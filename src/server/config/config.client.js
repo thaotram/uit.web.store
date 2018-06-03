@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import webpack from 'webpack';
 import openInEditor from 'launch-editor-middleware';
-import webpackDev from '../../../webpack/webpack.dev';
+import webpackDev from '../../webpack/webpack.dev';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 

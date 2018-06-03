@@ -19,7 +19,7 @@ AppSocket(io);
 server.listen(port, () => {
     log(
         {
-            Environment: process.env.NODE_ENV,
+            Environment: process.env.NODE_ENV || 'Unknown Environment',
             Url: `http://127.0.0.1:${port}`,
             Time: `${moment().format('hh:mm:ss')}`,
         },

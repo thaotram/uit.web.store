@@ -18,14 +18,14 @@ jobs:
   include:
     # Unit Test
     - stage:          Test
-      env:            ❤ = Test
-      script:         
-        - yarn test
-
-    - stage:          Test
       env:            ❤ = Lint
       script:         
         - yarn lint
+
+    - stage:          Test
+      env:            ❤ = Test
+      script:         
+        - yarn test
 
     - stage:          Build
       env:            ❤ = Lint
