@@ -17,7 +17,7 @@
     "start": "node dist/server/app",
     "run": "cross-env NODE_ENV=production node dist/server/app",
     "dev": "cross-env NODE_ENV=development nodemon src/server/app.js --exec babel-node",
-    "test": "mocha --compilers js:babel-register",
+    "test": "mocha --require @babel/register",
     "chrome": "Start-Process \"chrome.exe\" \"ai.ai\" --unsafely-treat-insecure-origin-as-secure=http://ai.ai/"
   },
   "nodemonConfig": {
@@ -60,6 +60,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
     "@babel/preset-stage-2": "^7.0.0-beta.49",
+    "@babel/register": "^7.0.0-beta.49",
     "add": "^2.0.6",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.3",
