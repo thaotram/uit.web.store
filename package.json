@@ -21,10 +21,7 @@
     "chrome": "Start-Process \"chrome.exe\" \"ai.ai\" --unsafely-treat-insecure-origin-as-secure=http://ai.ai/"
   },
   "nodemonConfig": {
-    "watch": [
-      "src/server",
-      "dist"
-    ]
+    "watch": ["src/server", "webpack", "dist"]
   },
   "repository": {
     "type": "git",
@@ -79,6 +76,7 @@
     "eslint-plugin-vue-libs": "^3.0.0",
     "express-open-in-editor": "^3.1.1",
     "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",
     "launch-editor-middleware": "^2.2.1",

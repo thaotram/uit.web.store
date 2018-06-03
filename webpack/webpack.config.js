@@ -76,6 +76,7 @@ export default {
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
+            filename: 'index.html',
             template: 'src/client/index.html',
             minify: {
                 collapseWhitespace: true,
