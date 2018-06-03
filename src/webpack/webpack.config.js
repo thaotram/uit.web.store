@@ -68,8 +68,8 @@ export default {
             '@': path.resolve(__dirname, './src/client/script/vue'),
         },
         modules: [
-            path.resolve(__dirname, '../node_modules'),
-            path.resolve(__dirname, '../src/client/script/modules'),
+            path.resolve(__dirname, '../../node_modules'),
+            path.resolve(__dirname, '../client/script/modules'),
         ],
         extensions: ['.js', '.vue', '.json'],
     },
