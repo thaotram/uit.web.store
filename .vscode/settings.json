@@ -1,0 +1,29 @@
+{
+    "eslint.enable": true,
+    "eslint.validate": [
+        "javascript",
+        {
+            "language": "html",
+            "autoFix": true
+        },
+        {
+            "language": "vue",
+            "autoFix": true
+        }
+    ],
+    "files.exclude": {
+        "dist": true,
+        "**/.vscode": true,
+        "**/node_modules": true
+    },
+    "git.ignoreLimitWarning": true,
+    "terminal.integrated.fontSize": 12,
+    "LineCount.excludes": [
+        "**/.vscode/**",
+        "**/node_modules/**",
+        "**/*.svg",
+        "dist",
+        "yarn-error.log",
+        "yarn.lock"
+    ]
+}

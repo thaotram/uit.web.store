@@ -1,0 +1,36 @@
+os: linux
+language: node_js
+node_js:
+- '8'
+
+cache:
+  directories:
+  - node_modules
+  
+before_script:
+  - git lfs pull
+
+stages:
+  - Test
+  - Build
+
+jobs:
+  include:
+    # Unit Test
+    - stage:          Test
+      env:            ❤ = Test
+      script:         
+        - yarn test
+
+    - stage:          Test
+      env:            ❤ = Lint
+      script:         
+        - yarn lint
+
+    - stage:          Build
+      env:            ❤ = Lint
+      script:         
+        - yarn build
+
+after_success: ./.travis/discord.sh success $WEBHOOK_URL
+after_failure: ./.travis/discord.sh failure $WEBHOOK_URL
