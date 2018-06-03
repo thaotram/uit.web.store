@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    word-wrap: break-word;
+}
+
+*:not(.noTransition) {
+    transition: all 0.2s;
+}
+
+html,
+body {
+    user-select: none;
+    font-family: $text-font;
+    color: rgba(0, 0, 0, 0.87);
+    -webkit-user-select: none;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.3em;
+}
+
+li,
+ol,
+ul {
+    list-style-position: inside;
+    margin: 0 0 0 0.4em;
+    padding: 0;
+}
+
+::selection {
+    background: rgba(#3e7bd4, 0.3);
+    color: #fff;
+    text-shadow: none;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@for $header from 1 through 6 {
+    h#{$header} {
+        font-weight: normal;
+        font-size: 1em + (6 - $header) * 0.1em;
+        line-height: 1.5em;
+    }
+}
+
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+hr {
+    background-color: #d4d4d4;
+    border: 0px;
+    clear: both;
+    color: #d4d4d4;
+    height: 0.5px;
+    margin-bottom: 0;
+}
+
+// ----- scrollbar -----
+$blue: #3498db;
+$scrollbar-size: 12px;
+::-webkit-scrollbar {
+    width: $scrollbar-size;
+    height: $scrollbar-size;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #23232d;
+}
