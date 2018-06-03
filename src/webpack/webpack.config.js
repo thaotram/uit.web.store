@@ -7,7 +7,7 @@ export default {
     output: {
         filename: '[name].bundle.js',
         chunkFilename: '[name].bundle.js',
-        path: path.resolve(__dirname, './client'),
+        path: path.resolve(__dirname, '../client'),
     },
     target: 'web',
     devtool: '#source-map',
