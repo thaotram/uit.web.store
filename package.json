@@ -21,7 +21,11 @@
     "chrome": "Start-Process \"chrome.exe\" \"ai.ai\" --unsafely-treat-insecure-origin-as-secure=http://ai.ai/"
   },
   "nodemonConfig": {
-    "watch": ["src/server", "webpack", "dist"]
+    "watch": [
+      "src/server",
+      "webpack",
+      "dist"
+    ]
   },
   "repository": {
     "type": "git",
