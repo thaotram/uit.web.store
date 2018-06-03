@@ -11,12 +11,13 @@
     "style": "scss --watch style/index.scss:dist/render.css",
     "style-render": "scss --style compressed style/index.scss:dist/render.css",
     "build:server": "babel src/server -d dist/server",
-    "build:client": "webpack",
+    "build:config": "babel webpack -d dist",
+    "build:client": "yarn build:config && webpack --config dist/webpack.prod.js",
     "build": "cross-env NODE_ENV=production npm-run-all build:server build:client",
     "start": "node dist/server/app",
     "run": "cross-env NODE_ENV=production node dist/server/app",
     "dev": "cross-env NODE_ENV=development nodemon src/server/app.js --exec babel-node",
-    "test": "mocha --compilers js:babel-core/register",
+    "test": "mocha --compilers js:babel-register",
     "chrome": "Start-Process \"chrome.exe\" \"ai.ai\" --unsafely-treat-insecure-origin-as-secure=http://ai.ai/"
   },
   "nodemonConfig": {
@@ -58,9 +59,11 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
     "@babel/preset-stage-2": "^7.0.0-beta.49",
+    "add": "^2.0.6",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.3",
-    "babel-minify": "^0.4.3",
+    "babel-plugin-root-import": "^6.0.0",
+    "babel-preset-minify": "^0.5.0-alpha.2e0de171",
     "chalk": "^2.4.1",
     "cross-env": "^5.1.6",
     "css-loader": "^0.28.11",
@@ -96,6 +99,7 @@
     "webpack-dev-middleware": "^3.1.3",
     "webpack-dev-server": "^3.1.4",
     "webpack-hot-middleware": "^2.22.2",
-    "webpack-split-by-path": "^2.0.0"
+    "webpack-split-by-path": "^2.0.0",
+    "yarn": "^1.7.0"
   }
 }
