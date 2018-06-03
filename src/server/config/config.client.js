@@ -12,10 +12,11 @@ export default function(app) {
         const webpack = require('webpack');
         const openInEditor = require('launch-editor-middleware');
         const webpackDev = require('../../webpack/webpack.dev');
+        const expressOpenInEditor = require('express-open-in-editor');
         const webpackDevMiddleware = require('webpack-dev-middleware');
         const webpackHotMiddleware = require('webpack-hot-middleware');
         const webpackCompiler = webpack(webpackDev.default);
-
+        
         const config = {
             stats: {
                 hash: false,
@@ -28,6 +29,8 @@ export default function(app) {
                 app.use('/__open-in-editor', openInEditor());
             },
         };
+
+        app.use('/__open-in-editor', expressOpenInEditor({ editor: 'code' }));
         app.use(webpackDevMiddleware(webpackCompiler, config));
         app.use(webpackHotMiddleware(webpackCompiler));
     } else {
