@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "heroku-postbuild": "yarn run build",
-    "lint": "eslint src",
+    "lint": "eslint webpack",
     "style": "scss --watch style/index.scss:dist/render.css",
     "style-render": "scss --style compressed style/index.scss:dist/render.css",
     "build:server": "babel src/server -d dist/server",
