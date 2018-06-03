@@ -23,7 +23,7 @@
   "nodemonConfig": {
     "watch": [
       "src/server",
-      "webpack",
+      "src/webpack",
       "dist"
     ]
   },
