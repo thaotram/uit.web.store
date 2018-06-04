@@ -5,20 +5,33 @@
         "es6": true,
         "mocha": true
     },
-    "extends": ["eslint:recommended", "plugin:vue/recommended"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:node/recommended"
+    ],
     "parser": "vue-eslint-parser",
     "parserOptions": {
         "parser": "babel-eslint",
-        "ecmaVersion": 8,
+        "ecmaVersion": 2017,
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true,
             "experimentalObjectRestSpread": true
         }
     },
-    "plugins": ["vue"],
+    "plugins": ["vue", "import", "node"],
     "rules": {
-        "import/no-named-as-default-member": "off",
+        "node/no-deprecated-api": [
+            "warn",
+            {
+                "ignoreModuleItems": [],
+                "ignoreGlobalItems": []
+            }
+        ],
+        "node/no-unsupported-features": "off",
         "vue/max-attributes-per-line": [
             2,
             {
