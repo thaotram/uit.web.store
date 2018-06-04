@@ -65,7 +65,7 @@ export default {
     },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, '../client/script/vue'),
+            '@': path.resolve(__dirname, '../../src/client/script/vue/') + '\\',
         },
         modules: [
             path.resolve(__dirname, '../../node_modules'),

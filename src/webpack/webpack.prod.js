@@ -4,8 +4,6 @@ export default {
     ...globalConfig,
     ...{
         mode: 'production',
-        entry: {
-            index: './src/client/script/script.js',
-        },
+        entry: ['./src/client/script/script.js'],
     },
 };
