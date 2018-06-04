@@ -3,9 +3,5 @@
         "@babel/preset-env",
         ["@babel/stage-2", { "decoratorsLegacy": true }],
         "minify"
-    ],
-    "plugins": [
-        "babel-plugin-root-import",
-        "@babel/plugin-syntax-dynamic-import"
     ]
 }
