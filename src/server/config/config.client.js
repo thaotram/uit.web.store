@@ -1,3 +1,14 @@
+/* 
+eslint node/no-unpublished-require: ["error", {
+    "allowModules": [
+        "webpack",
+        'launch-editor-middleware',
+        'express-open-in-editor',
+        'webpack-dev-middleware',
+        'webpack-hot-middleware',
+    ]
+}]
+*/
 import express from 'express';
 import path from 'path';
 
@@ -16,7 +27,7 @@ export default function(app) {
         const webpackDevMiddleware = require('webpack-dev-middleware');
         const webpackHotMiddleware = require('webpack-hot-middleware');
         const webpackCompiler = webpack(webpackDev.default);
-        
+
         const config = {
             stats: {
                 hash: false,
