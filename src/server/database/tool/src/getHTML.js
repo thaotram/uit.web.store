@@ -8,7 +8,7 @@ export default async function(url) {
             if (!error && response.statusCode == 200) {
                 resolve(body);
             } else {
-                reject('Không thể truy cập đường dẫn', url);
+                reject(`Không thể truy cập đường dẫn ${url}`);
             }
         });
     });
