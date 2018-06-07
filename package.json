@@ -19,7 +19,7 @@
     "run": "cross-env NODE_ENV=production node dist/server/app",
     "dev": "cross-env NODE_ENV=development nodemon src/server/app.js --exec babel-node",
     "one": "cross-env NODE_ENV=development babel-node src/server/app.js",
-    "test": "mocha test --recursive --require mocha-babel",
+    "test": "mocha test --recursive --exit --require mocha-babel",
     "chrome": "Start-Process \"chrome.exe\" \"ai.ai\" --unsafely-treat-insecure-origin-as-secure=http://ai.ai/"
   },
   "nodemonConfig": {

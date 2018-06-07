@@ -39,12 +39,9 @@ export default async function() {
             deleteRealmIfMigrationNeeded: true,
         })
             .then(realm => {
-                // app.realm = realm;
-                console.log('Success');
                 resolve(realm);
             })
             .catch(error => {
-                console.error(error);
                 reject(error);
             });
     });

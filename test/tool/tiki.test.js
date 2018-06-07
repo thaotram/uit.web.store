@@ -4,7 +4,7 @@ import getRawBook from '../../src/server/database/tool/getRawBook';
 
 describe('Lấy thông tin sách từ Tiki', function() {
     this.timeout(20000);
-    
+
     it('Lấy danh mục sách', async function() {
         const url = 'https://tiki.vn/nha-sach-tiki/c8322';
         const data = await getListBook(url);
