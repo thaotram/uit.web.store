@@ -31,13 +31,19 @@ export default {
                 test: /\.scss$/,
                 use: [
                     {
-                        loader: 'style-loader',
+                        loader: 'vue-style-loader',
                     },
                     {
                         loader: 'css-loader',
                     },
                     {
                         loader: 'sass-loader',
+                        options: {
+                            data: '@import "variables";',
+                            includePaths: [
+                                path.resolve(__dirname, '../client/style/'),
+                            ],
+                        },
                     },
                 ],
             },
@@ -64,11 +70,13 @@ export default {
         ],
     },
     resolve: {
-        alias: {
-            '@': path.resolve(__dirname, '../../src/client/script/vue/') + '\\',
-        },
         modules: [
             path.resolve(__dirname, '../../node_modules'),
+            path.resolve(__dirname, '../client/style'),
+            path.resolve(__dirname, '../client/script/vue/routes'),
+            path.resolve(__dirname, '../client/script/vue/app'),
+            path.resolve(__dirname, '../client/script/vue/unit'),
+            path.resolve(__dirname, '../client/script/vue/container'),
             path.resolve(__dirname, '../client/script/modules'),
         ],
         extensions: ['.js', '.vue', '.json'],

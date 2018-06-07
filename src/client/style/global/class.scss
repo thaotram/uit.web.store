@@ -1,0 +1,14 @@
+.noOver {
+    overflow: hidden;
+}
+
+.nanobar > .bar {
+    background: $color;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba($color, 0.3);
+}
+
+.dark {
+    @extend %dark-shadow;
+    background: $dark-background;
+}
