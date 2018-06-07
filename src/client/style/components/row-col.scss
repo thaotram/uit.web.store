@@ -1,0 +1,10 @@
+.col,
+.row {
+    display: flex;
+    > .full {
+        flex: 1;
+    }
+    > .line {
+        margin: 0 auto;
+    }
+}

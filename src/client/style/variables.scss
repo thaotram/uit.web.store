@@ -1,5 +1,32 @@
-$text-color: #ccc;
-$color-blue: #3498db;
-
 $text-font: 'Noto Sans', sans-serif;
-$line-size: 1px;
+
+$color: #38f;
+
+$light-text-color: #1e1e1e;
+$light-line-color: #ccc;
+$light-background: #ededed;
+$light-background-hover: rgba(#212733, 0.05);
+
+$dark-text-color: #738699;
+$dark-line-color: #343d4a;
+$dark-background: #212733;
+$dark-background-hover: rgba(#000, 0.5);
+$dark-background-active: rgba(#000, 0.3);
+
+$side-width: 250px;
+
+%dark-shadow {
+    box-shadow: 0 0 10px rgba(black, 0.75);
+}
+
+%light-shadow {
+    box-shadow: 0 0 10px rgba(black, 0.3);
+}
+
+%dark-hover {
+    background-color: $dark-background-hover;
+}
+
+%light-hover {
+    background-color: $light-background-hover;
+}

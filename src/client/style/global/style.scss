@@ -11,14 +11,15 @@
 
 html,
 body {
-    user-select: none;
-    font-family: $text-font;
-    color: rgba(0, 0, 0, 0.87);
-    -webkit-user-select: none;
-    word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: $text-font;
+    font-weight: 300;
     line-height: 1.3em;
+    user-select: none;
+    word-wrap: break-word;
 }
 
 li,
@@ -70,7 +71,6 @@ hr {
 }
 
 // ----- scrollbar -----
-$blue: #3498db;
 $scrollbar-size: 12px;
 ::-webkit-scrollbar {
     width: $scrollbar-size;
