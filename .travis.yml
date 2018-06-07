@@ -28,7 +28,7 @@ jobs:
         - yarn test
 
     - stage:          Build
-      env:            ❤ = Lint
+      env:            ❤ = Build
       script:         
         - yarn build
 
