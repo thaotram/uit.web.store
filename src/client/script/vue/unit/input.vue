@@ -80,8 +80,7 @@ export default {
             const el = this.$el.querySelector('textarea');
             el.style.height = 'auto';
             el.style.height =
-                Number(el.scrollHeight + el.offsetHeight - el.clientHeight) +
-                'px';
+                Number(el.scrollHeight + el.offsetHeight - el.clientHeight) + 'px';
         }
     },
     mounted() {
