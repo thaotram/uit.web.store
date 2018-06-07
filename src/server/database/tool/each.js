@@ -1,6 +1,4 @@
 import request from 'request';
-import log from 'log';
-import chalk from 'chalk';
 import tiki from './src/tiki';
 
 export default function(id, callback = () => {}) {

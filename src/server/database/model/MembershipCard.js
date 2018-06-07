@@ -1,5 +1,3 @@
-import Realm from 'realm';
-
 class MembershipCard {
     static getNextId(realm) {
         const items = realm.objects('MembershipCard');

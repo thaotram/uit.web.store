@@ -1,5 +1,3 @@
-import Realm from 'realm';
-
 class User {
     static isValid(realm, user) {
         if (!user) {

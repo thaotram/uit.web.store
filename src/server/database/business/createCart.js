@@ -1,16 +1,13 @@
-import Realm from 'realm';
 import User from '../model/User';
 import Cart from '../model/Cart';
 import CartDetail from '../model/CartDetail';
 import Book from '../model/Book';
 
 /**
-    
 const cartDetails = [
     { id: 1517213, amount: 1 },
     { id: 1517213, amount: 1 },
 ];
-
  * @param {Realm} realm
  * @param {User} user
  * @param {Object[]} cartDetails

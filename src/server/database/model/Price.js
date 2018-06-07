@@ -1,5 +1,3 @@
-import Realm from 'realm';
-
 class Price {
     static getNextId(realm) {
         const items = realm.objects('Price');

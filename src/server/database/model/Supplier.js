@@ -1,6 +1,3 @@
-import Realm from 'realm';
-import moment from 'moment';
-
 import {
     isNameValid,
     isAddressValid,

@@ -1,5 +1,3 @@
-import Realm from 'realm';
-//Thể loại
 class Category {}
 
 Category.schema = {

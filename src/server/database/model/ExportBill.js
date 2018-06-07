@@ -1,5 +1,3 @@
-import Realm from 'realm';
-
 class ExportBill {
     static getNextId(realm) {
         const items = realm.objects('ExportBill');

@@ -1,5 +1,3 @@
-import Realm from 'realm';
-//Tựa sách
 class Book {
     /**
      * @param {Date} time

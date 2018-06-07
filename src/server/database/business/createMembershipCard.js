@@ -1,4 +1,3 @@
-import Realm from 'realm';
 import User from '../model/User';
 import Employee from '../model/Employee';
 import MembershipCard from '../model/MembershipCard';

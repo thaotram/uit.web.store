@@ -1,5 +1,3 @@
-import Realm from 'realm';
-
 class ImportCoupon {
     static getNextId(realm) {
         const items = realm.objects('ImportCoupon');

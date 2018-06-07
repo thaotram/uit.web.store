@@ -1,4 +1,3 @@
-import Realm from 'realm';
 import PaymentCoupon from '../model/PaymentCoupon';
 import Employee from '../model/Employee';
 import Supplier from '../model/Supplier';

@@ -1,4 +1,3 @@
-import Realm from 'realm';
 import {
     isNameValid,
     isAddressValid,

@@ -1,6 +1,3 @@
-import Realm from 'realm';
-import User from '../model/User';
-
 /**
  *
  * @param {Realm} realm

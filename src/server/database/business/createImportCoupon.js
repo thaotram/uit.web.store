@@ -1,4 +1,3 @@
-import Realm from 'realm';
 import ImportCoupon from '../model/ImportCoupon';
 import ImportCouponDetail from '../model/ImportCouponDetail';
 import Book from '../model/Book';

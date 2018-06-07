@@ -1,6 +1,4 @@
-import Realm from 'realm';
 import Supplier from '../model/Supplier';
-import { resolve } from 'dns';
 
 /**
  *

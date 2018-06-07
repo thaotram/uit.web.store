@@ -1,4 +1,3 @@
-import Realm from 'realm';
 import {
     isPaidContentValid,
     isMoney,
