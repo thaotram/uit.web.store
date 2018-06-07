@@ -4,7 +4,7 @@ import Nanobar from 'nanobar';
 
 Vue.use(VueRouter);
 
-window.nanobar = new Nanobar({
+const nanobar = new Nanobar({
     id: 'nanobar',
 });
 
@@ -12,20 +12,21 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: () => import('./vue/routes/home.vue'),
+            name: 'w',
+            component: () => import('home'),
+        },
+        {
+            path: '/admin/point-of-sale',
+            name: 'point-of-sale',
+            component: () => import('point-of-sale'),
         },
     ],
 });
 
-router.beforeEach((to, from, next) => {
-    window.nanobar.go(90);
-    next();
-});
-
 router.afterEach(() => {
-    const body = document.getElementById('body');
-    window.nanobar.go(100);
-    if (body) body.scrollTop = 0;
+    setTimeout(() => {
+        nanobar.go(100);
+    }, 0);
 });
 
 export default router;

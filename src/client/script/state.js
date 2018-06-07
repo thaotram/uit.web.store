@@ -1,1 +1,23 @@
-export default {};
+export default {
+    user: {
+        id: '12312535123',
+        name: 'Phạm Hồng Phúc',
+    },
+    gui: {
+        fullSideBarSize: true,
+    },
+    books: [
+        {
+            id: 1,
+            name: 'Người cùng khổ',
+        },
+        {
+            id: 2,
+            name: 'Những con chim mỏi mòn chờ chết',
+        },
+        {
+            id: 3,
+            name: 'Con hâm dưới gầm cầu',
+        },
+    ],
+};
