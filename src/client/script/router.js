@@ -12,7 +12,7 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'w',
+            name: 'home',
             component: () => import('home'),
         },
         {

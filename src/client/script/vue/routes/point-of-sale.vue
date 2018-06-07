@@ -38,7 +38,6 @@ export default {
         ...'line',
         ...'button',
         ...'label',
-        ...'layer',
         ...'input',
         ...'space',
     },
