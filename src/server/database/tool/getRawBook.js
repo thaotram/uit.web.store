@@ -1,11 +1,14 @@
-import toMarkdown from './toMarkdown';
-import getDOM from './getDOM';
+import toMarkdown from './src/toMarkdown';
+import getDOM from './src/getDOM';
+import getHTML from './src/getHTML';
 import moment from 'moment';
+
 /**
- *
  * @param {String} body
  */
-export default function(id, body) {
+export default async function(id) {
+    const url = `https://tiki.vn/p${id}.html`;
+    const body = await getHTML(url);
     const $ = getDOM(body);
     return {
         book: {
@@ -20,7 +23,6 @@ export default function(id, body) {
                     .text()
                     .replace(/[^0-9]/, ''),
             ),
-
             publisher: get($, 'publisher_vn'),
             manufacturer: get($, 'manufacturer_book_vn'),
             dimensions: get($, 'dimensions'),
@@ -30,12 +32,14 @@ export default function(id, body) {
                 'MM-YYYY',
             ).toDate(),
             bookCover: get($, 'book_cover'),
-
-            description: toMarkdown($('#gioi-thieu').html()),
+            description: toMarkdown(
+                $('#gioi-thieu').html(),
+            ),
             image: getImage(body),
 
             category: [],
         },
+        url,
         price: parseInt(
             $('#span-price')
                 .text()
