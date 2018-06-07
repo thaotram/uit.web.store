@@ -15,7 +15,7 @@ import PaymentCoupon from './model/PaymentCoupon';
 import Price from './model/Price';
 import Supplier from './model/Supplier';
 
-export default async function(app) {
+export default async function() {
     return new Promise((resolve, reject) => {
         Realm.open({
             path: 'database/realm.realm',
@@ -39,7 +39,7 @@ export default async function(app) {
             deleteRealmIfMigrationNeeded: true,
         })
             .then(realm => {
-                app.realm = realm;
+                // app.realm = realm;
                 console.log('Success');
                 resolve(realm);
             })

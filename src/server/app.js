@@ -15,12 +15,13 @@ const server = http.createServer(app);
 const io = SocketIO(server);
 
 (async function() {
-    await AppDatabase(app);
+    const realm = await AppDatabase();
+    app.realm = realm;
 
     AppConfig(app, io);
     AppExpress(app);
     AppSocket(io);
-    
+
     server.listen(port, () => {
         log(
             {
