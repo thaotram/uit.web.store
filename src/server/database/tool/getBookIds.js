@@ -8,9 +8,10 @@ import getHTML from './src/getHTML';
 export default async function(url) {
     const body = await getHTML(url);
     const $ = getDOM(body);
-    return Array.from(
-        $('[data-id]').map((index, element) =>
-            $(element).attr('data-id'),
-        ),
+    const data = [];
+
+    $('[data-id]').each((index, element) =>
+        data.push($(element).attr('data-id')),
     );
+    return data;
 }

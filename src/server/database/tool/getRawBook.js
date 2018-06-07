@@ -8,7 +8,10 @@ import moment from 'moment';
  */
 export default async function(id) {
     const url = `https://tiki.vn/p${id}.html`;
+    console.log(url);
     const body = await getHTML(url);
+    console.log(url, 'done');
+    
     const $ = getDOM(body);
     return {
         book: {
