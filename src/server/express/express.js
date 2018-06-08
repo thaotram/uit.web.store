@@ -1,12 +1,11 @@
 import path from 'path';
 import book from './api/book.api';
+
 /**
  *
  * @param {Express.Application} app
  */
 export default function(app) {
-    const realm = app.realm;
-    
     book(app);
 
     app.get('/', (req, res) => {

@@ -1,8 +1,12 @@
 import Book from '../../database/model/Book';
 
+/**
+ *
+ * @param {Express.Application} app
+ */
 export default function(app) {
     const realm = app.realm;
-    
+
     app.get('/api/book/:id', (req, res) => {
         const id = req.params.id;
         const book = Book.getBookById(realm, id);
