@@ -4,33 +4,40 @@
             <row- size="40" 
                   class="title">
                 <space-/>
-                <row- size="40" 
-                      class="row">
-                    <line-/>
-                    <input- v-model="search" 
-                            type="text"
-                            icon=""
-                            class="search-box base"
-                            placeholder="Tìm kiếm"> 
-                        <col- class="dropdown" 
-                              @click.native="log">
-                            a
+                <input- v-model="search" 
+                        type="text"
+                        icon=""
+                        class="search-box"
+                        placeholder="Tìm kiếm">
+                    <row- class="dropdown">
+                        <line-/>
+                        <col- class="full">
+                            <row- size="40">
+                                <space-/>
+                            </row->
+                            <col- class="result">
+                                <book-search-item- v-for="book in data.books" 
+                                                   :book="book"
+                                                   :key="book.id"/>
+                                <line- style="height: 2px"/>
+                            </col->
                         </col->
-                    </input->
-                    <line-/>
-                </row->
+                        <line-/>
+                    </row->
+                </input->
                 <button- icon=""/>
             </row->
             <line-/>
+            <!-- Khoảng trống ở dưới --> 
             <space-/>
         </col->
-        <col- class="right">
-            <!--//-->
-        </col->
+        <!-- <col- class="right">
+        </col-> -->
     </row->
 </template>
-
 <script>
+import { mapState } from 'vuex';
+
 export default {
     components: {
         ...'col',
@@ -40,11 +47,15 @@ export default {
         ...'label',
         ...'input',
         ...'space',
+        ...'book-search-item',
     },
     data() {
         return {
             search: '',
         };
+    },
+    computed: {
+        ...mapState(['data']),
     },
     watch: {
         search(value) {
@@ -63,17 +74,24 @@ $padding: 15px;
         border-radius: 3px;
         margin: $padding;
         &.left {
+            overflow: hidden;
             > .title {
-                > .search-box {
-                    flex: 0.5;
-                    &.focus > .dropdown,
-                    > .dropdown:hover {
-                        visibility: visible;
+                > .input.search-box {
+                    min-width: 400px;
+                    > .dropdown {
+                        position: absolute;
+                        width: 100%;
                     }
-                    .dropdown {
-                        // visibility: collapse;
-                        top: calc(100% + 10px);
-                        background: white;
+                    .result {
+                        display: none;
+                    }
+                    &.focus {
+                        > .dropdown {
+                            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+                        }
+                        .result {
+                            display: flex;
+                        }
                     }
                 }
             }

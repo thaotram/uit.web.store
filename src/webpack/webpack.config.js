@@ -66,9 +66,10 @@ export default {
         modules: [
             'node_modules',
             'src/client/script/modules/',
-            'src/client/script/vue/container/',
-            'src/client/script/vue/unit/',
             'src/client/script/vue/app/',
+            'src/client/script/vue/unit/',
+            'src/client/script/vue/project/',
+            'src/client/script/vue/container/',
             'src/client/script/vue/routes/',
         ],
         extensions: ['.vue', '.js', '.json'],
