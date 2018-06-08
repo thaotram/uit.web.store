@@ -23,7 +23,7 @@ export default {
     mounted() {
         const size = getAttribute('size', this, 40);
         style({
-            [`[size="${size}"] > .image, .image[size="${size}"]`]: {
+            [`[size="${size}"] > .image.square, .image.square[size="${size}"]`]: {
                 height: `${size}px`,
                 width: `${size}px`,
                 minWidth: `${size}px`,
@@ -39,7 +39,7 @@ export default {
     background-size: cover;
     background-position: center;
     background-color: white;
-    &.round {
+    &.square.round {
         border-radius: 50%;
     }
 }

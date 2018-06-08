@@ -8,7 +8,7 @@
         <row- class="account" 
               size="50">
             <label- :text="user.name"/>
-            <image- class="round"
+            <image- class="round square"
                     size="30"
                     src="#"/>
         </row->
