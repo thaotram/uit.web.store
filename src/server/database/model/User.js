@@ -1,14 +1,16 @@
+import { json } from '../business/Utils';
+
 class User {
     static isValid(realm, user) {
         if (!user) {
             return false;
         }
-        return (
-            realm
-                .objects('User')
-                .filtered(`id == ${user.id}`)[0] !==
-            undefined
-        );
+        return realm.objects('User').filtered(`id == ${user.id}`)[0] !== undefined;
+    }
+
+    
+    get allBills() {
+        return this.carts.map(cart => cart.exportBill[0]);
     }
 }
 

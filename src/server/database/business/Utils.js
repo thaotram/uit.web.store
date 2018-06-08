@@ -20,12 +20,24 @@ export function isPhoneValid(phone) {
     return true;
 }
 export function isPaidContentValid(paidContent) {
-    if(typeof paidContent !== 'string') return false;
-    if(paidContent.length <= 3) return false;
+    if (typeof paidContent !== 'string') return false;
+    if (paidContent.length <= 3) return false;
     return true;
 }
-export function isMoney(money){
-    if(typeof money !== 'number') return false;
-    if(money <= 0) return false;
+export function isMoney(money) {
+    if (typeof money !== 'number') return false;
+    if (money <= 0) return false;
     return true;
+}
+export function json(Class, self) {
+    const properties = Class.schema.properties;
+    const object = {};
+    for (const property in properties) {
+        if (properties.hasOwnProperty(property)) {
+            if (['int', 'string', 'date'].indexOf(properties[property]) !== -1) {
+                object[property] = self[property];
+            }
+        }
+    }
+    return object;
 }
