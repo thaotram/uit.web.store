@@ -73,6 +73,7 @@
     "@babel/preset-env": "^7.0.0-beta.49",
     "@babel/preset-stage-2": "^7.0.0-beta.49",
     "@babel/register": "^7.0.0-beta.49",
+    "@types/express-serve-static-core": "phamhongphuc/express-serve-static-core#v4.16.1-pre",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.3",
     "babel-preset-minify": "^0.5.0-alpha.2e0de171",
