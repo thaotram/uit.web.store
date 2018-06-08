@@ -1,7 +1,7 @@
-import User from '../model/User';
-import Cart from '../model/Cart';
-import CartDetail from '../model/CartDetail';
-import Book from '../model/Book';
+import User from '../../model/User';
+import Cart from '../../model/Cart';
+import CartDetail from '../../model/CartDetail';
+import Book from '../../model/Book';
 
 /**
 const cartDetails = [

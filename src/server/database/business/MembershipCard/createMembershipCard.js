@@ -1,6 +1,6 @@
-import User from '../model/User';
-import Employee from '../model/Employee';
-import MembershipCard from '../model/MembershipCard';
+import User from '../../model/User';
+import Employee from '../../model/Employee';
+import MembershipCard from '../../model/MembershipCard';
 
 /**
  *
