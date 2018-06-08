@@ -1,5 +1,5 @@
-import User from '../model/User';
-import Employee from '../model/Employee';
+import User from '../../model/User';
+import Employee from '../../model/Employee';
 
 /**
  *

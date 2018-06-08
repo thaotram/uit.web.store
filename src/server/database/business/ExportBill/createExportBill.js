@@ -1,6 +1,6 @@
-import Cart from '../model/Cart';
-import Employee from '../model/Employee';
-import ExportBill from '../model/ExportBill';
+import Cart from '../../model/Cart';
+import Employee from '../../model/Employee';
+import ExportBill from '../../model/ExportBill';
 
 /**
  *

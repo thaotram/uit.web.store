@@ -1,8 +1,8 @@
-import ImportCoupon from '../model/ImportCoupon';
-import ImportCouponDetail from '../model/ImportCouponDetail';
-import Book from '../model/Book';
-import Employee from '../model/Employee';
-import Supplier from '../model/Supplier';
+import ImportCoupon from '../../model/ImportCoupon';
+import ImportCouponDetail from '../../model/ImportCouponDetail';
+import Book from '../../model/Book';
+import Employee from '../../model/Employee';
+import Supplier from '../../model/Supplier';
 
 /**
     

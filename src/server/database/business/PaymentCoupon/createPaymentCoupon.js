@@ -1,6 +1,6 @@
-import PaymentCoupon from '../model/PaymentCoupon';
-import Employee from '../model/Employee';
-import Supplier from '../model/Supplier';
+import PaymentCoupon from '../../model/PaymentCoupon';
+import Employee from '../../model/Employee';
+import Supplier from '../../model/Supplier';
 
 /**
  * @param {Realm} realm
