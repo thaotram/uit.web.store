@@ -1,6 +1,8 @@
 <template>
     <div :class="{ hasIcon: icon !== '', focus: focus }" 
          class="input">
+        <slot/>
+        <div class="bottomLine"/>
         <input v-if="type === 'text'"
                ref="text"
                :value="value"
@@ -30,7 +32,6 @@
              class="icon">
             {{ icon }}
         </div>
-        <slot/>
     </div>
 </template>
 <script>
@@ -118,13 +119,16 @@ export default {
 </script>
 <style lang="scss">
 .light {
-    .input > input,
-    .input > textarea {
-        &:hover {
-            border-bottom-color: rgba($color, 0.3);
+    .input {
+        > .bottomLine {
+            background-color: $color;
+            opacity: 0;
         }
-        &:focus {
-            border-bottom-color: $color;
+        &:hover > .bottomLine {
+            opacity: 0.5;
+        }
+        &.focus > .bottomLine {
+            opacity: 1;
         }
     }
 }
@@ -132,13 +136,13 @@ export default {
 .input {
     display: flex;
     position: relative;
+    box-sizing: border-box;
     > input,
     > textarea {
         box-sizing: border-box;
-        border-style: solid;
-        border-color: transparent;
-        border-width: 2px 0;
         background: transparent;
+        border: none;
+        z-index: 1;
         &:focus {
             outline: 0;
         }
@@ -172,11 +176,11 @@ export default {
         right: 0;
     }
 
-    > .dropdown {
+    > .bottomLine {
         position: absolute;
-        top: 100%;
-        height: 50px;
+        height: 2px;
         width: 100%;
+        bottom: 0;
     }
 }
 </style>

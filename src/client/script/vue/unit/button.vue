@@ -33,34 +33,41 @@ export default {
             default: '',
         },
     },
-
     data() {
         return {};
     },
     updated() {
-        const size = getAttribute('size', this, 40, true);
-        style({
-            [`[size="${size}"] > .button`]: {
-                minHeight: `${size}px`,
-            },
-            [`[size="${size}"] > .button > .br`]: {
-                width: `${size * 0.3}px`,
-            },
-            [`[size="${size}"] > .button > .slot`]: {
-                padding: `0 ${size * 0.3}px`,
-                fontSize: `#{($size * 0.2 + 7)}px`,
-            },
-            [`[size="${size}"] > .button > .icon`]: {
-                minWidth: `${size}px`,
-                minHeight: `${size}px`,
-                lineHeight: `${size}px`,
-                fontSize: `${size * 0.4}px`,
-            },
-            [`[size="${size}"] > .button > .text`]: {
-                lineHeight: `${size}px`,
-                fontSize: `${size * 0.2 + 7}px`,
-            },
-        });
+        this.updateStyle();
+    },
+    mounted() {
+        this.updateStyle();
+    },
+    methods: {
+        updateStyle() {
+            const size = getAttribute('size', this, 40, true);
+            style({
+                [`[size="${size}"] > .button`]: {
+                    minHeight: `${size}px`,
+                },
+                [`[size="${size}"] > .button > .br`]: {
+                    width: `${size * 0.3}px`,
+                },
+                [`[size="${size}"] > .button > .slot`]: {
+                    padding: `0 ${size * 0.3}px`,
+                    fontSize: `#{($size * 0.2 + 7)}px`,
+                },
+                [`[size="${size}"] > .button > .icon`]: {
+                    minWidth: `${size}px`,
+                    minHeight: `${size}px`,
+                    lineHeight: `${size}px`,
+                    fontSize: `${size * 0.4}px`,
+                },
+                [`[size="${size}"] > .button > .text`]: {
+                    lineHeight: `${size}px`,
+                    fontSize: `${size * 0.2 + 7}px`,
+                },
+            });
+        },
     },
 };
 </script>
