@@ -45,7 +45,7 @@ User.schema = {
             objectType: 'Employee',
             property: 'user',
         },
-        membershipCard: {
+        membershipCards: {
             type: 'linkingObjects',
             objectType: 'MembershipCard',
             property: 'owner',

@@ -66,7 +66,7 @@ ImportCoupon.schema = {
         create: 'date',
         shipper: 'string',
 
-        importDetail: {
+        importDetails: {
             type: 'linkingObjects',
             objectType: 'ImportCouponDetail',
             property: 'importCoupon',

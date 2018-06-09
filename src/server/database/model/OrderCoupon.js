@@ -57,7 +57,7 @@ OrderCoupon.schema = {
         employee: 'Employee',
         create: 'date',
 
-        orderDetail: {
+        orderDetails: {
             type: 'linkingObjects',
             objectType: 'OrderCouponDetail',
             property: 'orderCoupon',

@@ -57,8 +57,7 @@ Cart.schema = {
         owner: 'User',
         create: 'date',
 
-        //TODO: thêm s, đồ khó ưa
-        cartDetail: {
+        cartDetails: {
             type: 'linkingObjects',
             objectType: 'CartDetail',
             property: 'cart',
