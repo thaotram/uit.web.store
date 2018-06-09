@@ -2,7 +2,9 @@ import { assert } from 'chai';
 import database, { Book } from '../../src/server/database/database';
 import { getRawBook, writeList } from '../../src/server/database/tiki';
 
-describe('Đoạn lệnh này chỉ chạy một lần', () => {
+describe('Tiki test', function() {
+    this.timeout(30 * 1000);
+
     it('Lưu thông tin sách từ id', async () => {
         const id = '580112';
 

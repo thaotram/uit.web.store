@@ -10,10 +10,10 @@ Category.schema = {
         id: 'int',
         name: 'string',
 
-        bookCategory: {
+        books: {
             type: 'linkingObjects',
             objectType: 'Book',
-            property: 'category',
+            property: 'categories',
         },
     },
 };

@@ -66,24 +66,24 @@ Book.schema = {
         description: 'string',
         image: 'string',
 
-        category: 'Category[]',
+        categories: 'Category[]',
 
-        price: {
+        prices: {
             type: 'linkingObjects',
             objectType: 'Price',
             property: 'book',
         },
-        cartDetail: {
+        cartDetails: {
             type: 'linkingObjects',
             objectType: 'CartDetail',
             property: 'book',
         },
-        orderDetail: {
+        orderDetails: {
             type: 'linkingObjects',
             objectType: 'OrderCouponDetail',
             property: 'book',
         },
-        importDetail: {
+        importDetails: {
             type: 'linkingObjects',
             objectType: 'ImportCouponDetail',
             property: 'book',

@@ -60,7 +60,7 @@ PaymentCoupon.schema = {
         id: 'int',
         supplier: 'Supplier',
         employee: 'Employee',
-        paidContent: 'string',
+        content: 'string',
         money: 'int',
         create: 'date',
     },

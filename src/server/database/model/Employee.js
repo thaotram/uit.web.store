@@ -70,14 +70,13 @@ Employee.schema = {
 
     properties: {
         id: 'int',
-        user: 'User', // nhân viên là 1 user
+        user: 'User',
 
         name: 'string',
         birthdate: 'date',
         address: 'string',
         phone: 'string',
         startDate: 'date',
-        // salary: 'int', //TODO: xóa trong ERD, CSDL
 
         membershipCards: {
             type: 'linkingObjects',
