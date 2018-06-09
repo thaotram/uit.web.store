@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import database, { Book, Cart } from '../../src/server/database/database';
 
-describe('Class Book', () => {
+describe('Class Book', function() {
     this.timeout(1000);
 
     it('[.json] Lấy json của một sách', async () => {
