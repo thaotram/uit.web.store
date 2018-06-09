@@ -2,9 +2,10 @@ import Promise from 'bluebird';
 import { Book } from '../../database';
 import getList from './getList';
 import getRawBook from './getRawBook';
+import readline from 'readline';
 
 export default async function(realm, url) {
-    const bookIds = await getList(url);
+    const bookIds = (await getList(url)).slice(0, 5);
 
     let count = 0;
     log(count, bookIds.length);
@@ -19,9 +20,8 @@ export default async function(realm, url) {
             concurrency: 4,
         },
     ).finally(() => {
-        process.stdout.write('\r');
-        process.stdout.clearLine();
-        process.stdout.cursorTo(0);
+        readline.clearLine(process.stdout, 0);
+        readline.cursorTo(process.stdout, 0);
     });
 }
 
@@ -33,6 +33,5 @@ function log(a, b) {
     const start = Math.round((a / b) * length);
     const loading = ''.padStart(start, char).padEnd(length, '░');
 
-    
     process.stdout.write(`\r ${loading} : ${a} / ${b} `);
 }
