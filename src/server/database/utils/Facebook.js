@@ -1,11 +1,10 @@
+import fb from 'fb';
 /**
  * @param {String} accessToken
  */
 export async function getUserInfo(accessToken) {
-    return new Promise((resolve, reject) => {
-        resolve({
-            id: 123,
-            name: 'tocdep',
-        });
+    return await fb.api('me', {
+        fields: ['id', 'name'],
+        access_token: accessToken,
     });
 }

@@ -41,7 +41,19 @@ class Book extends Model {
     get json() {
         const o = this.object;
         o.realPrice = this.realPrice(new Date());
+        o.count = this.count;
         return o;
+    }
+
+    get count() {
+        let total = 0;
+        total += this.importCouponDetails.sum('amount');
+
+        total -= this.cartDetails
+            .map(cartDetail => (cartDetail.isSold ? cartDetail.amount : 0))
+            .reduce((a, b) => a + b);
+
+        return total;
     }
 }
 
@@ -78,12 +90,12 @@ Book.schema = {
             objectType: 'CartDetail',
             property: 'book',
         },
-        orderDetails: {
+        orderCouponDetails: {
             type: 'linkingObjects',
             objectType: 'OrderCouponDetail',
             property: 'book',
         },
-        importDetails: {
+        importCouponDetails: {
             type: 'linkingObjects',
             objectType: 'ImportCouponDetail',
             property: 'book',

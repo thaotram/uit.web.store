@@ -53,6 +53,11 @@ class ImportCoupon extends Model {
         });
         return money;
     }
+
+    get count(){
+        let count = 0;
+
+    }
 }
 
 ImportCoupon.schema = {
@@ -66,7 +71,7 @@ ImportCoupon.schema = {
         create: 'date',
         shipper: 'string',
 
-        importDetails: {
+        importCouponDetails: {
             type: 'linkingObjects',
             objectType: 'ImportCouponDetail',
             property: 'importCoupon',
