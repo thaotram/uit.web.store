@@ -1,16 +1,16 @@
 /* eslint no-unused-vars: 0 */
-
+import { filename } from '../utils/utils';
 import { assert } from 'chai';
-import database, { Cart, Book } from '../../src/server/database/database';
-import { getRawBook, writeList } from '../../src/server/database/tiki';
+import database from '../../src/server/database/database';
+import { writeList } from '../../src/server/database/tiki';
 
-describe('♦ Kiểm thử ♦', function() {
-    this.timeout(1000000);
+describe(filename(__filename), function() {
+    this.timeout(100 * 1000);
 
-    it('♦ ♦ ♦ ♦', async () => {
-        const realm = await database();
-        const url = 'https://tiki.vn/nha-sach-tiki/c8322?order=position';
-        await writeList(realm, url);
-        assert.isTrue(true, 'avc');
+    it('❤️💛💚💙💜', async function() {
+        // const realm = await database();
+        // const url = 'https://tiki.vn/nha-sach-tiki/c8322?order=position';
+        // await writeList(realm, url);
+        // assert.isTrue(true, 'avc');
     });
 });
