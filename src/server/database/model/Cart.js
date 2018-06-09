@@ -10,7 +10,7 @@ class Cart extends Model {
     static async create(realm, user, cartDetails) {
         return new Promise((resolve, reject) => {
             if (
-                !(user === null || User.isValid(realm, user)) ||
+                !(user === null || User.has(realm, user)) ||
                 !CartDetail.isRawValid(cartDetails)
             ) {
                 reject(`User or CartDetail doesn't exist`);
