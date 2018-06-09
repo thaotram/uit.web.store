@@ -1,26 +1,25 @@
-import log from 'log';
-import http from 'http';
 import chalk from 'chalk';
+import Express from 'express';
+import http from 'http';
+import log from 'log';
 import moment from 'moment';
-import express from 'express';
 import SocketIO from 'socket.io';
-import AppDatabase from './database/database';
-import AppConfig from './config/config';
-import AppExpress from './express/express';
-import AppSocket from './socket/socket';
+import config from './config/config';
+import database from './database/database';
+import express from './express/express';
+import socket from './socket/socket';
 
-const app = express();
+const app = Express();
 const port = process.env.PORT || 80;
 const server = http.createServer(app);
 const io = SocketIO(server);
 
 (async function() {
-    const realm = await AppDatabase();
-    app.realm = realm;
+    const realm = await database();
 
-    AppConfig(app, io);
-    AppExpress(app);
-    AppSocket(io);
+    config(app, io);
+    express(app, realm);
+    socket(io);
 
     server.listen(port, () => {
         log(

@@ -1,15 +1,14 @@
-import Book from '../../database/model/Book';
+import { Book } from '../../database/database';
 
 /**
  *
  * @param {Express.Application} app
+ * @param {Realm} realm
  */
-export default function(app) {
-    const realm = app.realm;
-
+export default function(app, realm) {
     app.get('/api/book/:id', (req, res) => {
         const id = req.params.id;
-        const book = Book.getBookById(realm, id);
+        const book = Book.getById(realm, id);
         if (!book) {
             res.json({
                 error: `Không tìm thấy sách có Id: ${id}`,
