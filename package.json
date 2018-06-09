@@ -49,6 +49,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "fb": "^2.0.0",
     "gsap": "^2.0.1",
     "log": "phamhongphuc/log#0.2.10",
     "moment": "^2.22.2",
