@@ -4,6 +4,6 @@ export default {
     ...globalConfig,
     ...{
         mode: 'production',
-        entry: ['./src/client/script/script.js'],
+        entry: ['@babel/polyfill', './src/client/script/script.js'],
     },
 };

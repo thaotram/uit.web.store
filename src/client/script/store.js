@@ -11,8 +11,16 @@ export default new Vuex.Store({
     state,
     plugins: [VuexPersistedstate()],
     mutations: {
-        toogleSideBar(state) {
-            state.gui.fullSideBarSize ^= true;
+        ...gui,
+        loadBooks(state, books) {
+            state.data.books = books;
+        },
+    },
+    actions: {
+        async loadBooks({ commit }) {
+            const res = await fetch('/api/books');
+            console.log(res);
+            return;
         },
     },
 });

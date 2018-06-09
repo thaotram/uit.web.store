@@ -3,5 +3,6 @@
         "@babel/preset-env",
         ["@babel/stage-2", { "decoratorsLegacy": true }],
         "minify"
-    ]
+    ],
+    "plugins": ["@babel/plugin-transform-async-to-generator"]
 }

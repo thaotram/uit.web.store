@@ -1,8 +1,6 @@
-import State from '../state';
-
 export default {
     /**
-     * @param {State} state
+     * @param {typeof import("../state").default} state
      */
     toogleSideBar(state) {
         state.gui.fullSideBarSize ^= true;
