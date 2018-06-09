@@ -31,7 +31,7 @@ class Book extends Model {
      * @param {Date} time
      */
     realPrice(time) {
-        return this.price.filtered(`time <= $0`, time).sorted('time', true)[0].price;
+        return this.prices.filtered(`time <= $0`, time).sorted('time', true)[0].price;
     }
 
     static getJsonBooks(realm) {

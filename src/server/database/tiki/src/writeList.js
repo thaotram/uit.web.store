@@ -18,7 +18,11 @@ export default async function(realm, url) {
         {
             concurrency: 4,
         },
-    ).finally(() => console.log(''));
+    ).finally(() => {
+        process.stdout.write('\r');
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+    });
 }
 
 function log(a, b) {
@@ -29,5 +33,6 @@ function log(a, b) {
     const start = Math.round((a / b) * length);
     const loading = ''.padStart(start, char).padEnd(length, '░');
 
-    process.stdout.write(`\r${loading} : ${a} / ${b}`);
+    
+    process.stdout.write(`\r ${loading} : ${a} / ${b} `);
 }

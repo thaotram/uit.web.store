@@ -1,24 +1,25 @@
+import { filename, itname } from '../utils/utils';
 import { assert } from 'chai';
 import database, { Book, Cart } from '../../src/server/database/database';
 
-describe('Class Book', function() {
-    this.timeout(1000);
+describe(filename(__filename), function() {
+    this.timeout(10000);
 
-    it('[.json] Lấy json của một sách', async () => {
+    it(itname('book.json', 'Lấy json của một sách'), async function() {
         const realm = await database();
         const book = realm.objects('Book')[0];
-        if (book instanceof Book == false) return;
+        assert.isTrue(book instanceof Book, 'Phải là book');
         const json = book.json;
         assert.isObject(json, 'json trả về phải là một object');
     });
 
-    it('[.getJsonBooks] Lấy json của tất cả sách', async () => {
+    it(itname('Book.getJsonBooks()', 'Lấy json của tất cả sách'), async function() {
         const realm = await database();
         const books = Book.getJsonBooks(realm);
         assert.isArray(books, 'json trả về phải là một object');
     });
 
-    it('[.has(realm, instance)]', async function() {
+    it(itname('Book.has()', 'Tồn tại đối tượng trong Class'), async function() {
         const realm = await database();
 
         const cart = realm.objects(Cart.schema.name)[0];
