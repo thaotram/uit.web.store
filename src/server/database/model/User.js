@@ -7,15 +7,28 @@ class User extends Model {
      * @param {Realm} realm
      * @param {String} accessToken
      */
-    static async create(realm, accessToken) {
-        return new Promise(async resolve => {
+    static async getByAccessToken(realm, accessToken) {
+        return new Promise(async (resolve, reject) => {
             const info = await getUserInfo(accessToken);
+            if (info.error) {
+                reject({ error: `Can't get user info` });
+                return;
+            }
+            console.log(1);
+
+            const user = User.getById(Number(info.id));
+
+            console.log(1);
+            if (user != null) {
+                resolve(user);
+                return;
+            }
             realm.write(() => {
                 resolve(
                     realm.create(
                         'User',
                         {
-                            id: info.id,
+                            id: Number(info.id),
                             name: info.name,
                             point: 0,
                         },
