@@ -46,6 +46,10 @@ class Cart extends Model {
         });
         return money;
     }
+
+    get isSold(){
+        return this.exportBill[0] != null;
+    }
 }
 
 Cart.schema = {

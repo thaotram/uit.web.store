@@ -16,6 +16,11 @@ class CartDetail extends Model {
             return true;
         });
     }
+
+    get isSold() {
+        if (this.cart == null) return false;
+        return this.cart.isSold;
+    }
 }
 
 CartDetail.schema = {
