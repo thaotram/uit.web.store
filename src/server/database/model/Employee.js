@@ -1,26 +1,16 @@
 import {
-    isNameValid,
     isAddressValid,
-    isPhoneValid,
     isBirthdateValid,
-} from '../business/Utils';
+    isNameValid,
+    isPhoneValid,
+} from '../utils/Validation';
+import { User } from '../database';
+import Model from '../utils/Model';
 
-class Employee {
-    static getNextId(realm) {
-        const items = realm.objects('Employee');
-        return items.length == 0 ? 1 : items.max('id') + 1;
-    }
-    static isValid(realm, employee) {
-        if (!employee) {
-            return false;
-        }
-        return (
-            realm
-                .objects('Employee')
-                .filtered(`id == ${employee.id}`)[0] !==
-            undefined
-        );
-    }
+class Employee extends Model {
+    /**
+     * @param {Employee} employee
+     */
     static isRawValid(employee) {
         if (
             !isNameValid(employee.name) ||
@@ -30,6 +20,47 @@ class Employee {
         )
             return false;
         return true;
+    }
+
+    /**
+     * @param {Realm} realm
+     * @param {Employee} rawEmployee
+     */
+    static async create(realm, user, rawEmployee) {
+        return new Promise((resolve, reject) => {
+            if (!User.isValid(realm, user)) {
+                reject(`User doesn't exist`);
+                return;
+            }
+            if (
+                realm.objects('Employee').filtered(`user.id == ${user.id}`)[0] !==
+                undefined
+            ) {
+                reject(`Employee is exist`);
+                return;
+            }
+            if (!Employee.isRawValid(rawEmployee)) {
+                reject('Information Error');
+                return;
+            }
+            realm.write(() => {
+                resolve(
+                    realm.create(
+                        'Employee',
+                        {
+                            id: Employee.getNextId(realm),
+                            user: user,
+                            name: rawEmployee.name,
+                            birthdate: rawEmployee.birthdate,
+                            address: rawEmployee.address,
+                            phone: rawEmployee.phone,
+                            startDate: new Date(),
+                        },
+                        true,
+                    ),
+                );
+            });
+        });
     }
 }
 

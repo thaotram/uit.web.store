@@ -1,27 +1,45 @@
-import { json } from '../business/Utils';
+import { Price } from '../database';
+import Model from '../utils/Model';
 
-class Book {
+class Book extends Model {
+    /**
+     *
+     * @param {Realm} realm
+     * @param {getRawBook} book
+     */
+    static async create(realm, rawBook) {
+        return new Promise(resolve => {
+            realm.write(() => {
+                const book = realm.create('Book', rawBook.book, true);
+                const lastPrice = realm
+                    .objects('Price')
+                    .filtered(`book.id == ${book.id} SORT (time DESCENDING)`)[0];
+                if (!lastPrice || lastPrice.price !== rawBook.price) {
+                    realm.create('Price', {
+                        id: Price.getNextId(realm),
+                        time: new Date(),
+                        price: rawBook.price,
+                        book: book,
+                    });
+                }
+                resolve(book);
+            });
+        });
+    }
+
     /**
      * @param {Date} time
      */
     realPrice(time) {
         return this.price.filtered(`time <= $0`, time).sorted('time', true)[0].price;
     }
-    static isValid(realm, book) {
-        if (!book) {
-            return false;
-        }
-        return realm.objects('Book').filtered(`id == ${book.id}`)[0] !== undefined;
-    }
-    static getBookById(realm, id) {
-        return realm.objects('Book').filtered(`id == ${id}`)[0];
-    }
+
     static getJsonBooks(realm) {
         return realm.objects('Book').map(book => book.json);
     }
 
     get json() {
-        const o = json(Book, this);
+        const o = this.object;
         o.realPrice = this.realPrice(new Date());
         return o;
     }
@@ -50,7 +68,6 @@ Book.schema = {
 
         category: 'Category[]',
 
-        //giá bán
         price: {
             type: 'linkingObjects',
             objectType: 'Price',

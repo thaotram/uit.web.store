@@ -1,6 +1,6 @@
-import toMarkdown from './src/toMarkdown';
-import getDOM from './src/getDOM';
-import getHTML from './src/getHTML';
+import toMarkdown from './toMarkdown';
+import getDOM from './getDOM';
+import getHTML from './getHTML';
 import moment from 'moment';
 
 /**
@@ -8,10 +8,7 @@ import moment from 'moment';
  */
 export default async function(id) {
     const url = `https://tiki.vn/p${id}.html`;
-    console.log(url);
     const body = await getHTML(url);
-    console.log(url, 'done');
-    
     const $ = getDOM(body);
     return {
         book: {
@@ -30,14 +27,9 @@ export default async function(id) {
             manufacturer: get($, 'manufacturer_book_vn'),
             dimensions: get($, 'dimensions'),
             numberOfPage: getNumberOfPage($),
-            publicationDate: moment(
-                get($, 'publication_date'),
-                'MM-YYYY',
-            ).toDate(),
+            publicationDate: moment(get($, 'publication_date'), 'MM-YYYY').toDate(),
             bookCover: get($, 'book_cover'),
-            description: toMarkdown(
-                $('#gioi-thieu').html(),
-            ),
+            description: toMarkdown($('#gioi-thieu').html()),
             image: getImage(body),
 
             category: [],
@@ -59,9 +51,7 @@ function get($, id) {
 }
 
 function getImage(body) {
-    return body
-        .replace(/[^]+"large_url":"([^"]+)"[^]+/g, '$1')
-        .replace(/\\/g, '');
+    return body.replace(/[^]+"large_url":"([^"]+)"[^]+/g, '$1').replace(/\\/g, '');
 }
 
 function getNumberOfPage($) {

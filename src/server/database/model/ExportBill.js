@@ -1,25 +1,45 @@
-class ExportBill {
-    static getNextId(realm) {
-        const items = realm.objects('ExportBill');
-        return items.length == 0 ? 1 : items.max('id') + 1;
+import { Cart, Employee } from '../database';
+import Model from '../utils/Model';
+class ExportBill extends Model {
+    /**
+     * @param {Realm} realm
+     * @param {Cart} cart
+     * @param {Employee} employee
+     */
+    static async create(realm, cart, employee) {
+        return new Promise((resolve, reject) => {
+            if (!Cart.isValid(realm, cart) || !Employee.isValid(realm, employee)) {
+                reject(`Cart or Employee doesn't exist`);
+                return;
+            }
+            if (
+                realm.objects('ExportBill').filtered(`cart.id == ${cart.id}`)[0] !==
+                undefined
+            ) {
+                reject(`ExportBill is exist`);
+                return;
+            }
+            realm.write(() => {
+                resolve(
+                    realm.create(
+                        'ExportBill',
+                        {
+                            id: ExportBill.getNextId(realm),
+                            employee: employee,
+                            cart: cart,
+                            create: new Date(),
+                        },
+                        true,
+                    ),
+                );
+            });
+        });
     }
-    static isValid(realm, exportBill) {
-        if (!exportBill) {
-            return false;
-        }
-        return (
-            realm
-                .objects('ExportBill')
-                .filtered(`id == ${exportBill.id}`)[0] !==
-            undefined
-        );
-    }
+
     get total() {
         let money = 0;
         this.cart.cartDetail.forEach(detail => {
-            money +=
-                detail.book.realPrice(this.create) *
-                detail.amount;
+            money += detail.book.realPrice(this.create) * detail.amount;
         });
         return money;
     }

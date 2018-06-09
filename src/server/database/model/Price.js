@@ -1,20 +1,6 @@
-class Price {
-    static getNextId(realm) {
-        const items = realm.objects('Price');
-        return items.length == 0 ? 1 : items.max('id') + 1;
-    }
-    static isValid(realm, price) {
-        if (!price) {
-            return false;
-        }
-        return (
-            realm
-                .objects('Price')
-                .filtered(`id == ${price.id}`)[0] !==
-            undefined
-        );
-    }
-}
+import Model from '../utils/Model';
+
+class Price extends Model {}
 
 Price.schema = {
     name: 'Price',

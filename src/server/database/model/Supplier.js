@@ -1,26 +1,7 @@
-import {
-    isNameValid,
-    isAddressValid,
-    isPhoneValid,
-} from '../business/Utils';
+import { isNameValid, isAddressValid, isPhoneValid } from '../utils/Validation';
+import Model from '../utils/Model';
 
-class Supplier {
-    static getNextId(realm) {
-        const items = realm.objects('Supplier');
-        return items.length == 0 ? 1 : items.max('id') + 1;
-    }
-    static isValid(realm, supplier) {
-        if (!supplier) {
-            return false;
-        }
-        console.log(supplier);
-        return (
-            realm
-                .objects('Supplier')
-                .filtered(`id == ${supplier.id}`)[0] !==
-            undefined
-        );
-    }
+class Supplier extends Model {
     static isRawValid(supplier) {
         if (
             !isNameValid(supplier.name) ||
@@ -30,12 +11,39 @@ class Supplier {
             return false;
         return true;
     }
+
+    /**
+     *
+     * @param {Realm} realm
+     * @param {Supplier} rawSupplier
+     */
+    static create(realm, rawSupplier) {
+        return new Promise((resolve, reject) => {
+            if (!Supplier.isRawValid(rawSupplier)) {
+                reject('Information Error');
+                return;
+            }
+            realm.write(() => {
+                resolve(
+                    realm.create(
+                        'Supplier',
+                        {
+                            id: Supplier.getNextId(realm),
+                            name: rawSupplier.name,
+                            address: rawSupplier.address,
+                            phone: rawSupplier.phone,
+                        },
+                        true,
+                    ),
+                );
+            });
+        });
+    }
+
     get loan() {
         let money = 0;
         money += this.paymentCoupons.sum('money');
-        this.importCoupons.forEach(
-            importCoupon => (money -= importCoupon.total),
-        );
+        this.importCoupons.forEach(importCoupon => (money -= importCoupon.total));
         return money;
     }
     /**
@@ -46,23 +54,15 @@ class Supplier {
     async loanTo(end) {
         return new Promise((resolve, reject) => {
             let money = 0;
-            if (
-                typeof end != 'object' ||
-                end.constructor.name !== 'Date'
-            ) {
+            if (typeof end != 'object' || end.constructor.name !== 'Date') {
                 reject(`Date is invalid`);
                 return;
             }
 
-            money += this.paymentCoupons
-                .filtered('create < $0', end)
-                .sum('money');
+            money += this.paymentCoupons.filtered('create < $0', end).sum('money');
             this.importCoupons
                 .filtered('create < $0', end)
-                .forEach(
-                    importCoupon =>
-                        (money -= importCoupon.total),
-                );
+                .forEach(importCoupon => (money -= importCoupon.total));
             resolve(money);
         });
     }
@@ -85,22 +85,11 @@ class Supplier {
                 return;
             }
             money += this.paymentCoupons
-                .filtered(
-                    '$0 < create AND create < $1',
-                    begin,
-                    end,
-                )
+                .filtered('$0 < create AND create < $1', begin, end)
                 .sum('money');
             this.importCoupons
-                .filtered(
-                    '$0 < create AND create < $1',
-                    begin,
-                    end,
-                )
-                .forEach(
-                    importCoupon =>
-                        (money -= importCoupon.total),
-                );
+                .filtered('$0 < create AND create < $1', begin, end)
+                .forEach(importCoupon => (money -= importCoupon.total));
             resolve(money);
         });
     }

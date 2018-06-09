@@ -1,23 +1,8 @@
-class ImportCouponDetail {
-    static getNextId(realm) {
-        const items = realm.objects('ImportCouponDetail');
-        return items.length == 0 ? 1 : items.max('id') + 1;
-    }
-    static isValid(realm, importCouponDetail) {
-        if (!importCouponDetail) {
-            return false;
-        }
-        return (
-            realm
-                .objects('ImportCouponDetail')
-                .filtered(
-                    `id == ${importCouponDetail.id}`,
-                )[0] !== undefined
-        );
-    }
+import Model from '../utils/Model';
+
+class ImportCouponDetail extends Model {
     static isRawValid(importCouponDetails) {
-        if (!Array.isArray(importCouponDetails))
-            return false;
+        if (!Array.isArray(importCouponDetails)) return false;
 
         return importCouponDetails.every(detail => {
             console.log(detail);

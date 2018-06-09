@@ -1,14 +1,31 @@
-import { json } from '../business/Utils';
+import { getUserInfo } from '../utils/Facebook';
+import Model from '../utils/Model';
 
-class User {
-    static isValid(realm, user) {
-        if (!user) {
-            return false;
-        }
-        return realm.objects('User').filtered(`id == ${user.id}`)[0] !== undefined;
+class User extends Model {
+    /**
+     *
+     * @param {Realm} realm
+     * @param {String} accessToken
+     */
+    static async create(realm, accessToken) {
+        return new Promise(async resolve => {
+            const info = await getUserInfo(accessToken);
+            realm.write(() => {
+                resolve(
+                    realm.create(
+                        'User',
+                        {
+                            id: info.id,
+                            name: info.name,
+                            point: 0,
+                        },
+                        true,
+                    ),
+                );
+            });
+        });
     }
 
-    
     get allBills() {
         return this.carts.map(cart => cart.exportBill[0]);
     }

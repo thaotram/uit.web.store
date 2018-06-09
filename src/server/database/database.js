@@ -1,6 +1,7 @@
 import Realm from 'realm';
-import User from './model/User';
+
 import Book from './model/Book';
+import User from './model/User';
 import Cart from './model/Cart';
 import Category from './model/Category';
 import CartDetail from './model/CartDetail';
@@ -15,34 +16,44 @@ import PaymentCoupon from './model/PaymentCoupon';
 import Price from './model/Price';
 import Supplier from './model/Supplier';
 
+export {
+    Book,
+    User,
+    Cart,
+    Category,
+    CartDetail,
+    ImportCouponDetail,
+    OrderCouponDetail,
+    Employee,
+    ExportBill,
+    ImportCoupon,
+    MembershipCard,
+    OrderCoupon,
+    PaymentCoupon,
+    Price,
+    Supplier,
+};
+
 export default async function() {
-    return new Promise((resolve, reject) => {
-        Realm.open({
-            path: 'database/realm.realm',
-            schema: [
-                Book,
-                Cart,
-                Category,
-                CartDetail,
-                ImportCouponDetail,
-                OrderCouponDetail,
-                Employee,
-                ExportBill,
-                ImportCoupon,
-                MembershipCard,
-                OrderCoupon,
-                PaymentCoupon,
-                Price,
-                Supplier,
-                User,
-            ],
-            deleteRealmIfMigrationNeeded: true,
-        })
-            .then(realm => {
-                resolve(realm);
-            })
-            .catch(error => {
-                reject(error);
-            });
+    return await Realm.open({
+        path: 'database/realm.realm',
+        schema: [
+            Book,
+            Cart,
+            Category,
+            CartDetail,
+            ImportCouponDetail,
+            OrderCouponDetail,
+            Employee,
+            ExportBill,
+            ImportCoupon,
+            MembershipCard,
+            OrderCoupon,
+            PaymentCoupon,
+            Price,
+            Supplier,
+            User,
+        ],
+        deleteRealmIfMigrationNeeded: true,
     });
 }
