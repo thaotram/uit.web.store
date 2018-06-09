@@ -11,6 +11,13 @@ class Supplier extends Model {
             return false;
         return true;
     }
+    /**
+     * @param {Realm} realm
+     * @param {String} name
+     */
+    static getByName(realm, name) {
+        return realm.objects('Supplier').filtered(`name LIKE $0`, name)[0];
+    }
 
     /**
      *
@@ -21,6 +28,10 @@ class Supplier extends Model {
         return new Promise((resolve, reject) => {
             if (!Supplier.isRawValid(rawSupplier)) {
                 reject('Information Error');
+                return;
+            }
+            if (Supplier.getByName(realm, rawSupplier.name) !== undefined) {
+                reject('Supplier is exist');
                 return;
             }
             realm.write(() => {
