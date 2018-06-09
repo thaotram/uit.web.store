@@ -51,7 +51,7 @@ class Book extends Model {
 
         total -= this.cartDetails
             .map(cartDetail => (cartDetail.isSold ? cartDetail.amount : 0))
-            .reduce((a, b) => a + b);
+            .reduce((a, b) => a + b, 0);
 
         return total;
     }
