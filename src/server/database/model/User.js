@@ -26,7 +26,7 @@ class User extends Model {
         });
     }
 
-    get allBills() {
+    get bills() {
         return this.carts.map(cart => cart.exportBill[0]);
     }
 }
