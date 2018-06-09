@@ -1,29 +1,24 @@
 {
+    "autoimport.doubleQuotes": false,
     "eslint.enable": true,
-    "eslint.validate": [
-        "javascript",
-        {
-            "language": "html",
-            "autoFix": true
-        },
-        {
-            "language": "vue",
-            "autoFix": true
-        }
-    ],
+    "eslint.validate": ["javascript", {
+        "language": "html",
+        "autoFix": true
+    }, {
+        "language": "vue",
+        "autoFix": true
+    }],
     "files.exclude": {
         "dist": true,
         "**/.vscode": true,
         "**/node_modules": true
     },
     "git.ignoreLimitWarning": true,
+    "javascript.preferences.quoteStyle": "single",
+    "LineCount.excludes": ["**/.vscode/**", "**/node_modules/**", "**/*.svg", "dist", "yarn-error.log", "yarn.lock"],
+    "npm-intellisense.importQuotes": "'",
+    "prettier.singleQuote": true,
     "terminal.integrated.fontSize": 12,
-    "LineCount.excludes": [
-        "**/.vscode/**",
-        "**/node_modules/**",
-        "**/*.svg",
-        "dist",
-        "yarn-error.log",
-        "yarn.lock"
-    ]
+    "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "typescript.preferences.quoteStyle": "single"
 }

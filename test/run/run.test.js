@@ -1,16 +1,16 @@
-import { assert } from 'chai';
-import getDatabase from '../../src/server/database/database';
-import getAllBook from '../../src/server/database/business/Book/getAllBooks';
-import Book from '../../src/server/database/model/Book';
+/* eslint no-unused-vars: 0 */
 
-describe('Đoạn lệnh này chỉ chạy một lần', function() {
+import { assert } from 'chai';
+import database, { Cart, Book } from '../../src/server/database/database';
+import { getRawBook, writeList } from '../../src/server/database/tiki';
+
+describe('♦ Kiểm thử ♦', function() {
     this.timeout(1000000);
 
-    it('Chạy', async function() {
-        const realm = await getDatabase();
-        const books = Book.getJsonBooks(realm);
-        console.log(books);
-
-        assert.isArray(books, 'json trả về phải là một object');
+    it('♦ ♦ ♦ ♦', async () => {
+        const realm = await database();
+        const url = 'https://tiki.vn/nha-sach-tiki/c8322?order=position';
+        await writeList(realm, url);
+        assert.isTrue(true, 'avc');
     });
 });

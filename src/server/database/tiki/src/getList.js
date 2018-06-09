@@ -1,5 +1,5 @@
-import getDOM from './src/getDOM';
-import getHTML from './src/getHTML';
+import getDOM from './getDOM';
+import getHTML from './getHTML';
 
 /**
  *
@@ -10,8 +10,6 @@ export default async function(url) {
     const $ = getDOM(body);
     const data = [];
 
-    $('[data-id]').each((index, element) =>
-        data.push($(element).attr('data-id')),
-    );
+    $('[data-id]').each((index, element) => data.push($(element).attr('data-id')));
     return data;
 }

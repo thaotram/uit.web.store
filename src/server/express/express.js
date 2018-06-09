@@ -4,9 +4,10 @@ import book from './api/book.api';
 /**
  *
  * @param {Express.Application} app
+ * @param {Realm} realm
  */
-export default function(app) {
-    book(app);
+export default function(app, realm) {
+    book(app, realm);
 
     app.get('/', (req, res) => {
         res.sendFile(path.resolve(__dirname, '../../../dist/client/index.html'));

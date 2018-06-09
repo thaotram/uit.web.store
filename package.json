@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "heroku-postbuild": "yarn run build",
-    "lint": "eslint src && eslint test",
-    "lint:fix": "eslint src --fix && eslint test --fix",
+    "lint": "eslint src test",
+    "lint:skip": "eslint --rule \"no-unused-vars: 0\" src test",
+    "lint:fix": "eslint src test --fix",
     "style": "scss --watch style/index.scss:dist/render.css",
     "style-render": "scss --style compressed style/index.scss:dist/render.css",
     "clean": "rimraf database && mkdir database",
@@ -42,7 +43,6 @@
     "node": ">=8.10.0"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "chart.js": "^2.7.2",
     "cheerio": "^1.0.0-rc.2",
@@ -77,6 +77,7 @@
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.3",
     "babel-preset-minify": "^0.5.0-alpha.2e0de171",
+    "bluebird": "^3.5.1",
     "chai": "^4.1.2",
     "chalk": "^2.4.1",
     "cross-env": "^5.1.6",
@@ -88,6 +89,7 @@
     "eslint-plugin-vue": "^4.5.0",
     "express-open-in-editor": "^3.1.1",
     "file-loader": "^1.1.11",
+    "got": "^8.3.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",

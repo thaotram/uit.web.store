@@ -1,18 +1,38 @@
-class MembershipCard {
-    static getNextId(realm) {
-        const items = realm.objects('MembershipCard');
-        return items.length == 0 ? 1 : items.max('id') + 1;
-    }
-    static isValid(realm, card) {
-        if (!card) {
-            return false;
-        }
-        return (
-            realm
-                .objects('MembershipCard')
-                .filtered(`id == ${card.id}`)[0] !==
-            undefined
-        );
+import { User, Employee } from '../database';
+import Model from '../utils/Model';
+// 
+class MembershipCard extends Model {
+    /**
+     * @param {Realm} realm
+     * @param {User} user
+     * @param {Employee} employee
+     */
+    static async create(realm, user, employee) {
+        return new Promise((resolve, reject) => {
+            if (!User.isValid(realm, user) || !Employee.isValid(realm, employee)) {
+                reject(`User or employee doesn't exist`);
+                return;
+            }
+            if (user.billOwns.length === 0) {
+                reject('Dont Create');
+                return;
+            }
+            realm.write(() => {
+                resolve(
+                    realm.create(
+                        'MembershipCard',
+                        {
+                            id: MembershipCard.getNextId(realm),
+                            owner: user,
+                            employee: employee,
+                            create: new Date(),
+                            valid: true,
+                        },
+                        true,
+                    ),
+                );
+            });
+        });
     }
 }
 

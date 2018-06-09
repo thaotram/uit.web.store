@@ -1,34 +1,54 @@
-import {
-    isPaidContentValid,
-    isMoney,
-} from '../business/Utils';
+import { isPaidContentValid, isMoney } from '../utils/Validation';
+import { Supplier, Employee } from '../database';
+import Model from '../utils/Model';
 
-class PaymentCoupon {
-    static getNextId(realm) {
-        const items = realm.objects('PaymentCoupon');
-        return items.length == 0 ? 1 : items.max('id') + 1;
-    }
-    static isValid(realm, paymentCoupon) {
-        if (!paymentCoupon) {
-            return false;
-        }
-        return (
-            realm
-                .objects('PaymentCoupon')
-                .filtered(
-                    `id == ${paymentCoupon.id}`,
-                )[0] !== undefined
-        );
-    }
+class PaymentCoupon extends Model {
     static isRawValid(paymentCoupon) {
         if (
-            !isPaidContentValid(
-                paymentCoupon.paidContent,
-            ) ||
+            !isPaidContentValid(paymentCoupon.paidContent) ||
             !isMoney(paymentCoupon.money)
         )
             return false;
         return true;
+    }
+
+    /**
+     * @param {Realm} realm
+     * @param {Employee} employee
+     * @param {Supplier} supplier
+     * @param {PaymentCoupon} rawPaymentCoupon
+     *
+     */
+    static async create(realm, supplier, employee, rawPaymentCoupon) {
+        return new Promise((resolve, reject) => {
+            if (
+                !Supplier.isValid(realm, supplier) ||
+                !Employee.isValid(realm, employee) ||
+                !PaymentCoupon.isRawValid(rawPaymentCoupon)
+            ) {
+                reject(
+                    `Supplier, Employee or PaymentCoupon
+                 doesn't exist`,
+                );
+                return;
+            }
+            realm.write(() => {
+                resolve(
+                    realm.create(
+                        'PaymentCoupon',
+                        {
+                            id: PaymentCoupon.getNextId(realm),
+                            supplier: supplier,
+                            employee: employee,
+                            paidContent: rawPaymentCoupon.paidContent,
+                            money: rawPaymentCoupon.money,
+                            create: new Date(),
+                        },
+                        true,
+                    ),
+                );
+            });
+        });
     }
 }
 

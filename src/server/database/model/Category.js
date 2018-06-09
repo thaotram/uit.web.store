@@ -1,4 +1,6 @@
-class Category {}
+import Model from '../utils/Model';
+
+class Category extends Model {}
 
 Category.schema = {
     name: 'Category',
