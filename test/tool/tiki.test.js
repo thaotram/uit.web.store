@@ -1,13 +1,12 @@
 import { assert } from 'chai';
-import getBookIds from '../../src/server/database/tool/getBookIds';
-import getRawBook from '../../src/server/database/tool/getRawBook';
+import { getRawBook, getList } from '../../src/server/database/tiki';
 
 describe('Lấy thông tin sách từ Tiki', function() {
     this.timeout(1000000);
 
     it('Lấy danh mục sách', async function() {
         const url = 'https://tiki.vn/nha-sach-tiki/c8322';
-        const data = await getBookIds(url);
+        const data = await getList(url);
 
         assert.isArray(data, `Phải trả về một mảng`);
         assert.isTrue(
