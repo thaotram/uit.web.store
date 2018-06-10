@@ -10,6 +10,9 @@ export default async function(id) {
     const url = `https://tiki.vn/p${id}.html`;
     const body = await getHTML(url);
     const $ = getDOM(body);
+
+    let publicationMoment = moment(get($, 'publication_date'), 'MM-YYYY');
+    if (!publicationMoment.isValid()) publicationMoment = moment();
     return {
         book: {
             id: parseInt(id),
@@ -27,7 +30,7 @@ export default async function(id) {
             manufacturer: get($, 'manufacturer_book_vn'),
             dimensions: get($, 'dimensions'),
             numberOfPage: getNumberOfPage($),
-            publicationDate: moment(get($, 'publication_date'), 'MM-YYYY').toDate(),
+            publicationDate: publicationMoment.toDate(),
             bookCover: get($, 'book_cover'),
             description: toMarkdown($('#gioi-thieu').html()),
             image: getImage(body),

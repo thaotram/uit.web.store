@@ -5,11 +5,11 @@ import getRawBook from './getRawBook';
 import readline from 'readline';
 
 export default async function(realm, url) {
-    const bookIds = (await getList(url)).slice(0, 5);
+    const bookIds = await getList(url);
 
     let count = 0;
     log(count, bookIds.length);
-    return Promise.map(
+    return await Promise.map(
         bookIds,
         async bookId => {
             const rawBook = await getRawBook(bookId);
