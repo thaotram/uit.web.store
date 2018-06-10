@@ -19,7 +19,6 @@ export default {
             };
         },
     },
-    // size: this.size || style.get('size', this, 40),
     mounted() {
         const size = getAttribute('size', this, 40);
         style({

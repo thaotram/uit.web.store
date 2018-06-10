@@ -1,5 +1,13 @@
-.noOver {
+.noOverflow {
     overflow: hidden;
+}
+
+.light {
+    .shadow {
+        @extend %light-shadow;
+        box-shadow: 0 0 5px rgba(black, 0.2);
+        background: white;
+    }
 }
 
 .nanobar > .bar {

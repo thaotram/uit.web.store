@@ -19,7 +19,7 @@ export default new Vuex.Store({
     actions: {
         async loadBooks({ commit }) {
             const res = await fetch('/api/books');
-            console.log(res);
+            commit('loadBooks', await res.json());
             return;
         },
     },

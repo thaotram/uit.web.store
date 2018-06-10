@@ -1,30 +1,30 @@
 <template>
     <col- class="book-search-item">
-        <line-/>
         <row- size="40">
-            <image- src="#"/>
-            <col- class="full">
-                <label- :text="book.name" 
-                        size="25"/>
-                        <!-- {{ book.name }} -->
-            </col->
-            <col->
-                <label- text="100.000 đ" 
-                        size="20"/>
-                <label- text="30.000 đ" 
-                        size="20"/>
+            <image- :src="book.image"/>
+            <col- class="full book-content">
+                <p class="book-name full">
+                    {{ book.name }}
+                </p>
+                <row- class="book-bottom">
+                    <span>Còn lại: <span class="amount">{{ book.count }}</span></span>
+                    <space-/>
+                    <span class="book-price">
+                        {{ toMoney(book.realPrice) }}
+                    </span>
+                </row->
             </col->
         </row->
     </col->
 </template>
 <script>
-import style, { getAttribute } from 'style';
-
+import { toMoney } from '../../modules/';
 export default {
     components: {
         ...'row',
         ...'col',
         ...'line',
+        ...'space',
         ...'label',
         ...'image',
     },
@@ -35,22 +35,72 @@ export default {
             validator(book) {
                 if (typeof book.id != 'number') return false;
                 if (typeof book.name != 'string') return false;
-
                 return true;
             },
         },
+    },
+    methods: {
+        toMoney,
     },
 };
 </script>
 <style lang="scss">
 .book-search-item {
+    &,
+    * {
+        cursor: pointer;
+    }
+    overflow: hidden;
+    &:hover {
+        background-color: $light-background-hover;
+    }
+    &:active {
+        background-color: $light-background-active;
+    }
     > .row {
-        padding: 8px;
+        padding: 12px;
+        overflow: hidden;
         > .image {
-            height: 40px;
-            background: black;
-            width: 30px;
+            height: 64px;
+            flex: 0 40px;
+            background-color: black;
+            box-shadow: 0 0 5px rgba(black, 0.3);
+            border: 3px solid white;
+            border-radius: 3px;
         }
+        > .book-content {
+            height: 70px;
+            overflow: hidden;
+            padding: 0 10px;
+            justify-content: center;
+            > p.book-name {
+                display: -webkit-box;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 14px;
+                line-height: 22px;
+                font-weight: bold;
+                color: #333;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+            .book-bottom {
+                font-size: 14px;
+                .amount {
+                    font-weight: bold;
+                    color: #e67e22;
+                }
+                .book-price {
+                    font-weight: bold;
+                    color: #27ae60;
+                }
+            }
+        }
+    }
+    &.list-enter-to,
+    &.list-leave {
+        height: 94px;
+        opacity: 1;
     }
 }
 </style>
