@@ -4,7 +4,7 @@ import { getRawBook, writeList } from '../../src/server/database/tiki';
 import { filename, itname } from '../utils/utils';
 
 describe(filename(__filename), function() {
-    this.timeout(30 * 1000);
+    this.timeout(200 * 1000);
 
     it(itname('.writeList()', 'Lưu thông tin sách từ url'), async function() {
         const realm = await database();
@@ -18,11 +18,9 @@ describe(filename(__filename), function() {
         async function() {
             const id = '580112';
 
-            const callDatabase = database();
-            const callRawBook = getRawBook(id);
+            const realm = await database();
 
-            const realm = await callDatabase;
-            const rawBook = await callRawBook;
+            const rawBook = await getRawBook(id);
 
             const book = await Book.create(realm, rawBook);
 

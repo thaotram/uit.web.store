@@ -9,8 +9,8 @@ describe(filename(__filename), function() {
         itname('PaymentCoupon.create()', 'Tạo phiếu trả tiền nhà cung cấp'),
         async function() {
             const realm = await database();
-            const supplier = realm.objects('Supplier')[2];
-            const employee = realm.objects('Employee')[1];
+            const supplier = realm.objects('Supplier')[0];
+            const employee = realm.objects('Employee')[0];
             const rawPaymentCounpon = {
                 content: 'Trả Tiền nợ tháng 6',
                 money: 100000000,

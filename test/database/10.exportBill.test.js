@@ -7,16 +7,15 @@ describe(filename(__filename), function() {
 
     it(itname('ImportCoupon.create()', 'Tạo hóa đơn xuất'), async function() {
         const realm = await database();
-        const employee = realm.objects('Employee')[1];
+        const employee = realm.objects('Employee')[0];
         const cart = realm.objects('Cart')[0];
 
         try {
             const exportBill = await ExportBill.create(realm, cart, employee);
-
             assert.isTrue(exportBill instanceof ExportBill);
-            assert.equal(exportBill.cart[0].id, cart.id);
+            assert.equal(exportBill.cart    .id, cart.id);
         } catch (e) {
-            assert.equal(e, 'ExportBill is exist');
+            assert.equal(e, 'Hóa đơn xuất đã tồn tại');
         }
     });
 });

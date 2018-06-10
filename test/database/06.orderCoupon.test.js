@@ -9,8 +9,8 @@ describe(filename(__filename), function() {
         itname('OrderCoupon.create()', 'Tạo phiếu đặt hàng nhà cung cấp'),
         async function() {
             const realm = await database();
-            const supplier = realm.objects('Supplier')[2];
-            const employee = realm.objects('Employee')[1];
+            const supplier = realm.objects('Supplier')[0];
+            const employee = realm.objects('Employee')[0];
             const orderCouponDetails = [
                 {
                     bookId: 2181161,
@@ -21,21 +21,17 @@ describe(filename(__filename), function() {
                     amount: 20,
                 },
             ];
-            try {
-                const orderCoupon = await OrderCoupon.create(
-                    realm,
-                    supplier,
-                    employee,
-                    orderCouponDetails,
-                );
-                assert.isTrue(orderCoupon instanceof OrderCoupon);
-                assert.equal(
-                    orderCoupon.orderCouponDetails[0].book.id,
-                    orderCouponDetails[0].bookId,
-                );
-            } catch (e) {
-                assert.equal(e, 'OrderCoupon is exist');
-            }
+            const orderCoupon = await OrderCoupon.create(
+                realm,
+                supplier,
+                employee,
+                orderCouponDetails,
+            );
+            assert.isTrue(orderCoupon instanceof OrderCoupon);
+            assert.equal(
+                orderCoupon.orderCouponDetails[0].book.id,
+                orderCouponDetails[0].bookId,
+            );
         },
     );
 });

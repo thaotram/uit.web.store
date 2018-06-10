@@ -7,7 +7,7 @@ describe(filename(__filename), function() {
 
     it(itname('Employee.create()', 'Thêm nhân viên'), async function() {
         const realm = await database();
-        const user = realm.objects('User')[2];
+        const user = realm.objects('User')[0];
         const rawEmployee = {
             name: 'Ng V C',
             birthdate: new Date(2000, 2, 3),
