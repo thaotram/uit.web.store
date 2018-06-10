@@ -9,12 +9,12 @@ class ImportCoupon extends Model {
      * @param {String} shipper
      * @param {Object[]} importCouponDetails
      */
-    static async aaa(realm, supplier, employee, shipper, importCouponDetails) {
+    static async create(realm, supplier, employee, shipper, importCouponDetails) {
         return new Promise((resolve, reject) => {
             if (
-                !Supplier.isValid(realm, supplier) ||
-                !Employee.isValid(realm, employee) ||
-                !ImportCouponDetail.isRawValid(importCouponDetails)
+                !Supplier.has(realm, supplier) ||
+                !Employee.has(realm, employee) ||
+                !ImportCouponDetail.isRawValid(realm, importCouponDetails)
             ) {
                 reject(`Supplier, Employee or ImportCouponDetail doesn't exist`);
                 return;
@@ -36,7 +36,7 @@ class ImportCoupon extends Model {
                     realm.create('ImportCouponDetail', {
                         id: ImportCouponDetail.getNextId(realm),
                         importCoupon: importCoupon,
-                        book: Book.getById(realm, importCouponDetail.id),
+                        book: Book.getById(realm, importCouponDetail.bookId),
                         amount: importCouponDetail.amount,
                         price: importCouponDetail.price,
                     });
@@ -52,11 +52,6 @@ class ImportCoupon extends Model {
             money += detail.price * detail.amount;
         });
         return money;
-    }
-
-    get count(){
-        let count = 0;
-
     }
 }
 

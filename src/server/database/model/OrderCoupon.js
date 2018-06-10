@@ -15,9 +15,9 @@ class OrderCoupon extends Model {
     static async create(realm, supplier, employee, orderCouponDetails) {
         return new Promise((resolve, reject) => {
             if (
-                !Supplier.isValid(realm, supplier) ||
-                !Employee.isValid(realm, employee) ||
-                !OrderCouponDetail.isRawValid(orderCouponDetails)
+                !Supplier.has(realm, supplier) ||
+                !Employee.has(realm, employee) ||
+                !OrderCouponDetail.isRawValid(realm, orderCouponDetails)
             ) {
                 reject(`Supplier, Employee or OrderCouponDetail doesn't exist`);
                 return;
@@ -37,7 +37,7 @@ class OrderCoupon extends Model {
                     realm.create('OrderCouponDetail', {
                         id: OrderCouponDetail.getNextId(realm),
                         orderCoupon: orderCoupon,
-                        book: Book.getById(realm, orderCouponDetail.id),
+                        book: Book.getById(realm, orderCouponDetail.bookId),
                         amount: orderCouponDetail.amount,
                     });
                 });

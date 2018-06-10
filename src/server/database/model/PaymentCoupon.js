@@ -1,13 +1,10 @@
-import { isPaidContentValid, isMoney } from '../utils/Validation';
+import { isContentValid, isMoney } from '../utils/Validation';
 import { Supplier, Employee } from '../database';
 import Model from '../utils/Model';
 
 class PaymentCoupon extends Model {
     static isRawValid(paymentCoupon) {
-        if (
-            !isPaidContentValid(paymentCoupon.paidContent) ||
-            !isMoney(paymentCoupon.money)
-        )
+        if (!isContentValid(paymentCoupon.content) || !isMoney(paymentCoupon.money))
             return false;
         return true;
     }
@@ -22,8 +19,8 @@ class PaymentCoupon extends Model {
     static async create(realm, supplier, employee, rawPaymentCoupon) {
         return new Promise((resolve, reject) => {
             if (
-                !Supplier.isValid(realm, supplier) ||
-                !Employee.isValid(realm, employee) ||
+                !Supplier.has(realm, supplier) ||
+                !Employee.has(realm, employee) ||
                 !PaymentCoupon.isRawValid(rawPaymentCoupon)
             ) {
                 reject(
@@ -40,7 +37,7 @@ class PaymentCoupon extends Model {
                             id: PaymentCoupon.getNextId(realm),
                             supplier: supplier,
                             employee: employee,
-                            paidContent: rawPaymentCoupon.paidContent,
+                            content: rawPaymentCoupon.content,
                             money: rawPaymentCoupon.money,
                             create: new Date(),
                         },

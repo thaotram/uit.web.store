@@ -8,7 +8,7 @@ class ExportBill extends Model {
      */
     static async create(realm, cart, employee) {
         return new Promise((resolve, reject) => {
-            if (!Cart.isValid(realm, cart) || !Employee.isValid(realm, employee)) {
+            if (!Cart.has(realm, cart) || !Employee.has(realm, employee)) {
                 reject(`Cart or Employee doesn't exist`);
                 return;
             }

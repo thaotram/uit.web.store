@@ -28,7 +28,7 @@ class Employee extends Model {
      */
     static async create(realm, user, rawEmployee) {
         return new Promise((resolve, reject) => {
-            if (!User.isValid(realm, user)) {
+            if (!User.has(realm, user)) {
                 reject(`User doesn't exist`);
                 return;
             }
