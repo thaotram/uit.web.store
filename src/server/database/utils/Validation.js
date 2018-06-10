@@ -23,9 +23,9 @@ export function isPhoneValid(phone) {
     return true;
 }
 
-export function isPaidContentValid(paidContent) {
-    if (typeof paidContent !== 'string') return false;
-    if (paidContent.length <= 3) return false;
+export function isContentValid(content) {
+    if (typeof content !== 'string') return false;
+    if (content.length <= 3) return false;
     return true;
 }
 
