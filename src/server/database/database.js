@@ -34,8 +34,8 @@ export {
     Supplier,
 };
 
-export default async function() {
-    return await Realm.open({
+export default function() {
+    return Realm.open({
         path: 'database/realm.realm',
         schema: [
             Book,

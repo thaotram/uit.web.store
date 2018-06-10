@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 import { Book, CartDetail, User } from '../database';
 import Model from '../utils/Model';
 
@@ -8,35 +9,26 @@ class Cart extends Model {
      * @param {CartDetail} cartDetails
      */
     static async create(realm, user, cartDetails) {
-        return new Promise((resolve, reject) => {
-            if (
-                !(user === null || User.isValid(realm, user)) ||
-                !CartDetail.isRawValid(cartDetails)
-            ) {
-                reject(`User or CartDetail doesn't exist`);
-                return;
-            }
-            realm.write(() => {
-                const cart = realm.create(
-                    'Cart',
-                    {
-                        id: Cart.getNextId(realm),
-                        owner: user,
-                        create: new Date(),
-                    },
-                    true,
-                );
-                cartDetails.forEach(cartDetail => {
-                    realm.create('CartDetail', {
-                        id: CartDetail.getNextId(realm),
-                        cart: cart,
-                        book: Book.getById(realm, cartDetail.id),
-                        amount: cartDetail.amount,
-                    });
-                });
-                resolve(cart);
+        if (
+            !(user === null || User.has(realm, user)) ||
+            !CartDetail.isRawValid(cartDetails)
+        ) {
+            throw `User or CartDetail doesn't exist`;
+        }
+        const cart = await Cart.write(realm, true, {
+            id: Cart.getNextId(realm),
+            owner: user,
+            create: new Date(),
+        });
+        await Promise.map(cartDetails, async cartDetail => {
+            await CartDetail.write(realm, false, {
+                id: CartDetail.getNextId(realm),
+                cart: cart,
+                book: Book.getById(realm, cartDetail.id),
+                amount: cartDetail.amount,
             });
         });
+        return cart;
     }
 
     get total() {
@@ -47,7 +39,15 @@ class Cart extends Model {
         return money;
     }
 
-    get isSold(){
+    get jsonWithoutUser() {
+        const o = this.object;
+        const exportBill = this.exportBill[0];
+        if (exportBill !== undefined) o.exportBill = exportBill.jsonWithoutCart;
+        o.cartDetails = this.cartDetails.map(cartDetail => cartDetail.json);
+        return o;
+    }
+
+    get isSold() {
         return this.exportBill[0] != null;
     }
 }

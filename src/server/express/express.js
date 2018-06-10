@@ -1,5 +1,6 @@
 import path from 'path';
 import book from './api/book.api';
+import user from './api/user.api';
 
 /**
  *
@@ -8,6 +9,7 @@ import book from './api/book.api';
  */
 export default function(app, realm) {
     book(app, realm);
+    user(app, realm);
 
     app.get('/', (req, res) => {
         res.sendFile(path.resolve(__dirname, '../../../dist/client/index.html'));

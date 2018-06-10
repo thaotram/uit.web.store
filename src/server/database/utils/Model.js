@@ -31,6 +31,24 @@ export default class Model {
         return realm.objects(this.schema.name).filtered('id == $0', id)[0];
     }
 
+    /**
+     *
+     * @param {Realm} realm
+     * @param {Object} data
+     * @param {Boolean} overwrite
+     */
+    static write(realm, overwrite = false, data) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                realm.write(() =>
+                    resolve(realm.create(this.schema.name, data, overwrite)),
+                );
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
     get object() {
         const properties = this.constructor.schema.properties;
         const object = {};

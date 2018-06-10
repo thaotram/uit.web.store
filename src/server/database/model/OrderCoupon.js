@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 import { Book, Employee, OrderCouponDetail, Supplier } from '../database';
 import Model from '../utils/Model';
 
@@ -13,37 +14,28 @@ class OrderCoupon extends Model {
      * @param {Object[]} orderCouponDetails
      */
     static async create(realm, supplier, employee, orderCouponDetails) {
-        return new Promise((resolve, reject) => {
-            if (
-                !Supplier.isValid(realm, supplier) ||
-                !Employee.isValid(realm, employee) ||
-                !OrderCouponDetail.isRawValid(orderCouponDetails)
-            ) {
-                reject(`Supplier, Employee or OrderCouponDetail doesn't exist`);
-                return;
-            }
-            realm.write(() => {
-                const orderCoupon = realm.create(
-                    'OrderCoupon',
-                    {
-                        id: OrderCoupon.getNextId(realm),
-                        supplier: supplier,
-                        employee: employee,
-                        create: new Date(),
-                    },
-                    true,
-                );
-                orderCouponDetails.forEach(orderCouponDetail => {
-                    realm.create('OrderCouponDetail', {
-                        id: OrderCouponDetail.getNextId(realm),
-                        orderCoupon: orderCoupon,
-                        book: Book.getById(realm, orderCouponDetail.id),
-                        amount: orderCouponDetail.amount,
-                    });
-                });
-                resolve(orderCoupon);
+        if (
+            !Supplier.has(realm, supplier) ||
+            !Employee.has(realm, employee) ||
+            !OrderCouponDetail.isRawValid(realm, orderCouponDetails)
+        ) {
+            throw `Supplier, Employee or OrderCouponDetail doesn't exist`;
+        }
+        const orderCoupon = await OrderCoupon.write(realm, true, {
+            id: OrderCoupon.getNextId(realm),
+            supplier: supplier,
+            employee: employee,
+            create: new Date(),
+        });
+        await Promise.map(orderCouponDetails, orderCouponDetail => {
+            OrderCouponDetail.write(realm, false, {
+                id: OrderCouponDetail.getNextId(realm),
+                orderCoupon: orderCoupon,
+                book: Book.getById(realm, orderCouponDetail.bookId),
+                amount: orderCouponDetail.amount,
             });
         });
+        return orderCoupon;
     }
 }
 

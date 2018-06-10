@@ -1,31 +1,38 @@
 import Model from '../utils/Model';
+import { Book } from '../database';
 
 class ImportCouponDetail extends Model {
-    static isRawValid(importCouponDetails) {
+    static isRawValid(realm, importCouponDetails) {
         if (!Array.isArray(importCouponDetails)) return false;
 
         return importCouponDetails.every(detail => {
-            console.log(detail);
-
             if (typeof detail != 'object') return false;
             if (
-                !detail.hasOwnProperty('id') ||
+                !detail.hasOwnProperty('bookId') ||
                 !detail.hasOwnProperty('amount') ||
                 !detail.hasOwnProperty('price')
             ) {
                 return false;
             }
             if (
-                typeof detail.id != 'number' ||
+                typeof detail.bookId != 'number' ||
                 typeof detail.amount != 'number' ||
                 typeof detail.price != 'number'
             ) {
+                return false;
+            }
+            if (Book.getById(realm, detail.bookId) == undefined) {
                 return false;
             }
             if (detail.amount <= 0) return false;
             if (detail.price <= 0) return false;
             return true;
         });
+    }
+    get json() {
+        const o = this.object;
+        o.bookId = this.book.id;
+        return o;
     }
 }
 

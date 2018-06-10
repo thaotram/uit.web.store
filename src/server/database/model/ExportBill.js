@@ -7,32 +7,15 @@ class ExportBill extends Model {
      * @param {Employee} employee
      */
     static async create(realm, cart, employee) {
-        return new Promise((resolve, reject) => {
-            if (!Cart.isValid(realm, cart) || !Employee.isValid(realm, employee)) {
-                reject(`Cart or Employee doesn't exist`);
-                return;
-            }
-            if (
-                realm.objects('ExportBill').filtered(`cart.id == ${cart.id}`)[0] !==
-                undefined
-            ) {
-                reject(`ExportBill is exist`);
-                return;
-            }
-            realm.write(() => {
-                resolve(
-                    realm.create(
-                        'ExportBill',
-                        {
-                            id: ExportBill.getNextId(realm),
-                            employee: employee,
-                            cart: cart,
-                            create: new Date(),
-                        },
-                        true,
-                    ),
-                );
-            });
+        if (!Cart.has(realm, cart)) throw 'Giỏ hàng không tồn tại';
+        if (!Employee.has(realm, employee)) throw 'Nhân viên không tồn tại';
+        if (cart.exportBill[0] !== undefined) throw 'Hóa đơn xuất đã tồn tại';
+
+        return await ExportBill.write(realm, true, {
+            id: ExportBill.getNextId(realm),
+            employee: employee,
+            cart: cart,
+            create: new Date(),
         });
     }
 
@@ -42,6 +25,16 @@ class ExportBill extends Model {
             money += detail.book.realPrice(this.create) * detail.amount;
         });
         return money;
+    }
+
+    get json() {
+        const o = this.object;
+        return o;
+    }
+
+    get jsonWithoutCart() {
+        const o = this.object;
+        return o;
     }
 }
 

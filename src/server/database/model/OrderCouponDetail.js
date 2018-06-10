@@ -1,15 +1,18 @@
 import Model from '../utils/Model';
-
+import { Book } from '../database';
 class OrderCouponDetail extends Model {
-    static isRawValid(cartDetail) {
-        if (!Array.isArray(cartDetail)) return false;
+    static isRawValid(realm, orderCouponDetails) {
+        if (!Array.isArray(orderCouponDetails)) return false;
 
-        return cartDetail.every(detail => {
+        return orderCouponDetails.every(detail => {
             if (typeof detail != 'object') return false;
-            if (!detail.hasOwnProperty('id') || !detail.hasOwnProperty('amount')) {
+            if (!detail.hasOwnProperty('bookId') || !detail.hasOwnProperty('amount')) {
                 return false;
             }
-            if (typeof detail.id != 'number' || typeof detail.amount != 'number') {
+            if (typeof detail.bookId != 'number' || typeof detail.amount != 'number') {
+                return false;
+            }
+            if (Book.getById(realm, detail.bookId) == undefined) {
                 return false;
             }
             if (detail.amount <= 0) return false;

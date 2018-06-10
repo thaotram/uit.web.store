@@ -27,39 +27,25 @@ class Employee extends Model {
      * @param {Employee} rawEmployee
      */
     static async create(realm, user, rawEmployee) {
-        return new Promise((resolve, reject) => {
-            if (!User.isValid(realm, user)) {
-                reject(`User doesn't exist`);
-                return;
-            }
-            if (
-                realm.objects('Employee').filtered(`user.id == ${user.id}`)[0] !==
-                undefined
-            ) {
-                reject(`Employee is exist`);
-                return;
-            }
-            if (!Employee.isRawValid(rawEmployee)) {
-                reject('Information Error');
-                return;
-            }
-            realm.write(() => {
-                resolve(
-                    realm.create(
-                        'Employee',
-                        {
-                            id: Employee.getNextId(realm),
-                            user: user,
-                            name: rawEmployee.name,
-                            birthdate: rawEmployee.birthdate,
-                            address: rawEmployee.address,
-                            phone: rawEmployee.phone,
-                            startDate: new Date(),
-                        },
-                        true,
-                    ),
-                );
-            });
+        if (!User.has(realm, user)) {
+            throw `User doesn't exist`;
+        }
+        if (
+            realm.objects('Employee').filtered(`user.id == ${user.id}`)[0] !== undefined
+        ) {
+            throw `Employee is exist`;
+        }
+        if (!Employee.isRawValid(rawEmployee)) {
+            throw 'Information Error';
+        }
+        return await Employee.write(realm, true, {
+            id: Employee.getNextId(realm),
+            user: user,
+            name: rawEmployee.name,
+            birthdate: rawEmployee.birthdate,
+            address: rawEmployee.address,
+            phone: rawEmployee.phone,
+            startDate: new Date(),
         });
     }
 }

@@ -1,5 +1,6 @@
 import { Book, Employee, ImportCouponDetail, Supplier } from '../database';
 import Model from '../utils/Model';
+import Promise from 'bluebird';
 
 class ImportCoupon extends Model {
     /**
@@ -9,41 +10,34 @@ class ImportCoupon extends Model {
      * @param {String} shipper
      * @param {Object[]} importCouponDetails
      */
-    static async aaa(realm, supplier, employee, shipper, importCouponDetails) {
-        return new Promise((resolve, reject) => {
-            if (
-                !Supplier.isValid(realm, supplier) ||
-                !Employee.isValid(realm, employee) ||
-                !ImportCouponDetail.isRawValid(importCouponDetails)
-            ) {
-                reject(`Supplier, Employee or ImportCouponDetail doesn't exist`);
-                return;
-            }
-            if (typeof shipper !== 'string') return false;
-            realm.write(() => {
-                const importCoupon = realm.create(
-                    'ImportCoupon',
-                    {
-                        id: ImportCoupon.getNextId(realm),
-                        supplier: supplier,
-                        employee: employee,
-                        create: new Date(),
-                        shipper: shipper,
-                    },
-                    true,
-                );
-                importCouponDetails.forEach(importCouponDetail => {
-                    realm.create('ImportCouponDetail', {
-                        id: ImportCouponDetail.getNextId(realm),
-                        importCoupon: importCoupon,
-                        book: Book.getById(realm, importCouponDetail.id),
-                        amount: importCouponDetail.amount,
-                        price: importCouponDetail.price,
-                    });
-                });
-                resolve(importCoupon);
+    static async create(realm, supplier, employee, shipper, importCouponDetails) {
+        if (
+            !Supplier.has(realm, supplier) ||
+            !Employee.has(realm, employee) ||
+            !ImportCouponDetail.isRawValid(realm, importCouponDetails)
+        ) {
+            throw `Supplier, Employee or ImportCouponDetail doesn't exist`;
+        }
+        if (typeof shipper !== 'string') return false;
+
+        const importCoupon = await ImportCoupon.write(realm, true, {
+            id: ImportCoupon.getNextId(realm),
+            supplier: supplier,
+            employee: employee,
+            create: new Date(),
+            shipper: shipper,
+        });
+
+        await Promise.map(importCouponDetails, importCouponDetail => {
+            ImportCouponDetail.write(realm, true, {
+                id: ImportCouponDetail.getNextId(realm),
+                importCoupon: importCoupon,
+                book: Book.getById(realm, importCouponDetail.bookId),
+                amount: importCouponDetail.amount,
+                price: importCouponDetail.price,
             });
         });
+        return importCoupon;
     }
 
     get total() {
@@ -54,9 +48,17 @@ class ImportCoupon extends Model {
         return money;
     }
 
-    get count(){
-        let count = 0;
-
+    get json() {
+        const o = this.object;
+        o.supplierId = this.supplier.id;
+        o.employeeId = this.employee.id;
+        o.importCouponDetails = this.importCouponDetails.map(
+            importCouponDetail => importCouponDetail.json,
+        );
+        return o;
+    }
+    static getJsons(realm) {
+        return realm.objects('ImportCoupon').map(importCoupon => importCoupon.json);
     }
 }
 
