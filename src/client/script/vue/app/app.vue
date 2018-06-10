@@ -1,7 +1,7 @@
 <template>
     <row- id="app">
         <sidebar-/>
-        <col- class="full">
+        <col- class="full noOverflow">
             <header-/>
             <router-view id="view"
                          ref="view"
@@ -26,5 +26,7 @@ export default {
     width: 100%;
     min-width: 350px;
     background: $light-background;
+    transform: translateZ(0);
+    overflow: hidden;
 }
 </style>

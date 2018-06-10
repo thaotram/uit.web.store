@@ -1,103 +1,129 @@
 <template>
     <row- class="point-of-sale light" >
-        <col- class="left full">
+        <col- class="left full noOverflow">
             <row- size="40" 
-                  class="title">
+                  class="title shadow">
                 <space-/>
                 <input- v-model="search" 
                         type="text"
                         icon=""
                         class="search-box"
                         placeholder="Tìm kiếm">
-                    <row- class="dropdown">
-                        <line-/>
-                        <col- class="full">
-                            <row- size="40">
-                                <space-/>
-                            </row->
-                            <col- class="result">
-                                <book-search-item- v-for="book in data.books" 
-                                                   :book="book"
-                                                   :key="book.id"/>
-                                <line- style="height: 2px"/>
-                            </col->
-                        </col->
-                        <line-/>
-                    </row->
+                    <dropdown- :size="40">
+                        <book-search-item- v-for="book in bookResults" 
+                                           :book="book"
+                                           :key="book.id"/>
+                    </dropdown->
                 </input->
                 <button- icon=""/>
             </row->
-            <line-/>
-            <!-- Khoảng trống ở dưới --> 
-            <space-/>
+            <space- :size="15"/>
+            <table-view- :size="size"
+                         class="content full shadow">
+                <template slot="header">
+                    <table-row->
+                        <div>
+                            Mã
+                        </div>
+                        <div>
+                            Tên sản phẩm
+                        </div>
+                        <div>
+                            Số lượng
+                        </div>
+                        <div>
+                            Đơn giá
+                        </div>
+                        <div>
+                            Thành tiền
+                        </div>
+                        <span/>
+                    </table-row->
+                </template>
+                
+                <template slot="content">
+                    <book-sell-item- v-for="book in bookResults"
+                                     :book="book"
+                                     :key="book.id"/>
+                </template>
+               
+            </table-view->
         </col->
-        <!-- <col- class="right">
-        </col-> -->
+        <col- class="right shadow"/>
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { found } from '../../modules/index';
 
 export default {
     components: {
-        ...'col',
-        ...'row',
-        ...'line',
-        ...'button',
-        ...'label',
-        ...'input',
-        ...'space',
         ...'book-search-item',
+        ...'book-sell-item',
+        ...'button',
+        ...'col',
+        ...'dropdown',
+        ...'input',
+        ...'label',
+        ...'line',
+        ...'list',
+        ...'row',
+        ...'space',
+        ...'table-row',
+        ...'table-view',
     },
     data() {
         return {
             search: '',
+            size: [
+                ['0 60px', 'end'],
+                [1, 'start'],
+                ['0 70px', 'start'],
+                ['0 80px', 'end'],
+                ['0 80px', 'end'],
+            ],
         };
     },
     computed: {
         ...mapState(['data']),
-    },
-    watch: {
-        search(value) {
-            console.log(value);
+        bookResults() {
+            return this.data.books.filter(book => found(book.name, this.search));
         },
+    },
+    mounted() {
+        this.loadBooks();
+    },
+    methods: {
+        ...mapActions(['loadBooks']),
     },
 };
 </script>
 <style lang="scss">
-$padding: 15px;
+$padding: 10px;
+
 .point-of-sale {
     padding: $padding;
-    > * {
-        box-shadow: 0 0 5px rgba(black, 0.2);
-        background: white;
-        border-radius: 3px;
-        margin: $padding;
+    > *:not(.space) {
         &.left {
-            overflow: hidden;
+            padding: $padding;
             > .title {
+                border-radius: 3px;
+                overflow: visible;
                 > .input.search-box {
                     min-width: 400px;
-                    > .dropdown {
-                        position: absolute;
-                        width: 100%;
-                    }
-                    .result {
-                        display: none;
-                    }
-                    &.focus {
-                        > .dropdown {
-                            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-                        }
-                        .result {
-                            display: flex;
-                        }
-                    }
                 }
+            }
+            > .content {
+                overflow: hidden;
+                border-radius: 3px;
             }
         }
         &.right {
-            width: 300px;
+            margin: $padding;
+            border-radius: 3px;
+            flex: 0 300px;
+            max-width: 300px;
+            min-width: 300px;
         }
     }
 }
