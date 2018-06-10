@@ -75,8 +75,16 @@ $scrollbar-size: 12px;
 ::-webkit-scrollbar {
     width: $scrollbar-size;
     height: $scrollbar-size;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #23232d;
+    background-color: $scroll-bar-color;
+}
+
+$scrollbar-light: 8px;
+.scrollbar-light {
+    &::-webkit-scrollbar {
+        width: $scrollbar-light;
+    }
 }
