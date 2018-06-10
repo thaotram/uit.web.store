@@ -1,16 +1,11 @@
 import fb from 'fb';
+fb.options({ version: 'v3.0' });
 /**
  * @param {String} accessToken
  */
-export async function getUserInfo(accessToken) {
-    try {
-        return await fb.api('me', {
-            fields: ['id', 'name'],
-            access_token: accessToken,
-        });
-    } catch (e) {
-        return {
-            error: e,
-        };
-    }
+export function getUserInfo(accessToken) {
+    return fb.api('me', {
+        fields: ['id', 'name'],
+        access_token: accessToken,
+    });
 }
