@@ -1,6 +1,6 @@
 import { User, Employee } from '../database';
 import Model from '../utils/Model';
-// 
+//
 class MembershipCard extends Model {
     /**
      * @param {Realm} realm
@@ -8,30 +8,18 @@ class MembershipCard extends Model {
      * @param {Employee} employee
      */
     static async create(realm, user, employee) {
-        return new Promise((resolve, reject) => {
-            if (!User.isValid(realm, user) || !Employee.isValid(realm, employee)) {
-                reject(`User or employee doesn't exist`);
-                return;
-            }
-            if (user.billOwns.length === 0) {
-                reject('Dont Create');
-                return;
-            }
-            realm.write(() => {
-                resolve(
-                    realm.create(
-                        'MembershipCard',
-                        {
-                            id: MembershipCard.getNextId(realm),
-                            owner: user,
-                            employee: employee,
-                            create: new Date(),
-                            valid: true,
-                        },
-                        true,
-                    ),
-                );
-            });
+        if (!User.isValid(realm, user) || !Employee.isValid(realm, employee)) {
+            throw `User or employee doesn't exist`;
+        }
+        if (user.billOwns.length === 0) {
+            throw 'Dont Create';
+        }
+        return await MembershipCard.write(realm, true, {
+            id: MembershipCard.getNextId(realm),
+            owner: user,
+            employee: employee,
+            create: new Date(),
+            valid: true,
         });
     }
 }

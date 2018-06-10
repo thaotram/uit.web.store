@@ -21,6 +21,11 @@ class CartDetail extends Model {
         if (this.cart == null) return false;
         return this.cart.isSold;
     }
+
+    get json() {
+        const o = this.object;
+        return o;
+    }
 }
 
 CartDetail.schema = {

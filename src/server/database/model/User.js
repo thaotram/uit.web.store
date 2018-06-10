@@ -8,40 +8,30 @@ class User extends Model {
      * @param {String} accessToken
      */
     static async getByAccessToken(realm, accessToken) {
-        return new Promise(async (resolve, reject) => {
-            const info = await getUserInfo(accessToken);
-            if (info.error) {
-                reject({ error: `Can't get user info` });
-                return;
-            }
-            console.log(1);
+        const info = await getUserInfo(accessToken);
+        const user = User.getById(realm, Number(info.id));
+        if (user != null) return user;
 
-            const user = User.getById(Number(info.id));
-
-            console.log(1);
-            if (user != null) {
-                resolve(user);
-                return;
-            }
-            realm.write(() => {
-                resolve(
-                    realm.create(
-                        'User',
-                        {
-                            id: Number(info.id),
-                            name: info.name,
-                            point: 0,
-                        },
-                        true,
-                    ),
-                );
-            });
+        return await User.write(realm, false, {
+            id: Number(info.id),
+            name: info.name,
+            point: 0,
         });
     }
 
-    get bills() {
-        return this.carts.map(cart => cart.exportBill[0]);
+    get cartsJson() {
+        return this.carts.map(cart => cart.jsonWithoutUser);
     }
+
+    // get exportBills() {
+    //     return this.carts
+    //         .map(cart => cart.exportBill[0])
+    //         .filter(exportBill => exportBill !== undefined);
+    // }
+
+    // get exportBillsJson() {
+    //     return this.exportBills.map(exportBill => exportBill.json);
+    // }
 }
 
 User.schema = {

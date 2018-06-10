@@ -8,30 +8,30 @@ class Book extends Model {
      * @param {getRawBook} book
      */
     static async create(realm, rawBook) {
-        return new Promise(resolve => {
-            realm.write(() => {
-                const book = realm.create('Book', rawBook.book, true);
-                const lastPrice = realm
-                    .objects('Price')
-                    .filtered(`book.id == ${book.id} SORT (time DESCENDING)`)[0];
-                if (!lastPrice || lastPrice.price !== rawBook.price) {
-                    realm.create('Price', {
-                        id: Price.getNextId(realm),
-                        time: new Date(),
-                        price: rawBook.price,
-                        book: book,
-                    });
-                }
-                resolve(book);
+        const book = await Book.write(realm, true, rawBook.book);
+        const lastPrice = book.realPrice();
+
+        if (!lastPrice || lastPrice.price !== rawBook.price) {
+            Price.write(realm, true, {
+                id: Price.getNextId(realm),
+                time: new Date(),
+                price: rawBook.price,
+                book: book,
             });
-        });
+        }
+        return book;
     }
 
     /**
-     * @param {Date} time
+     * @param {Date?} time
      */
     realPrice(time) {
-        return this.prices.filtered(`time <= $0`, time).sorted('time', true)[0].price;
+        let prices = this.prices;
+        if (typeof time instanceof Date) {
+            prices = prices.filtered(`time <= $0`, time);
+        }
+        prices = prices.sorted('time', true);
+        return prices[0];
     }
 
     static getJsonBooks(realm) {

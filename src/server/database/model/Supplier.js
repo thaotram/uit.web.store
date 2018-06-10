@@ -24,30 +24,18 @@ class Supplier extends Model {
      * @param {Realm} realm
      * @param {Supplier} rawSupplier
      */
-    static create(realm, rawSupplier) {
-        return new Promise((resolve, reject) => {
-            if (!Supplier.isRawValid(rawSupplier)) {
-                reject('Information Error');
-                return;
-            }
-            if (Supplier.getByName(realm, rawSupplier.name) !== undefined) {
-                reject('Supplier is exist');
-                return;
-            }
-            realm.write(() => {
-                resolve(
-                    realm.create(
-                        'Supplier',
-                        {
-                            id: Supplier.getNextId(realm),
-                            name: rawSupplier.name,
-                            address: rawSupplier.address,
-                            phone: rawSupplier.phone,
-                        },
-                        true,
-                    ),
-                );
-            });
+    static async create(realm, rawSupplier) {
+        if (!Supplier.isRawValid(rawSupplier)) {
+            throw 'Information Error';
+        }
+        if (Supplier.getByName(realm, rawSupplier.name) !== undefined) {
+            throw 'Supplier is exist';
+        }
+        return await Supplier.write(realm, true, {
+            id: Supplier.getNextId(realm),
+            name: rawSupplier.name,
+            address: rawSupplier.address,
+            phone: rawSupplier.phone,
         });
     }
 
