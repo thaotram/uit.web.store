@@ -47,6 +47,19 @@ class ImportCoupon extends Model {
         });
         return money;
     }
+
+    get json() {
+        const o = this.object;
+        o.supplierId = this.supplier.id;
+        o.employeeId = this.employee.id;
+        o.importCouponDetails = this.importCouponDetails.map(
+            importCouponDetail => importCouponDetail.json,
+        );
+        return o;
+    }
+    static getJsons(realm) {
+        return realm.objects('ImportCoupon').map(importCoupon => importCoupon.json);
+    }
 }
 
 ImportCoupon.schema = {
