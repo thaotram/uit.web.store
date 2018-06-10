@@ -3,7 +3,8 @@
           :class="{fullSize: gui.fullSideBarSize}"
           size="50"
           class="dark">
-        <button- icon=""
+        <button- icon=""
+                 class="rotate"
                  text="Thu gọn"
                  @click.native="toogleSideBar()"/>
         <line-/>
@@ -74,6 +75,9 @@ export default {
                 min-height: 50px;
                 height: 50px;
             }
+        }
+        .rotate > .icon{
+            transform: rotate(-180deg)
         }
     }
 }
