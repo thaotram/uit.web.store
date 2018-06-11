@@ -16,6 +16,7 @@ export default {
 .list-enter,
 .list-leave-to {
     height: 0;
+    min-height: 0!important;
     opacity: 0;
 }
 .list > * {
