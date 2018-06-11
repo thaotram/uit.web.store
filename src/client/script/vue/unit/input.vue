@@ -149,14 +149,12 @@ export default {
     }
     > input[type='text'],
     > input[type='number'] {
-        font-family: 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
         min-width: 1em;
         width: 100%;
         text-overflow: ellipsis;
     }
 
     > textarea {
-        font-family: 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;
         width: 100%;
         resize: none;
         overflow: hidden;
