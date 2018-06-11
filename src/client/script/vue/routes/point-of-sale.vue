@@ -1,24 +1,24 @@
 <template>
     <row- class="point-of-sale light" >
         <col- class="left full noOverflow">
-            <row- size="40" 
-                  class="title shadow">
+            <row- size="40">
                 <space-/>
                 <input- v-model="search" 
+                        class="shadow search-box"  
                         type="text"
                         icon=""
-                        class="search-box"
                         placeholder="Tìm kiếm">
                     <dropdown- :size="40">
-                        <book-search-item- v-for="book in bookResults" 
+                        <book-search-item- v-for="book in searchResults" 
                                            :book="book"
-                                           :key="book.id"/>
+                                           :key="book.id"
+                                           @click.native="pos_add_book(book)"/>
                     </dropdown->
                 </input->
-                <button- icon=""/>
             </row->
             <space- :size="15"/>
             <table-view- :size="size"
+                         :has-content="pos.books.length !== 0"
                          class="content full shadow">
                 <template slot="header">
                     <table-row->
@@ -37,23 +37,30 @@
                         <div>
                             Thành tiền
                         </div>
+                        <button- class="noPadding" 
+                                 icon=""/>
                         <span/>
                     </table-row->
                 </template>
-                
                 <template slot="content">
-                    <book-sell-item- v-for="book in bookResults"
-                                     :book="book"
-                                     :key="book.id"/>
+                    <book-sell-item- v-for="sell in pos.books"
+                                     :sell="sell"
+                                     :key="sell.book.id"/>
                 </template>
-               
+                <template slot="placeholder">
+                    <row- size="70">
+                        <button- icon=""
+                                 class="noHover"
+                                 text="Không có mặt hàng nào."/>
+                    </row->
+                </template>
             </table-view->
         </col->
-        <col- class="right shadow"/>
+        <col- class="right noOverflow"/>
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import { found } from '../../modules/index';
 
 export default {
@@ -76,25 +83,31 @@ export default {
         return {
             search: '',
             size: [
-                ['0 60px', 'end'],
+                ['0 80px', 'end'],
                 [1, 'start'],
-                ['0 70px', 'start'],
+                ['0 70px', 'center'],
                 ['0 80px', 'end'],
                 ['0 80px', 'end'],
+                ['0 45px', 'end'],
             ],
         };
     },
     computed: {
-        ...mapState(['data']),
-        bookResults() {
-            return this.data.books.filter(book => found(book.name, this.search));
+        ...mapState(['data', 'pos']),
+        searchResults() {
+            return this.data.books.filter(
+                book =>
+                    found(book.name, this.search) &&
+                    !this.pos.books.some(saleBook => saleBook.book === book),
+            );
         },
     },
     mounted() {
-        this.loadBooks();
+        this.pos_load_books();
     },
     methods: {
-        ...mapActions(['loadBooks']),
+        ...mapActions(['pos_load_books']),
+        ...mapMutations(['pos_add_book']),
     },
 };
 </script>
@@ -106,10 +119,9 @@ $padding: 10px;
     > *:not(.space) {
         &.left {
             padding: $padding;
-            > .title {
-                border-radius: 3px;
-                overflow: visible;
+            > .row {
                 > .input.search-box {
+                    border-radius: 3px;
                     min-width: 400px;
                 }
             }

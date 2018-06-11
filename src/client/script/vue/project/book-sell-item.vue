@@ -1,23 +1,27 @@
 <template>
-    <table-row->
+    <table-row- class="book-sell-item">
         <div>
-            {{ book.id }}
+            {{ sell.book.id }}
         </div>
         <div>
-            {{ book.name }}
+            {{ sell.book.name }}
         </div>
-        <input v-model="count"
+        <input v-model="sell.amount"
                type="number"
                min="0">
         <div>
-            {{ toMoney(book.realPrice) }}
+            {{ toMoney(sell.book.realPrice) }}
         </div>
         <div>
-            {{ toMoney(count * book.realPrice) }}
+            {{ toMoney(sell.amount * sell.book.realPrice) }}
         </div>
+        <button- class="noPadding"
+                 icon=""
+                 @click.native="pos_remove_book(sell)"/>
     </table-row->
 </template>
 <script>
+import { mapMutations } from 'vuex';
 import { toMoney } from '../../modules/index';
 export default {
     components: {
@@ -25,24 +29,31 @@ export default {
         ...'button',
     },
     props: {
-        book: {
+        sell: {
             type: Object,
             required: true,
-            validator(book) {
-                if (typeof book.id != 'number') return false;
-                if (typeof book.name != 'string') return false;
+            validator(sell) {
+                if (typeof sell.amount !== 'number') return false;
                 return true;
             },
         },
     },
-    data() {
-        return {
-            count: 0,
-        };
-    },
     mounted() {},
     methods: {
         toMoney,
+        ...mapMutations(['pos_remove_book']),
     },
 };
 </script>
+<style lang="scss">
+.book-sell-item {
+    input {
+        font-size: 17px;
+    }
+    &.list-enter-to,
+    &.list-leave {
+        height: 45px;
+        opacity: 1;
+    }
+}
+</style>
