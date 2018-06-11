@@ -1,13 +1,15 @@
-$text-font: 'Noto Sans', sans-serif;
+$text-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// $text-font: 'Noto Sans', sans-serif;
 
 $color: #38f;
 
-$scroll-bar-color: rgba(0, 0, 0, 0.2);
+$scrollbar-thumb: rgba(black, 0.2);
+$scrollbar-color: rgba(black, 0.15);
 
 $light-text-color: #1e1e1e;
-$light-line-color: #ccc;
+$light-line-color: rgba(black, 0.15);
 $light-background: #ddd;
-$light-background-hover: rgba(black, 0.15);
+$light-background-hover: rgba(black, 0.1);
 $light-background-active: rgba(black, 0.3);
 
 $dark-text-color: #738699;
