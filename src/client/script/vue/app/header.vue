@@ -46,7 +46,7 @@ export default {
         > .label {
             padding-right: 0;
             > .text {
-                font-size: 15px;
+                font-size: 17px;
             }
         }
         > .image {

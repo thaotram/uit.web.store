@@ -73,7 +73,9 @@ export default {
 </script>
 <style lang="scss">
 .button {
-    cursor: pointer;
+    &:not(.noHover) {
+        cursor: pointer;
+    }
     display: flex;
     position: relative;
     white-space: nowrap;
@@ -90,7 +92,6 @@ export default {
         &.text {
             text-align: left;
             text-overflow: ellipsis;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             width: auto;
         }
     }

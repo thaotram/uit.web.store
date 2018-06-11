@@ -6,7 +6,7 @@
         <button- icon=""
                  class="rotate"
                  text="Thu gọn"
-                 @click.native="toogleSideBar()"/>
+                 @click.native="gui_toogleSideBar()"/>
         <line-/>
         <button- :active="$route.name == `home`"
                  icon=""
@@ -38,7 +38,7 @@ export default {
         ...mapState(['user', 'gui']),
     },
     methods: {
-        ...mapMutations(['toogleSideBar']),
+        ...mapMutations(['gui_toogleSideBar']),
     },
 };
 </script>
@@ -76,8 +76,8 @@ export default {
                 height: 50px;
             }
         }
-        .rotate > .icon{
-            transform: rotate(-180deg)
+        .rotate > .icon {
+            transform: rotate(-180deg);
         }
     }
 }

@@ -31,7 +31,8 @@ class Book extends Model {
             prices = prices.filtered(`time <= $0`, time);
         }
         prices = prices.sorted('time', true);
-        return prices[0];
+        const price = prices[0];
+        return price == null ? 0 : price.price;
     }
 
     static getJsonBooks(realm) {
@@ -40,7 +41,7 @@ class Book extends Model {
 
     get json() {
         const o = this.object;
-        o.realPrice = this.realPrice(new Date());
+        o.realPrice = this.realPrice();
         o.count = this.count;
         return o;
     }

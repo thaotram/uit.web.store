@@ -22,7 +22,7 @@ export default {
             },
         ],
     },
-    point_of_sale: {
-        list: [],
+    pos: {
+        books: [],
     },
 };

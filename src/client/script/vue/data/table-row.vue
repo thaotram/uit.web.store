@@ -1,5 +1,6 @@
 <template>
-    <div class="table-row row">
+    <div class="table-row row" 
+         size="45">
         <slot/>
     </div>
 </template>
@@ -21,16 +22,14 @@ export default {
 </script>
 <style lang="scss">
 .table-row {
-    font-size: 14px;
+    font-size: 17px;
     display: flex;
     > div {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         box-sizing: content-box;
-        height: 25px;
         line-height: 25px;
-        padding: 10px 15px;
     }
     > input {
         outline: 0;
@@ -40,7 +39,9 @@ export default {
 
     > div,
     input {
-        padding: 10px 15px;
+        &:not(.noPadding) {
+            padding: 10px 15px;
+        }
         &:not(:first-child) {
             border-left-style: solid;
             border-left-color: $light-line-color;

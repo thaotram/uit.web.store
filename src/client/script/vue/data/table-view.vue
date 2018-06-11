@@ -8,6 +8,12 @@
         <list- class="content">
             <slot name="content"/>
         </list->
+        <div :class="{visible: !hasContent}"
+             class="placeholder col full">
+            <div class="row">
+                <slot name="placeholder"/>
+            </div>
+        </div>
     </div>    
 </template>
 <script>
@@ -24,6 +30,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        hasContent: {
+            type: Boolean,
+            default: true,
+        },
     },
     updated() {
         initialize({
@@ -38,14 +48,31 @@ export default {
 .table-view {
     display: flex;
     flex-direction: column;
+    font-weight: 400;
     > .header {
-        background: #e6e6e6;
-        >.table-row > span {
+        background: rgba(black, 0.1);
+        > .table-row > span {
             width: 12px;
         }
     }
     > .content {
         overflow-y: scroll;
+    }
+    > .placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 0;
+        &.visible {
+            opacity: 0.8;
+        }
+        > .row {
+            display: flex;
+            justify-content: center;
+            > * {
+                border: 2px dashed rgba(0, 0, 0, 0.5);
+            }
+        }
     }
 }
 </style>

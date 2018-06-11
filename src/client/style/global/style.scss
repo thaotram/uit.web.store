@@ -22,6 +22,15 @@ body {
     word-wrap: break-word;
 }
 
+input {
+    font-family: $text-font;
+    font-weight: 300;
+    line-height: 1.3em;
+    font-weight: 400;
+    color: $light-text-color;
+    background: transparent;
+}
+
 li,
 ol,
 ul {
@@ -75,11 +84,11 @@ $scrollbar-size: 12px;
 ::-webkit-scrollbar {
     width: $scrollbar-size;
     height: $scrollbar-size;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: $scrollbar-color;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: $scroll-bar-color;
+    background-color: $scrollbar-thumb;
 }
 
 $scrollbar-light: 8px;

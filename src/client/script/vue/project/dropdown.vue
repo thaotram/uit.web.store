@@ -1,16 +1,14 @@
 <template>
     <row- class="dropdown">
-        <line-/>
         <col- class="full">
             <row- size="40">
                 <space-/>
             </row->
             <list- class="result scrollbar-light">
                 <slot/>
-                <line- :key="-1"/>0
+                <line- :key="-1"/>
             </list->
         </col->
-        <line-/>
     </row->
 </template>
 <script>
@@ -35,24 +33,26 @@ export default {
 <style lang="scss">
 .input {
     > .dropdown {
-        background: white;
         position: absolute;
+        border-radius: 3px;
         width: 100%;
         > .col {
             overflow: hidden;
             > .result {
+                z-index: 1;
+                background: white;
                 display: none;
                 max-height: 300px;
                 overflow-x: hidden;
             }
         }
     }
-    &.focus {
-        > .dropdown {
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-            > .col > .result {
-                display: block;
-            }
+    &.focus > .dropdown,
+    > .dropdown:hover {
+        // background: red;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        > .col > .result {
+            display: block;
         }
     }
 }
