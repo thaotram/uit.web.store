@@ -2,7 +2,7 @@ export default {
     /**
      * @param {typeof import("../state").default} state
      */
-    toogleSideBar(state) {
+    gui_toogleSideBar(state) {
         state.gui.fullSideBarSize ^= true;
     },
 };
