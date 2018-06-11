@@ -12,7 +12,7 @@
                         <book-search-item- v-for="book in searchResults" 
                                            :book="book"
                                            :key="book.id"
-                                           @click.native="pos_add_book(book)"/>
+                                           @click.native="pos_add_sell_book(book)"/>
                     </dropdown->
                 </input->
             </row->
@@ -38,7 +38,8 @@
                             Thành tiền
                         </div>
                         <button- class="noPadding" 
-                                 icon=""/>
+                                 icon=""
+                                 @click.native="pos_remove_sell_books"/>
                         <span/>
                     </table-row->
                 </template>
@@ -107,7 +108,7 @@ export default {
     },
     methods: {
         ...mapActions(['pos_load_books']),
-        ...mapMutations(['pos_add_book']),
+        ...mapMutations(['pos_add_sell_book', 'pos_remove_sell_books']),
     },
 };
 </script>

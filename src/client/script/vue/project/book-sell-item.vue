@@ -17,7 +17,7 @@
         </div>
         <button- class="noPadding"
                  icon=""
-                 @click.native="pos_remove_book(sell)"/>
+                 @click.native="pos_remove_sell_book(sell)"/>
     </table-row->
 </template>
 <script>
@@ -41,7 +41,7 @@ export default {
     mounted() {},
     methods: {
         toMoney,
-        ...mapMutations(['pos_remove_book']),
+        ...mapMutations(['pos_remove_sell_book']),
     },
 };
 </script>
