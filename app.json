@@ -9,9 +9,6 @@
       "quantity": 1
     }
   },
-  "engines": {
-    "node": "8.9.4"
-  },
   "addons": [
 
   ],

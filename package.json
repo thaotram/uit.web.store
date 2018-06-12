@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/phamhongphuc/uit.web.store#readme",
   "engines": {
-    "node": ">=8.10.0"
+    "node": "8.10.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
