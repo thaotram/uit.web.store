@@ -7,22 +7,9 @@ export default {
         fullSideBarSize: true,
     },
     data: {
-        books: [
-            {
-                id: 1,
-                name: 'Người cùng khổ',
-            },
-            {
-                id: 2,
-                name: 'Những con chim mỏi mòn chờ chết',
-            },
-            {
-                id: 3,
-                name: 'Con hâm dưới gầm cầu',
-            },
-        ],
+        books: [],
     },
     pos: {
-        books: [],
+        sells: [],
     },
 };

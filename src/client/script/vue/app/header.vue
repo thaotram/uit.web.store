@@ -34,13 +34,12 @@ export default {
 <style lang="scss">
 #header {
     z-index: 1;
-    @extend %dark-shadow;
     > .line {
         margin: 10px 0;
     }
     > .account {
         &:hover {
-            @extend %dark-hover;
+            background-color: $dark-background-hover;
         }
 
         > .label {
