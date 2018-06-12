@@ -8,7 +8,7 @@
                 </p>
                 <row- class="book-bottom">
                     <span>Còn lại: <span class="orange-text bold">{{ book.count }}</span></span>
-                    <space-/>
+                    <s-/>
                     <span class="green-text bold">
                         {{ toMoney(book.realPrice) }}
                     </span>
@@ -24,7 +24,7 @@ export default {
         ...'row',
         ...'col',
         ...'line',
-        ...'space',
+        ...'s',
         ...'label',
         ...'image',
     },

@@ -1,0 +1,63 @@
+.report {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.2em;
+    p.text {
+        &.big {
+            font-size: 16px;
+        }
+        &.center {
+            text-align: center;
+        }
+    }
+
+    > .bill {
+        padding: 20px;
+        > .header {
+            > .logo {
+                height: 40px;
+                width: 40px;
+                background-image: url(https://i.imgur.com/viPYuGv.png);
+                background-size: cover;
+            }
+            > .logo-text {
+                line-height: 40px;
+                font-size: 18px;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+        }
+        > .line {
+            height: 2px;
+            background: #555;
+        }
+
+        > .bill-table {
+            padding: 0 8px;
+            > .line {
+                margin: 1px 0;
+                height: 0.8px;
+                background: #666;
+            }
+            > .row {
+                line-height: 15px;
+                padding: 1px 0;
+                > div:nth-child(1) {
+                    flex: 1;
+                }
+                > div:nth-child(2) {
+                    flex: 0 20px;
+                    text-align: right;
+                }
+                > div:nth-child(3) {
+                    flex: 0 70px;
+                    text-align: right;
+                }
+                > div:nth-child(4) {
+                    flex: 0 70px;
+                    text-align: right;
+                }
+            }
+        }
+    }
+}

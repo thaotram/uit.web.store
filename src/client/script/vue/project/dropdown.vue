@@ -2,7 +2,7 @@
     <row- class="dropdown">
         <col- class="full">
             <row- size="40">
-                <space-/>
+                <s-/>
             </row->
             <list- class="result scrollbar-light">
                 <slot/>
@@ -18,7 +18,7 @@ export default {
         ...'row',
         ...'line',
         ...'list',
-        ...'space',
+        ...'s',
     },
     props: {
         size: {
