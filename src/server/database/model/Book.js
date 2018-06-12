@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import { Price } from '../database';
 import Model from '../utils/Model';
 

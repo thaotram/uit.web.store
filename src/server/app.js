@@ -1,3 +1,5 @@
+import '@babel/polyfill';
+
 import chalk from 'chalk';
 import Express from 'express';
 import http from 'http';
@@ -24,9 +26,7 @@ const io = SocketIO(server);
     server.listen(port, () => {
         log(
             {
-                Environment:
-                    process.env.NODE_ENV ||
-                    'Unknown Environment',
+                Environment: process.env.NODE_ENV || 'Unknown Environment',
                 Url: `http://127.0.0.1:${port}`,
                 Time: `${moment().format('hh:mm:ss')}`,
             },
