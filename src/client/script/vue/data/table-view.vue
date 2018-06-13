@@ -70,7 +70,7 @@ export default {
             display: flex;
             justify-content: center;
             > * {
-                border: 2px dashed rgba(0, 0, 0, 0.5);
+                border: 1px dashed rgba(0, 0, 0, 0.5);
             }
         }
     }

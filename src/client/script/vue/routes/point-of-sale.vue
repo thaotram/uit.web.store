@@ -2,9 +2,9 @@
     <row- class="point-of-sale light" >
         <col- class="left full noOverflow">
             <row- size="40">
-                <space-/>
+                <s-/>
                 <input- v-model="search" 
-                        class="shadow search-box"  
+                        class="shadow search-box round"  
                         type="text"
                         icon=""
                         placeholder="Tìm kiếm">
@@ -12,14 +12,14 @@
                         <book-search-item- v-for="book in searchResults" 
                                            :book="book"
                                            :key="book.id"
-                                           @click.native="pos_add_book(book)"/>
+                                           @click.native="pos_add_sell_book(book)"/>
                     </dropdown->
                 </input->
             </row->
-            <space- :size="15"/>
+            <s- :s="20"/>
             <table-view- :size="size"
-                         :has-content="pos.books.length !== 0"
-                         class="content full shadow">
+                         :has-content="pos.sells.length !== 0"
+                         class="content full shadow round">
                 <template slot="header">
                     <table-row->
                         <div>
@@ -38,12 +38,13 @@
                             Thành tiền
                         </div>
                         <button- class="noPadding" 
-                                 icon=""/>
+                                 icon=""
+                                 @click.native="pos_remove_sell_books"/>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <book-sell-item- v-for="sell in pos.books"
+                    <book-sell-item- v-for="sell in pos.sells"
                                      :sell="sell"
                                      :key="sell.book.id"/>
                 </template>
@@ -56,12 +57,82 @@
                 </template>
             </table-view->
         </col->
-        <col- class="right noOverflow"/>
+        <col- class="right noOverflow">
+            <div ref="print" 
+                 class="shadow round full report">
+                <col- class="bill">
+                    <row- class="header"
+                          size="40">
+                        <div class="logo"/>
+                        <s- :s="10"/>
+                        <span class="logo-text d full">{{ app.name }}</span>
+                    </row->
+                    <s- :s="5"/>
+                    <p class="text">- Địa chỉ: {{ app.address }}</p>
+                    <p class="text">- Điện thoại: {{ app.phone }}</p>
+                    <s- :s="8"/>
+                    <div class="line"/>
+                    <s- :s="8"/>
+                    <p class="text bold big center">HÓA ĐƠN BÁN LẺ</p>
+                    <s- :s="8"/>
+                    <div class="bill-table">
+                        <p class="text">Thời gian: {{ time }}</p>
+                        <s- :s="8"/>
+                        <div class="row">
+                            <div>Tên sách</div>
+                            <div>SL</div>
+                            <div>Đơn giá</div>
+                            <div>Thành tiền</div>
+                        </div>
+                        <div class="line"/>
+                        <div v-for="sell in pos.sells" 
+                             :key="sell.book.id"
+                             class="row">
+                            <div>{{ sell.book.name }}</div>
+                            <div>{{ sell.amount }}</div>
+                            <div>{{ toMoney(sell.book.realPrice) }}</div>
+                            <div>{{ toMoney(sell.amount * sell.book.realPrice) }}</div>
+                        </div>
+                        <div class="line"/>
+                        <div class="row bold">
+                            <div>Tổng cộng</div>
+                            <div>{{ amount }}</div>
+                            <div/>
+                            <div>{{ toMoney(total) }}</div>
+                        </div>
+                    </div>
+                    <s- :s="20"/>
+                    <p class="text bold center">Xin cảm ơn quý khách!</p>
+                </col->
+            </div>
+            <s- :s="20"/>
+            <col- class="shadow round pay">
+                <row- class="pay-row bold">
+                    <span>Số lượng:</span>
+                    <s-/>
+                    <span class="green-text">{{ amount }}</span>
+                </row->
+                <row- class="pay-row bold">
+                    <span>Khách phải trả:</span>
+                    <s-/>
+                    <span class="green-text">{{ toMoney(total) }}</span>
+                </row->
+                <s- :s="10"/>
+                <row- size="40">
+                    <button- class="full green round"
+                             icon="" 
+                             text="Thanh toán và in hóa đơn"
+                             @click.native="print"/>
+                </row->
+            </col->
+        </col->
     </row->
 </template>
 <script>
+import moment from 'moment';
 import { mapState, mapActions, mapMutations } from 'vuex';
-import { found } from '../../modules/index';
+import { toMoney, found } from '../../modules/index';
+import { setInterval } from 'timers';
 
 export default {
     components: {
@@ -75,13 +146,14 @@ export default {
         ...'line',
         ...'list',
         ...'row',
-        ...'space',
+        ...'s',
         ...'table-row',
         ...'table-view',
     },
     data() {
         return {
             search: '',
+            time: '',
             size: [
                 ['0 80px', 'end'],
                 [1, 'start'],
@@ -93,21 +165,38 @@ export default {
         };
     },
     computed: {
-        ...mapState(['data', 'pos']),
+        ...mapState(['app', 'data', 'pos']),
         searchResults() {
             return this.data.books.filter(
                 book =>
                     found(book.name, this.search) &&
-                    !this.pos.books.some(saleBook => saleBook.book === book),
+                    !this.pos.sells.some(saleBook => saleBook.book.id === book.id),
             );
+        },
+        total() {
+            return this.pos.sells
+                .map(book => book.book.realPrice * book.amount)
+                .reduce((a, b) => a + b, 0);
+        },
+        amount() {
+            return this.pos.sells
+                .map(book => book.amount)
+                .reduce((a, b) => Number(a) + Number(b), 0);
         },
     },
     mounted() {
         this.pos_load_books();
+        setInterval(()=>{
+            this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
+        }, 100);
     },
     methods: {
+        print() {
+            this.$root.$refs.app.print(this.$refs.print);
+        },
+        toMoney,
         ...mapActions(['pos_load_books']),
-        ...mapMutations(['pos_add_book']),
+        ...mapMutations(['pos_add_sell_book', 'pos_remove_sell_books']),
     },
 };
 </script>
@@ -119,23 +208,27 @@ $padding: 10px;
     > *:not(.space) {
         &.left {
             padding: $padding;
-            > .row {
-                > .input.search-box {
-                    border-radius: 3px;
-                    min-width: 400px;
-                }
-            }
-            > .content {
-                overflow: hidden;
-                border-radius: 3px;
+            > .row > .input.search-box {
+                min-width: 400px;
             }
         }
         &.right {
-            margin: $padding;
-            border-radius: 3px;
+            padding: $padding;
             flex: 0 300px;
             max-width: 300px;
             min-width: 300px;
+            > .bill {
+                padding: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            > .pay {
+                padding: 15px;
+                > .pay-row {
+                    font-size: 15px;
+                    padding: 3px 2px;
+                }
+            }
         }
     }
 }

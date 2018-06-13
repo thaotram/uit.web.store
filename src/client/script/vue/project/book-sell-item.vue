@@ -6,8 +6,9 @@
         <div>
             {{ sell.book.name }}
         </div>
-        <input v-model="sell.amount"
+        <input v-model.number="sell.amount"
                type="number"
+               refs="amount"
                min="0">
         <div>
             {{ toMoney(sell.book.realPrice) }}
@@ -17,7 +18,7 @@
         </div>
         <button- class="noPadding"
                  icon=""
-                 @click.native="pos_remove_book(sell)"/>
+                 @click.native="pos_remove_sell_book(sell)"/>
     </table-row->
 </template>
 <script>
@@ -32,16 +33,16 @@ export default {
         sell: {
             type: Object,
             required: true,
-            validator(sell) {
-                if (typeof sell.amount !== 'number') return false;
-                return true;
-            },
+            // validator(sell) {
+            //     // if (typeof sell.amount !== 'number') return false;
+            //     return true;
+            // },
         },
     },
     mounted() {},
     methods: {
         toMoney,
-        ...mapMutations(['pos_remove_book']),
+        ...mapMutations(['pos_remove_sell_book']),
     },
 };
 </script>

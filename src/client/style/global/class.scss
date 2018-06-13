@@ -3,14 +3,29 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+.round {
+    border-radius: 3px;
+}
+
+.green-text {
+    color: #27ae60;
+}
+
+.orange-text {
+    color: #e67e22;
+}
+
+.bold {
+    font-weight: bold;
+}
+
 .noOverflow {
     overflow: hidden;
 }
 
 .light {
     .shadow {
-        @extend %light-shadow;
-        box-shadow: 0 0 5px rgba(black, 0.2);
+        box-shadow: 0 0 5px $light-shadow-color;
         background: white;
     }
 }
@@ -22,6 +37,6 @@ input::-webkit-inner-spin-button {
 }
 
 .dark {
-    @extend %dark-shadow;
+    box-shadow: 0 0 10px $dark-shadow-color;
     background: $dark-background;
 }

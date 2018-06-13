@@ -99,25 +99,34 @@ export default {
 
 .dark .button {
     color: $dark-text-color;
-    &:not(.noHover) {
-        &:hover,
-        &:active,
-        &.active,
-        &.active:hover {
-            @extend %dark-hover;
-        }
+}
+.light .button {
+    color: $light-text-color;
+}
+
+.button:not(.noHover) {
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+    &:active,
+    &.active,
+    &.active:hover {
+        background-color: rgba(0, 0, 0, 0.5);
     }
 }
 
-.light .button {
-    color: $light-text-color;
-    &:not(.noHover) {
-        &:hover,
-        &:active,
-        &.active,
-        &.active:hover {
-            @extend %light-hover;
-        }
+.button.green {
+    $green: #2ecc71;
+    background: $green;
+    box-shadow: 0 0 5px rgba($green, 0.7);
+    color: white;
+    &:hover,
+    &.active,
+    &.active:hover {
+        background-color: darken($green, 10%) !important;
+    }
+    &:active {
+        background-color: darken($green, 20%) !important;
     }
 }
 </style>

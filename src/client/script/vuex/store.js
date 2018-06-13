@@ -20,8 +20,5 @@ export default new Vuex.Store({
             const res = await fetch('/api/books');
             commit('pos_load_books', await res.json());
         },
-        addBoook({ commit }, book) {
-            commit('pos_add_book', book);
-        },
     },
 });
