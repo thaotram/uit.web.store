@@ -2,7 +2,9 @@
     <row- class="admin admin-book light" >
         <col- class="left full noOverflow">
             <row- size="40">
-                <s-/>
+                <checkbox- class="shadow round" 
+                           text="Còn hàng"/>
+                <s- :s="20"/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
                         type="text"
@@ -74,6 +76,7 @@ import { setInterval } from 'timers';
 export default {
     components: {
         ...'button',
+        ...'checkbox',
         ...'col',
         ...'dropdown',
         ...'input',

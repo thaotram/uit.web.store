@@ -33,9 +33,6 @@ export default {
             default: '',
         },
     },
-    data() {
-        return {};
-    },
     updated() {
         this.updateStyle();
     },
@@ -73,12 +70,12 @@ export default {
 </script>
 <style lang="scss">
 .button {
-    &:not(.noHover) {
-        cursor: pointer;
-    }
     display: flex;
     position: relative;
     white-space: nowrap;
+    &:not(.noHover) {
+        cursor: pointer;
+    }
     > span {
         align-self: center;
         box-sizing: border-box;
