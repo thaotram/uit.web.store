@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import { Book, CartDetail, User } from '../database';
 import Model from '../utils/Model';
+import moment from 'moment';
 
 class Cart extends Model {
     /**
@@ -29,6 +30,33 @@ class Cart extends Model {
             });
         });
         return cart;
+    }
+    /**
+     * @param {Realm} realm
+     * @param {import('../interface').QueryCart} query
+     */
+    static async queryCart(realm, query) {
+        let carts = realm.objects('Cart');
+        if (query.hasOwnProperty('userId')) {
+            carts = carts.filtered('owner.id == $0', query.userId);
+        }
+        if (query.hasOwnProperty('isBill')) {
+            if (query.isBill == true) {
+                carts = carts.filtered('exportBill != null');
+            } else {
+                carts = carts.filtered('exportBill == null');
+            }
+        }
+        if (query.hasOwnProperty('begin')) {
+            const begin = moment(query.begin, 'DD-MM-YYYY');
+            carts = carts.filtered('create >= $0', begin);
+        }
+        if (query.hasOwnProperty('end')) {
+            const end = moment(query.end, 'DD-MM-YYYY');
+            carts = carts.filtered('create <= $0', end);
+        }
+
+        return carts;
     }
 
     get total() {

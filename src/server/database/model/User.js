@@ -45,10 +45,6 @@ class User extends Model {
 
         return null;
     }
-
-    get cartsJson() {
-        return this.carts.map(cart => cart.jsonWithoutUser);
-    }
 }
 
 User.schema = {
