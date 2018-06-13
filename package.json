@@ -41,7 +41,7 @@
     },
     "homepage": "https://github.com/phamhongphuc/uit.web.store#readme",
     "engines": {
-        "node": "8.10.0"
+        "node": "8.11.2"
     },
     "dependencies": {
         "@babel/polyfill": "^7.0.0-beta.49",
