@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 // import VuexPersistedstate from 'vuex-persistedstate';
 import state from './state';
 
+import admin from './mutations/admin';
 import gui from './mutations/gui';
 import pos from './mutations/pos';
 
@@ -12,13 +13,14 @@ export default new Vuex.Store({
     state,
     // plugins: [VuexPersistedstate()],
     mutations: {
+        ...admin,
         ...gui,
         ...pos,
     },
     actions: {
-        async pos_load_books({ commit }) {
+        async load_books({ commit }) {
             const res = await fetch('/api/books');
-            commit('pos_load_books', await res.json());
+            commit('load_books', await res.json());
         },
     },
 });

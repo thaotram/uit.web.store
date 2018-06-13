@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin-pos light" >
+    <row- class="admin admin-pos light" >
         <col- class="left full noOverflow">
             <row- size="40">
                 <s-/>
@@ -45,7 +45,6 @@
                 </template>
                 <template slot="content">
                     <table-row- v-for="sell in pos.sells"
-                                :sell="sell"
                                 :key="sell.book.id"
                                 class="book-item">
                         <div>
@@ -205,7 +204,7 @@ export default {
         },
     },
     mounted() {
-        this.pos_load_books();
+        this.load_books();
         setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
@@ -215,25 +214,20 @@ export default {
             this.$root.$refs.app.print(this.$refs.print);
         },
         toMoney,
-        ...mapActions(['pos_load_books']),
+        ...mapActions(['load_books']),
         ...mapMutations(['pos_add_sell_book', 'pos_remove_sell_books']),
     },
 };
 </script>
 <style lang="scss">
-$padding: 10px;
-
 .admin-pos {
-    padding: $padding;
     > *:not(.space) {
         &.left {
-            padding: $padding;
             > .row > .input.search-box {
                 min-width: 400px;
             }
         }
         &.right {
-            padding: $padding;
             flex: 0 300px;
             max-width: 300px;
             min-width: 300px;

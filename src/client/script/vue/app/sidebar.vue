@@ -14,10 +14,9 @@
                  @click.native="$router.push(`/`)"/>
         <line-/>
         <button- :active="$route.name == `admin-book`"
-                 icon=""
+                 icon=""
                  text="Sách"
                  @click.native="$router.push(`/admin/book`)"/>
-        <line-/>
         <button- :active="$route.name == `admin-pos`"
                  icon=""
                  text="Bán hàng"
