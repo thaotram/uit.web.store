@@ -21,7 +21,7 @@ const io = SocketIO(server);
 
     config(app, io);
     express(app, realm);
-    socket(io);
+    socket(io, realm);
 
     server.listen(port, () => {
         log(
