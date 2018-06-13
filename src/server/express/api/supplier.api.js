@@ -1,11 +1,14 @@
 import { Supplier } from '../../database/database';
-
 /**
  *
  * @param {Express.Application} app
  * @param {Realm} realm
  */
 export default function(app, realm) {
+    app.post('/api/supplier/create', async (req, res) => {
+        const supplier = await Supplier.create(realm, req.body);
+        res.send(supplier.json);
+    });
     app.get('/api/supplier/:id', (req, res) => {
         const id = Number(req.params.id);
         const supplier = Supplier.getById(realm, id);

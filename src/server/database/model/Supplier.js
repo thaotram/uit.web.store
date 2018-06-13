@@ -23,6 +23,7 @@ class Supplier extends Model {
      *
      * @param {Realm} realm
      * @param {Supplier} rawSupplier
+     * @returns {Promise<Supplier>}
      */
     static async create(realm, rawSupplier) {
         if (!Supplier.isRawValid(rawSupplier)) {
