@@ -1,5 +1,5 @@
 <template>
-    <row- class="point-of-sale light" >
+    <row- class="admin admin-pos light" >
         <col- class="left full noOverflow">
             <row- size="40">
                 <s-/>
@@ -44,9 +44,29 @@
                     </table-row->
                 </template>
                 <template slot="content">
-                    <book-sell-item- v-for="sell in pos.sells"
-                                     :sell="sell"
-                                     :key="sell.book.id"/>
+                    <table-row- v-for="sell in pos.sells"
+                                :key="sell.book.id"
+                                class="book-item">
+                        <div>
+                            {{ sell.book.id }}
+                        </div>
+                        <div>
+                            {{ sell.book.name }}
+                        </div>
+                        <input v-model.number="sell.amount"
+                               type="number"
+                               refs="amount"
+                               min="0">
+                        <div>
+                            {{ toMoney(sell.book.realPrice) }}
+                        </div>
+                        <div>
+                            {{ toMoney(sell.amount * sell.book.realPrice) }}
+                        </div>
+                        <button- class="noPadding"
+                                 icon=""
+                                 @click.native="pos_remove_sell_book(sell)"/>
+                    </table-row->
                 </template>
                 <template slot="placeholder">
                     <row- size="70">
@@ -132,12 +152,10 @@
 import moment from 'moment';
 import { mapState, mapActions, mapMutations } from 'vuex';
 import { toMoney, found } from '../../modules/index';
-import { setInterval } from 'timers';
 
 export default {
     components: {
         ...'book-search-item',
-        ...'book-sell-item',
         ...'button',
         ...'col',
         ...'dropdown',
@@ -185,8 +203,8 @@ export default {
         },
     },
     mounted() {
-        this.pos_load_books();
-        setInterval(()=>{
+        this.load_books();
+        setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
     },
@@ -195,32 +213,26 @@ export default {
             this.$root.$refs.app.print(this.$refs.print);
         },
         toMoney,
-        ...mapActions(['pos_load_books']),
+        ...mapActions(['load_books']),
         ...mapMutations(['pos_add_sell_book', 'pos_remove_sell_books']),
     },
 };
 </script>
 <style lang="scss">
-$padding: 10px;
-
-.point-of-sale {
-    padding: $padding;
+.admin-pos {
     > *:not(.space) {
         &.left {
-            padding: $padding;
             > .row > .input.search-box {
                 min-width: 400px;
             }
         }
         &.right {
-            padding: $padding;
             flex: 0 300px;
             max-width: 300px;
             min-width: 300px;
-            > .bill {
-                padding: 10px;
-                width: 100%;
-                box-sizing: border-box;
+            > .report {
+                overflow-x: hidden;
+                overflow-y: auto;
             }
             > .pay {
                 padding: 15px;

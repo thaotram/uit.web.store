@@ -16,9 +16,14 @@ const router = new VueRouter({
             component: () => import('home'),
         },
         {
-            path: '/admin/point-of-sale',
-            name: 'point-of-sale',
-            component: () => import('point-of-sale'),
+            path: '/admin/pos',
+            name: 'admin-pos',
+            component: () => import('admin-pos'),
+        },
+        {
+            path: '/admin/book',
+            name: 'admin-book',
+            component: () => import('admin-book'),
         },
     ],
 });

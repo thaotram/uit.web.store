@@ -15,20 +15,17 @@ class User extends Model {
     static async get(realm, req, sessionID) {
         const userFromSession = getUserFromSessionID(req, sessionID);
         if (userFromSession instanceof User) {
-            console.log('Người dùng đã đăng nhập từ session');
             return userFromSession;
         }
 
         const info = await getUserInfo(req.token);
         if (info === null) {
-            console.log('Người dùng đăng nhập sai');
             return null;
         }
 
         const userFromDatabase = User.getById(realm, Number(info.id));
         if (userFromDatabase !== undefined) {
             setUserSession(userFromDatabase, sessionID);
-            console.log('Lấy thông tin người dùng từ database');
             return userFromDatabase;
         }
 
@@ -39,7 +36,6 @@ class User extends Model {
         });
         if (userFromToken) {
             setUserSession(userFromToken, sessionID);
-            console.log('Tạo mới người dùng');
             return userFromToken;
         }
 

@@ -33,9 +33,6 @@ export default {
             default: '',
         },
     },
-    data() {
-        return {};
-    },
     updated() {
         this.updateStyle();
     },
@@ -73,12 +70,12 @@ export default {
 </script>
 <style lang="scss">
 .button {
-    &:not(.noHover) {
-        cursor: pointer;
-    }
     display: flex;
     position: relative;
     white-space: nowrap;
+    &:not(.noHover) {
+        cursor: pointer;
+    }
     > span {
         align-self: center;
         box-sizing: border-box;
@@ -116,7 +113,7 @@ export default {
 }
 
 .button.green {
-    $green: #2ecc71;
+    $green: #27ae60;
     background: $green;
     box-shadow: 0 0 5px rgba($green, 0.7);
     color: white;

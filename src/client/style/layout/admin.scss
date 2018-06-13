@@ -1,0 +1,8 @@
+$padding: 10px;
+
+.admin {
+    padding: $padding;
+    > *:not(.space) {
+        padding: $padding;
+    }
+}

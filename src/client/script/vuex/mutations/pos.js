@@ -2,13 +2,6 @@ export default {
     /**
      * @param {typeof import("../state").default} state
      */
-    pos_load_books(state, books) {
-        state.data.books = books;
-    },
-
-    /**
-     * @param {typeof import("../state").default} state
-     */
     pos_add_sell_book(state, book) {
         if (state.pos.sells.some(self => self.book === book)) return;
         state.pos.sells.push({
