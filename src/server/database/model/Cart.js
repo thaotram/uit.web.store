@@ -31,9 +31,11 @@ class Cart extends Model {
         });
         return cart;
     }
+    
     /**
      * @param {Realm} realm
      * @param {import('../interface').QueryCart} query
+     * @return {Promise<Realm.Results<Cart>>}
      */
     static async queryCart(realm, query) {
         let carts = realm.objects('Cart');
@@ -55,7 +57,6 @@ class Cart extends Model {
             const end = moment(query.end, 'DD-MM-YYYY');
             carts = carts.filtered('create <= $0', end);
         }
-
         return carts;
     }
 
@@ -67,8 +68,9 @@ class Cart extends Model {
         return money;
     }
 
-    get jsonWithoutUser() {
+    get json() {
         const o = this.object;
+        o.userId = this.owner.id;
         const exportBill = this.exportBill[0];
         if (exportBill !== undefined) o.exportBill = exportBill.jsonWithoutCart;
         o.cartDetails = this.cartDetails.map(cartDetail => cartDetail.json);
