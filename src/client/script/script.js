@@ -14,12 +14,16 @@ new Vue({
     async beforeCreate() {
         await facebookInitialize();
         const FB = modules.FB;
+
         FB.getLoginStatus(response => {
             if (response.status === 'connected') {
-                console.log(response);
+                const req = {
+                    token: response.authResponse.accessToken,
+                    id: Number(response.authResponse.userID),
+                };
+                socket.emit('login', req, res => console.log(res));
             }
         });
-        socket;
     },
     render: h => h(app, { ref: 'app' }),
 });
