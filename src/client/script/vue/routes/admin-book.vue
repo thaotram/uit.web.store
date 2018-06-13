@@ -1,5 +1,5 @@
 <template>
-    <row- class="point-of-sale light" >
+    <row- class="admin-pos light" >
         <col- class="left full noOverflow">
             <row- size="40">
                 <s-/>
@@ -44,9 +44,30 @@
                     </table-row->
                 </template>
                 <template slot="content">
-                    <book-sell-item- v-for="sell in pos.sells"
-                                     :sell="sell"
-                                     :key="sell.book.id"/>
+                    <table-row- v-for="sell in pos.sells"
+                                :sell="sell"
+                                :key="sell.book.id"
+                                class="book-item">
+                        <div>
+                            {{ sell.book.id }}
+                        </div>
+                        <div>
+                            {{ sell.book.name }}
+                        </div>
+                        <input v-model.number="sell.amount"
+                               type="number"
+                               refs="amount"
+                               min="0">
+                        <div>
+                            {{ toMoney(sell.book.realPrice) }}
+                        </div>
+                        <div>
+                            {{ toMoney(sell.amount * sell.book.realPrice) }}
+                        </div>
+                        <button- class="noPadding"
+                                 icon=""
+                                 @click.native="pos_remove_sell_book(sell)"/>
+                    </table-row->
                 </template>
                 <template slot="placeholder">
                     <row- size="70">
@@ -137,7 +158,6 @@ import { setInterval } from 'timers';
 export default {
     components: {
         ...'book-search-item',
-        ...'book-sell-item',
         ...'button',
         ...'col',
         ...'dropdown',
@@ -203,7 +223,7 @@ export default {
 <style lang="scss">
 $padding: 10px;
 
-.point-of-sale {
+.admin-pos {
     padding: $padding;
     > *:not(.space) {
         &.left {

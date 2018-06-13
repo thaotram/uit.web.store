@@ -13,10 +13,15 @@
                  text="Trang chủ" 
                  @click.native="$router.push(`/`)"/>
         <line-/>
-        <button- :active="$route.name == `point-of-sale`"
+        <button- :active="$route.name == `admin-book`"
+                 icon=""
+                 text="Sách"
+                 @click.native="$router.push(`/admin/book`)"/>
+        <line-/>
+        <button- :active="$route.name == `admin-pos`"
                  icon=""
                  text="Bán hàng"
-                 @click.native="$router.push(`/admin/point-of-sale`)"/>
+                 @click.native="$router.push(`/admin/pos`)"/>
         <div class="full"/>
         <button- icon="" 
                  text="Đăng xuất"/>
