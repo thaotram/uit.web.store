@@ -780,6 +780,10 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
+"@types/fb@^0.0.23":
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/@types/fb/-/fb-0.0.23.tgz#8f601579bf41f968c5a55150f578e66dac37dcf8"
+
 "@types/node@*":
   version "10.3.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.2.tgz#3840ec6c12556fdda6e0e6d036df853101d732a4"
