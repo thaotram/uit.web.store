@@ -1,6 +1,7 @@
 import { Book, Employee, ImportCouponDetail, Supplier } from '../database';
 import Model from '../utils/Model';
 import Promise from 'bluebird';
+import moment from 'moment';
 
 class ImportCoupon extends Model {
     /**
@@ -38,6 +39,31 @@ class ImportCoupon extends Model {
             });
         });
         return importCoupon;
+    }
+
+    /**
+     *
+     * @param {Realm} realm
+     * @param {import('../interface').queryImportCoupon} query
+     * @return {Promise<Realm.Results<ImportCoupon>>}
+     */
+    static async queryImportCoupon(realm, query) {
+        let importCoupons = realm.objects('ImportCoupon');
+        if (query.hasOwnProperty('employeeId')) {
+            importCoupons = importCoupons.filtered('employee.id == $0', query.employeeId);
+        }
+        if (query.hasOwnProperty('supplierId')) {
+            importCoupons = importCoupons.filtered('supplier.id == $0', query.supplierId);
+        }
+        if (query.hasOwnProperty('begin')) {
+            const begin = moment(query.begin, 'DD-MM-YYYY');
+            importCoupons = importCoupons.filtered('create >= $0', begin);
+        }
+        if (query.hasOwnProperty('end')) {
+            const end = moment(query.end, 'DD-MM-YYYY');
+            importCoupons = importCoupons.filtered('create >= $0', end);
+        }
+        return importCoupons;
     }
 
     get total() {

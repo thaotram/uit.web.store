@@ -19,6 +19,12 @@ class OrderCouponDetail extends Model {
             return true;
         });
     }
+
+    get json(){
+        const o = this.object;
+        o.bookId = this.book.id;
+        return o;
+    }
 }
 
 OrderCouponDetail.schema = {

@@ -20,7 +20,7 @@ const io = SocketIO(server);
     const realm = await database();
 
     config(app, io);
-    express(app, realm);
+    express(wrap(app), realm);
     socket(io, realm);
 
     server.listen(port, () => {
@@ -38,3 +38,21 @@ const io = SocketIO(server);
         );
     });
 })();
+
+/**
+ * @param {Express.Application} app
+ * @returns {Express.Application}
+ */
+function wrap(app) {
+    const _ = handler => async (req, res) => {
+        try {
+            await handler(req, res);
+        } catch (e) {
+            res.status(400).json({ error: String(e) });
+        }
+    };
+    return {
+        get: (name, handler) => app.get(name, _(handler)),
+        post: (name, handler) => app.post(name, _(handler)),
+    };
+}

@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import { Book, Employee, OrderCouponDetail, Supplier } from '../database';
 import Model from '../utils/Model';
+import moment from 'moment';
 
 class OrderCoupon extends Model {
     /**
@@ -36,6 +37,41 @@ class OrderCoupon extends Model {
             });
         });
         return orderCoupon;
+    }
+
+    /**
+     *
+     * @param {Realm} realm
+     * @param {import('../interface').QueryOrderCoupon} query
+     * @return {Promise<Realm.Results<OrderCoupon>>}
+     */
+    static async queryOrderCoupon(realm, query) {
+        let orderCoupons = realm.objects('OrderCoupon');
+        if (query.hasOwnProperty('employeeId')) {
+            orderCoupons = orderCoupons.filtered('employee.id == $0', query.employeeId);
+        }
+        if (query.hasOwnProperty('supplierId')) {
+            orderCoupons = orderCoupons.filtered('supplier.id == $0', query.supplierId);
+        }
+        if (query.hasOwnProperty('begin')) {
+            const begin = moment(query.begin, 'DD-MM-YYYY');
+            orderCoupons = orderCoupons.filtered('create >= $0', begin);
+        }
+        if (query.hasOwnProperty('end')) {
+            const end = moment(query.end, 'DD-MM-YYYY');
+            orderCoupons = orderCoupons.filtered('create >= $0', end);
+        }
+        return orderCoupons;
+    }
+
+    get json() {
+        const o = this.object;
+        o.supplierId = this.supplier.id;
+        o.employeeId = this.employee.id;
+        o.orderCouponDetails = this.orderCouponDetails.map(
+            orderCouponDetail => orderCouponDetail.json,
+        );
+        return o;
     }
 }
 
