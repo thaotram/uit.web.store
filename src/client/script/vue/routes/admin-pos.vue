@@ -152,7 +152,6 @@
 import moment from 'moment';
 import { mapState, mapActions, mapMutations } from 'vuex';
 import { toMoney, found } from '../../modules/index';
-import { setInterval } from 'timers';
 
 export default {
     components: {

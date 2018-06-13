@@ -2,7 +2,8 @@
     <row- class="admin admin-book light" >
         <col- class="left full noOverflow">
             <row- size="40">
-                <checkbox- class="shadow round" 
+                <checkbox- v-model="residual" 
+                           class="shadow round"
                            text="Còn hàng"/>
                 <s- :s="20"/>
                 <input- v-model="search" 
@@ -68,10 +69,8 @@
     </row->
 </template>
 <script>
-import moment from 'moment';
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { toMoney, found } from '../../modules/index';
-import { setInterval } from 'timers';
 
 export default {
     components: {
@@ -91,6 +90,7 @@ export default {
     data() {
         return {
             search: '',
+            residual: true,
             time: '',
             size: [
                 ['0 80px', 'end'],
@@ -104,7 +104,10 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         bookResults() {
-            return this.data.books.filter(book => found(book.name, this.search));
+            return this.data.books.filter(
+                book =>
+                    found(book.name, this.search) && (!this.residual || book.count > 0),
+            );
         },
     },
     mounted() {

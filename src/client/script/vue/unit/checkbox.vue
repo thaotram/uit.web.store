@@ -19,7 +19,7 @@ export default {
         ...'row',
     },
     props: {
-        active: {
+        value: {
             type: Boolean,
             default: false,
         },
@@ -27,11 +27,6 @@ export default {
             type: String,
             default: '',
         },
-    },
-    data() {
-        return {
-            value: false,
-        };
     },
     updated() {
         this.updateStyle();
@@ -60,8 +55,7 @@ export default {
             });
         },
         updateValue() {
-            this.value ^= true;
-            this.$emit('input', this.value);
+            this.$emit('input', !this.value);
         },
     },
 };
