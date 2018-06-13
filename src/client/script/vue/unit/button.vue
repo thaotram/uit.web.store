@@ -113,7 +113,7 @@ export default {
 }
 
 .button.green {
-    $green: #2ecc71;
+    $green: #27ae60;
     background: $green;
     box-shadow: 0 0 5px rgba($green, 0.7);
     color: white;

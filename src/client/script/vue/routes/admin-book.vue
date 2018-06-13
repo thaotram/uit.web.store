@@ -2,9 +2,12 @@
     <row- class="admin admin-book light" >
         <col- class="left full noOverflow">
             <row- size="40">
-                <checkbox- v-model="residual" 
-                           class="shadow round"
-                           text="Còn hàng"/>
+                <button- text="Thêm sách mới" 
+                         class="shadow round green"/>
+                <s-/>
+                <three-selector- v-model="residual" 
+                                 right="Hết hàng"
+                                 left="Còn hàng"/>
                 <s- :s="20"/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
@@ -28,10 +31,10 @@
                             Số lượng
                         </div>
                         <div>
-                            Đơn giá
+                            Giá bán
                         </div>
                         <div>
-                            Thành tiền
+                            Giá bìa
                         </div>
                         <span/>
                     </table-row->
@@ -50,10 +53,10 @@
                             {{ book.count }}
                         </div>
                         <div>
-                            {{ toMoney(book.coverPrice) }}
+                            {{ toMoney(book.realPrice) }}
                         </div>
                         <div>
-                            {{ toMoney(book.realPrice) }}
+                            {{ toMoney(book.coverPrice) }}
                         </div>
                     </table-row->
                 </template>
@@ -75,7 +78,7 @@ import { toMoney, found } from '../../modules/index';
 export default {
     components: {
         ...'button',
-        ...'checkbox',
+        ...'three-selector',
         ...'col',
         ...'dropdown',
         ...'input',
@@ -90,7 +93,7 @@ export default {
     data() {
         return {
             search: '',
-            residual: true,
+            residual: 0,
             time: '',
             size: [
                 ['0 80px', 'end'],
@@ -106,7 +109,10 @@ export default {
         bookResults() {
             return this.data.books.filter(
                 book =>
-                    found(book.name, this.search) && (!this.residual || book.count > 0),
+                    found(book.name, this.search) &&
+                    ((this.residual === -1 && book.count > 0) ||
+                        (this.residual === 1 && book.count === 0) ||
+                        (this.residual === 0 && true)),
             );
         },
     },
