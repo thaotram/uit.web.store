@@ -19,3 +19,10 @@ export interface QueryOrderCoupon extends Object {
     begin?: string;
     end?: string;
 }
+
+export interface QueryPaymentCoupon extends Object {
+    employeeId?: number;
+    supplierId?: number;
+    begin?: string;
+    end?: string;
+}

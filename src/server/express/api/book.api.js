@@ -7,7 +7,7 @@ import { Book } from '../../database/database';
  */
 export default function(app, realm) {
     app.get('/api/book/:id', (req, res) => {
-        const id = req.params.id;
+        const id = Number(req.params.id);
         const book = Book.getById(realm, id);
         if (!book) {
             res.json({

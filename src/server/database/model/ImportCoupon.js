@@ -44,7 +44,7 @@ class ImportCoupon extends Model {
     /**
      *
      * @param {Realm} realm
-     * @param {import('../interface').QueryCart} query
+     * @param {import('../interface').queryImportCoupon} query
      * @return {Promise<Realm.Results<ImportCoupon>>}
      */
     static async queryImportCoupon(realm, query) {

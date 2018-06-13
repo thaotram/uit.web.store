@@ -92,6 +92,11 @@ class Supplier extends Model {
             resolve(money);
         });
     }
+
+    get json() {
+        const o = this.object;
+        return o;
+    }
 }
 
 Supplier.schema = {

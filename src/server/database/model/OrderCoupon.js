@@ -42,7 +42,7 @@ class OrderCoupon extends Model {
     /**
      *
      * @param {Realm} realm
-     * @param {import('../interface').QueryCart} query
+     * @param {import('../interface').QueryOrderCoupon} query
      * @return {Promise<Realm.Results<OrderCoupon>>}
      */
     static async queryOrderCoupon(realm, query) {
