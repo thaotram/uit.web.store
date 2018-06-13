@@ -186,7 +186,7 @@ export default {
     },
     mounted() {
         this.pos_load_books();
-        setInterval(()=>{
+        setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
     },
@@ -217,10 +217,9 @@ $padding: 10px;
             flex: 0 300px;
             max-width: 300px;
             min-width: 300px;
-            > .bill {
-                padding: 10px;
-                width: 100%;
-                box-sizing: border-box;
+            > .report {
+                overflow-x: hidden;
+                overflow-y: auto;
             }
             > .pay {
                 padding: 15px;
