@@ -6,6 +6,7 @@ import { socket } from './socket/socket';
 import('../style/index.scss');
 
 import modules, { facebookInitialize } from './modules';
+import { mapState, mapActions } from 'vuex';
 
 new Vue({
     el: '#app',
@@ -21,9 +22,18 @@ new Vue({
                     token: response.authResponse.accessToken,
                     id: Number(response.authResponse.userID),
                 };
-                socket.emit('login', req, res => console.log(res));
+                socket.emit('login', req, res => {
+                    console.log('Thông tin đăng nhập ở đây nè!', res);
+                });
             }
         });
+    },
+    mounted() {
+        this.load_books();
+        this.load_employee();
+    },
+    methods: {
+        ...mapActions(['load_books', 'load_employee']),
     },
     render: h => h(app, { ref: 'app' }),
 });

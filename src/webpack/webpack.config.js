@@ -60,6 +60,10 @@ export default {
                 test: /\.json$/,
                 use: 'json-loader',
             },
+            {
+                test: /\.md$/,
+                use: 'raw-loader',
+            },
         ],
     },
     resolve: {

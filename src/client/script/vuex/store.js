@@ -22,5 +22,9 @@ export default new Vuex.Store({
             const res = await fetch('/api/books');
             commit('load_books', await res.json());
         },
+        async load_employee({ commit }) {
+            // const res = await fetch('/api/employees');
+            // commit('load_employee', await res.json());
+        },
     },
 });

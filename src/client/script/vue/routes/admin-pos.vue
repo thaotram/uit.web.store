@@ -1,7 +1,8 @@
 <template>
     <row- class="admin admin-pos light" >
         <col- class="left full noOverflow">
-            <row- size="40">
+            <row- size="40" 
+                  class="title">
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
@@ -19,7 +20,7 @@
             <s- :s="20"/>
             <table-view- :size="size"
                          :has-content="pos.sells.length !== 0"
-                         class="content full shadow round">
+                         class="full shadow round">
                 <template slot="header">
                     <table-row->
                         <div>
@@ -46,7 +47,7 @@
                 <template slot="content">
                     <table-row- v-for="sell in pos.sells"
                                 :key="sell.book.id"
-                                class="book-item">
+                                class="table-small-item">
                         <div>
                             {{ sell.book.id }}
                         </div>
@@ -150,7 +151,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { toMoney, found } from '../../modules/index';
 
 export default {
@@ -203,7 +204,6 @@ export default {
         },
     },
     mounted() {
-        this.load_books();
         setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
@@ -213,33 +213,30 @@ export default {
             this.$root.$refs.app.print(this.$refs.print);
         },
         toMoney,
-        ...mapActions(['load_books']),
         ...mapMutations(['pos_add_sell_book', 'pos_remove_sell_books']),
     },
 };
 </script>
 <style lang="scss">
 .admin-pos {
-    > *:not(.space) {
-        &.left {
-            > .row > .input.search-box {
-                min-width: 400px;
-            }
+    > .left {
+        > .row.title > .input.search-box {
+            min-width: 400px;
         }
-        &.right {
-            flex: 0 300px;
-            max-width: 300px;
-            min-width: 300px;
-            > .report {
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-            > .pay {
-                padding: 15px;
-                > .pay-row {
-                    font-size: 15px;
-                    padding: 3px 2px;
-                }
+    }
+    > .right {
+        flex: 0 300px;
+        max-width: 300px;
+        min-width: 300px;
+        > .report {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        > .pay {
+            padding: 15px;
+            > .pay-row {
+                font-size: 15px;
+                padding: 3px 2px;
             }
         }
     }

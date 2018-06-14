@@ -66,7 +66,6 @@ export default {
                         bottom: `${size / 8}px`,
                     },
                     [`[size="${size}"] > .three-selector > .text`]: {
-                        borderRadius: `${size / 2}px`,
                         lineHeight: `${size}px`,
                         fontSize: `${size * 0.2 + 7}px`,
                         padding: `0 ${size * 0.4}px`,
@@ -86,20 +85,22 @@ export default {
     white-space: nowrap;
     > .text {
         background: white;
+        border-radius: 3px;
     }
     > .middle {
         position: relative;
         > div {
             background: white;
             position: absolute;
-            border-radius: 50%;
+            border-radius: 3px;
             margin: auto;
         }
     }
 
     .active {
-        background: $color!important;
+        background: $color !important;
         color: white;
+        z-index: 1;
     }
 
     .shadow:hover {
