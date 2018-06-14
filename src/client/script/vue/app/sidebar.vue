@@ -8,23 +8,34 @@
                  text="Thu gọn"
                  @click.native="gui_toogleSideBar()"/>
         <line-/>
-        <button- :active="$route.name == `home`"
+        <button- :active="is('home')"
                  icon=""
                  text="Trang chủ" 
-                 @click.native="$router.push(`/`)"/>
+                 @click.native="go('/')"/>
         <line-/>
-        <button- :active="$route.name == `admin-book`"
-                 icon=""
-                 text="Sách"
-                 @click.native="$router.push(`/admin/book`)"/>
-        <button- :active="$route.name == `admin-book-add`"
-                 icon=""
-                 text="Thêm sách"
-                 @click.native="$router.push(`/admin/book-add`)"/>
-        <button- :active="$route.name == `admin-pos`"
+        <button- :active="is('admin-pos')"
                  icon=""
                  text="Bán hàng"
-                 @click.native="$router.push(`/admin/pos`)"/>
+                 @click.native="go('/admin/pos')"/>
+
+        <!-- Sách -->
+        <button- icon=""
+                 text="Sách"
+                 @click.native="go('/admin/book')"/>
+        <col- :class="{show: match(/^admin-book/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-book')"
+                     icon=""
+                     text="Danh mục sách"
+                     @click.native="go('/admin/book')"/>
+            <button- :active="is('admin-book-add')"
+                     icon=""
+                     text="Thêm sách"
+                     @click.native="go('/admin/book-add')"/>
+        </col->
+
+
         <div class="full"/>
         <button- icon="" 
                  text="Đăng xuất"/>
@@ -47,6 +58,16 @@ export default {
     },
     methods: {
         ...mapMutations(['gui_toogleSideBar']),
+        go(name) {
+            this.$router.push(name);
+        },
+        is(name) {
+            return this.$route.name === name;
+        },
+        match(regex) {
+            if (!this.$route.name) return false;
+            return this.$route.name.match(regex);
+        },
     },
 };
 </script>
@@ -54,6 +75,24 @@ export default {
 #sidebar {
     z-index: 2;
 
+    .button:hover + .indent,
+    .indent:hover,
+    .indent.show {
+        > .button {
+            height: 50px;
+            transition: all 0.4s 0s;
+            opacity: 1;
+        }
+    }
+
+    > .indent > .button {
+        padding-left: 25px;
+        min-height: 0px;
+        height: 0;
+        opacity: 0;
+        transition: all 0.4s 0.5s;
+        overflow: hidden;
+    }
     > .user > .label > .text {
         line-height: 30px;
         height: 30px;
