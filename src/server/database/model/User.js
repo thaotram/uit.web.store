@@ -50,7 +50,7 @@ class User extends Model {
     get detail() {
         return {
             total: this.carts.map(cart => cart.total).reduce((a, b) => a + b, 0),
-            amount: this.carts.map(cart => cart.amount).reduce((a, b) => a + b, 0),
+            count: this.carts.map(cart => cart.count).reduce((a, b) => a + b, 0),
         };
     }
 }

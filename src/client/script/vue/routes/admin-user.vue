@@ -58,7 +58,7 @@
                             {{ user.point }}
                         </div>
                         <div>
-                            {{ user.amount }}
+                            {{ user.count }}
                         </div>
                         <div>
                             {{ toMoney(user.total) }}
@@ -122,8 +122,8 @@ export default {
             return this.data.users.filter(
                 user =>
                     found(user.name, this.search) &&
-                    ((this.isBuy === -1 && user.amount > 0) ||
-                        (this.isBuy === 1 && user.amount === 0) ||
+                    ((this.isBuy === -1 && user.count > 0) ||
+                        (this.isBuy === 1 && user.count === 0) ||
                         (this.isBuy === 0 && true)),
             );
         },

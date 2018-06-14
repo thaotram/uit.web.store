@@ -22,7 +22,7 @@ class ExportBill extends Model {
     get total() {
         let money = 0;
         this.cart.cartDetail.forEach(detail => {
-            money += detail.book.realPrice(this.create) * detail.amount;
+            money += detail.book.realPrice(this.create) * detail.count;
         });
         return money;
     }

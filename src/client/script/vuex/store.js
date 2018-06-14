@@ -45,7 +45,7 @@ export default new Vuex.Store({
                     employeeId: 1,
                     cartDetails: state.pos.sells.map(sell => ({
                         id: sell.book.id,
-                        amount: sell.amount,
+                        count: sell.count,
                     })),
                 }),
                 headers: {

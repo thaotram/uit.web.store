@@ -15,12 +15,12 @@ describe(filename(__filename), function() {
             const importCouponDetails = [
                 {
                     bookId: 2181161,
-                    amount: 10,
+                    count: 10,
                     price: 50000,
                 },
                 {
                     bookId: 1926791,
-                    amount: 20,
+                    count: 20,
                     price: 120000,
                 },
             ];

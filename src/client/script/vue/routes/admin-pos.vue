@@ -54,15 +54,15 @@
                         <div>
                             {{ sell.book.name }}
                         </div>
-                        <input v-model.number="sell.amount"
+                        <input v-model.number="sell.count"
                                type="number"
-                               refs="amount"
+                               refs="count"
                                min="0">
                         <div>
                             {{ toMoney(sell.book.realPrice) }}
                         </div>
                         <div>
-                            {{ toMoney(sell.amount * sell.book.realPrice) }}
+                            {{ toMoney(sell.count * sell.book.realPrice) }}
                         </div>
                         <button- class="noPadding"
                                  icon=""
@@ -110,14 +110,14 @@
                              :key="sell.book.id"
                              class="row">
                             <div>{{ sell.book.name }}</div>
-                            <div>{{ sell.amount }}</div>
+                            <div>{{ sell.count }}</div>
                             <div>{{ toMoney(sell.book.realPrice) }}</div>
-                            <div>{{ toMoney(sell.amount * sell.book.realPrice) }}</div>
+                            <div>{{ toMoney(sell.count * sell.book.realPrice) }}</div>
                         </div>
                         <div class="line"/>
                         <div class="row bold">
                             <div>Tổng cộng</div>
-                            <div>{{ amount }}</div>
+                            <div>{{ count }}</div>
                             <div/>
                             <div>{{ toMoney(total) }}</div>
                         </div>
@@ -131,7 +131,7 @@
                 <row- class="pay-row bold">
                     <span>Số lượng:</span>
                     <s-/>
-                    <span class="green-text">{{ amount }}</span>
+                    <span class="green-text">{{ count }}</span>
                 </row->
                 <row- class="pay-row bold">
                     <span>Khách phải trả:</span>
@@ -194,12 +194,12 @@ export default {
         },
         total() {
             return this.pos.sells
-                .map(book => book.book.realPrice * book.amount)
+                .map(book => book.book.realPrice * book.count)
                 .reduce((a, b) => a + b, 0);
         },
-        amount() {
+        count() {
             return this.pos.sells
-                .map(book => book.amount)
+                .map(book => book.count)
                 .reduce((a, b) => Number(a) + Number(b), 0);
         },
     },

@@ -6,7 +6,7 @@ export default {
         if (state.pos.sells.some(self => self.book === book)) return;
         state.pos.sells.push({
             book,
-            amount: 1,
+            count: 1,
         });
     },
 

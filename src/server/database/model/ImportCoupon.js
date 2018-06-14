@@ -31,7 +31,7 @@ class ImportCoupon extends Model {
                 id: ImportCouponDetail.getNextId(realm),
                 importCoupon: importCoupon,
                 book: Book.getById(realm, importCouponDetail.bookId),
-                amount: importCouponDetail.amount,
+                count: importCouponDetail.count,
                 price: importCouponDetail.price,
             });
         });
@@ -65,13 +65,13 @@ class ImportCoupon extends Model {
 
     get total() {
         return this.importCouponDetails
-            .map(detail => detail.price * detail.amount)
+            .map(detail => detail.price * detail.count)
             .reduce((a, b) => a + b, 0);
     }
 
     get count() {
         return this.importCouponDetails
-            .map(detail => detail.amount)
+            .map(detail => detail.count)
             .reduce((a, b) => a + b, 0);
     }
 

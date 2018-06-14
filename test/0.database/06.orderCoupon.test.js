@@ -14,11 +14,11 @@ describe(filename(__filename), function() {
             const orderCouponDetails = [
                 {
                     bookId: 2181161,
-                    amount: 30,
+                    count: 30,
                 },
                 {
                     bookId: 1926791,
-                    amount: 20,
+                    count: 20,
                 },
             ];
             const orderCoupon = await OrderCoupon.create(

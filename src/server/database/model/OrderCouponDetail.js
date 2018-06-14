@@ -6,16 +6,16 @@ class OrderCouponDetail extends Model {
 
         return orderCouponDetails.every(detail => {
             if (typeof detail != 'object') throw 'Chi tiết phiếu đặt phải là kiểu đối tượng';
-            if (!detail.hasOwnProperty('bookId') || !detail.hasOwnProperty('amount')) {
-                throw 'Không có trường dữ liệu bookId hoặc amount';
+            if (!detail.hasOwnProperty('bookId') || !detail.hasOwnProperty('count')) {
+                throw 'Không có trường dữ liệu bookId hoặc count';
             }
-            if (typeof detail.bookId != 'number' || typeof detail.amount != 'number') {
-                throw 'Cả bookId và amount phải là kiểu số';
+            if (typeof detail.bookId != 'number' || typeof detail.count != 'number') {
+                throw 'Cả bookId và count phải là kiểu số';
             }
             if (Book.getById(realm, detail.bookId) == undefined) {
                 throw 'BookId không tồn tại';
             }
-            if (detail.amount <= 0) throw 'Amount phải > 0';
+            if (detail.count <= 0) throw 'Count phải > 0';
         });
     }
 
@@ -34,7 +34,7 @@ OrderCouponDetail.schema = {
         id: 'int',
         orderCoupon: 'OrderCoupon',
         book: 'Book',
-        amount: 'int',
+        count: 'int',
     },
 };
 

@@ -6,8 +6,8 @@ import moment from 'moment';
 class OrderCoupon extends Model {
     /**
      * const orderCouponDetails = [
-     *     { bookId: 1517213, amount: 1 },
-     *     { bookId: 1517213, amount: 1 },
+     *     { bookId: 1517213, count: 1 },
+     *     { bookId: 1517213, count: 1 },
      * ];
      * @param {Realm} realm
      * @param {Employee} employee
@@ -30,7 +30,7 @@ class OrderCoupon extends Model {
                 id: OrderCouponDetail.getNextId(realm),
                 orderCoupon: orderCoupon,
                 book: Book.getById(realm, orderCouponDetail.bookId),
-                amount: orderCouponDetail.amount,
+                count: orderCouponDetail.count,
             });
         });
         return orderCoupon;

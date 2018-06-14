@@ -25,7 +25,7 @@ class Cart extends Model {
                 id: CartDetail.getNextId(realm),
                 cart: cart,
                 book: Book.getById(realm, cartDetail.id),
-                amount: cartDetail.amount,
+                count: cartDetail.count,
             });
         });
         return cart;
@@ -61,13 +61,13 @@ class Cart extends Model {
 
     get total() {
         return this.cartDetails
-            .map(cartDetail => cartDetail.book.realPrice(this.create) * cartDetail.amount)
+            .map(cartDetail => cartDetail.book.realPrice(this.create) * cartDetail.count)
             .reduce((a, b) => a + b, 0);
     }
 
-    get amount() {
+    get count() {
         return this.cartDetails
-            .map(cartDetail => cartDetail.amount)
+            .map(cartDetail => cartDetail.count)
             .reduce((a, b) => a + b, 0);
     }
 
