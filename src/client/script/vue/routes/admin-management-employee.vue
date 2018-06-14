@@ -42,7 +42,7 @@
                                 :key="employee.id"
                                 size="60">
                         <div>
-                            {{ index }}
+                            {{ index + 1 }}
                         </div>
                         <div class="row">
                             <image- :src="toAvatar(employee.userId)"

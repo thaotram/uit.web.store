@@ -9,7 +9,7 @@ class User extends Model {
     /**
      *
      * @param {Realm} realm
-     * @param {String} req chưa 2 tham số là token và id
+     * @param {{token: String, id: Number}} req
      * @param {String} sessionID
      */
     static async get(realm, req, sessionID) {
@@ -45,6 +45,13 @@ class User extends Model {
     get json() {
         const o = this.object;
         return o;
+    }
+
+    get detail() {
+        return {
+            total: this.carts.map(cart => cart.total).reduce((a, b) => a + b, 0),
+            amount: this.carts.map(cart => cart.amount).reduce((a, b) => a + b, 0),
+        };
     }
 }
 

@@ -60,11 +60,15 @@ class Cart extends Model {
     }
 
     get total() {
-        let money = 0;
-        this.cartDetail.forEach(detail => {
-            money += detail.book.realPrice(this.create) * detail.amount;
-        });
-        return money;
+        return this.cartDetails
+            .map(cartDetail => cartDetail.book.realPrice(this.create) * cartDetail.amount)
+            .reduce((a, b) => a + b, 0);
+    }
+
+    get amount() {
+        return this.cartDetails
+            .map(cartDetail => cartDetail.amount)
+            .reduce((a, b) => a + b, 0);
     }
 
     get json() {

@@ -43,7 +43,7 @@
                                 :key="user.id"
                                 size="60">
                         <div>
-                            {{ index }}
+                            {{ index + 1 }}
                         </div>
                         <div class="row">
                             <image- :src="toAvatar(user.id)"
@@ -58,10 +58,10 @@
                             {{ user.point }}
                         </div>
                         <div>
-                            {}
+                            {{ user.amount }}
                         </div>
                         <div>
-                            {}
+                            {{ toMoney(user.total) }}
                         </div>
                     </table-row->
                 </template>
@@ -84,7 +84,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { toDate, found, toAvatar } from '../../modules/index';
+import { toMoney, toDate, found, toAvatar } from '../../modules/index';
 
 export default {
     components: {
@@ -119,12 +119,19 @@ export default {
     computed: {
         ...mapState(['app', 'data', 'markdown']),
         userResults() {
-            return this.data.users.filter(user => found(user.name, this.search));
+            return this.data.users.filter(
+                user =>
+                    found(user.name, this.search) &&
+                    ((this.isBuy === -1 && user.amount > 0) ||
+                        (this.isBuy === 1 && user.amount === 0) ||
+                        (this.isBuy === 0 && true)),
+            );
         },
     },
     methods: {
         toDate,
         toAvatar,
+        toMoney,
     },
 };
 </script>
