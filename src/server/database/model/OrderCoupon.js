@@ -6,8 +6,8 @@ import moment from 'moment';
 class OrderCoupon extends Model {
     /**
      * const orderCouponDetails = [
-     *     { id: 1517213, amount: 1 },
-     *     { id: 1517213, amount: 1 },
+     *     { bookId: 1517213, amount: 1 },
+     *     { bookId: 1517213, amount: 1 },
      * ];
      * @param {Realm} realm
      * @param {Employee} employee
