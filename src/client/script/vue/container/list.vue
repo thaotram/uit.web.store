@@ -15,9 +15,9 @@ export default {
 <style lang="scss">
 .list-enter,
 .list-leave-to {
-    height: 0;
-    min-height: 0!important;
-    opacity: 0;
+    height: 0 !important;
+    min-height: 0 !important;
+    opacity: 0 !important;
 }
 .list > * {
     transition: all 0.5s;
