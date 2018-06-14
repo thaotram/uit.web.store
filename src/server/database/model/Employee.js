@@ -6,6 +6,7 @@ import {
 } from '../utils/Validation';
 import { User } from '../database';
 import Model from '../utils/Model';
+import moment from 'moment';
 
 class Employee extends Model {
     /**
@@ -42,11 +43,17 @@ class Employee extends Model {
             id: Employee.getNextId(realm),
             user: user,
             name: rawEmployee.name,
-            birthdate: rawEmployee.birthdate,
+            birthdate: moment(rawEmployee.birthdate, 'DD-MM-YYYY').toDate(),
             address: rawEmployee.address,
             phone: rawEmployee.phone,
             startDate: new Date(),
         });
+    }
+
+    get json() {
+        const o = this.object;
+        o.userId = this.user.id;
+        return o;
     }
 }
 

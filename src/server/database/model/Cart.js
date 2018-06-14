@@ -51,11 +51,11 @@ class Cart extends Model {
             }
         }
         if (query.hasOwnProperty('begin')) {
-            const begin = moment(query.begin, 'DD-MM-YYYY');
+            const begin = moment(query.begin, 'DD-MM-YYYY').toDate();
             carts = carts.filtered('create >= $0', begin);
         }
         if (query.hasOwnProperty('end')) {
-            const end = moment(query.end, 'DD-MM-YYYY');
+            const end = moment(query.end, 'DD-MM-YYYY').toDate();
             carts = carts.filtered('create <= $0', end);
         }
         return carts;
