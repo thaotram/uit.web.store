@@ -11,6 +11,12 @@ export default function(app, realm) {
         const employee = await Employee.create(realm, user, req.body.employee);
         res.send(employee.json);
     });
+    app.post('/api/employee/edit', async (req, res) => {
+        const employee = Employee.getById(realm, req.body.employeeId);
+        await employee.update(realm, req.body.data);
+        res.send(employee.json);
+    });
+
     app.get('/api/employee/:id', (req, res) => {
         const id = Number(req.params.id);
         const employee = Employee.getById(realm, id);

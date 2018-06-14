@@ -23,7 +23,6 @@ class Supplier extends Model {
      */
     static async create(realm, rawSupplier) {
         Supplier.isRawValid(rawSupplier);
-        
         if (Supplier.getByName(realm, rawSupplier.name) !== undefined) {
             throw 'Supplier is exist';
         }

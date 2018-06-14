@@ -12,12 +12,9 @@ class ImportCoupon extends Model {
      * @param {Object[]} importCouponDetails
      */
     static async create(realm, supplier, employee, shipper, importCouponDetails) {
-        if (
-            !Supplier.has(realm, supplier) ||
-            !Employee.has(realm, employee) ||
-            !ImportCouponDetail.isRawValid(realm, importCouponDetails)
-        ) {
-            throw `Supplier, Employee or ImportCouponDetail doesn't exist`;
+        ImportCouponDetail.isRawValid(realm, importCouponDetails);
+        if (!Supplier.has(realm, supplier) || !Employee.has(realm, employee)) {
+            throw `Supplier, Employee doesn't exist`;
         }
         if (typeof shipper !== 'string') return false;
 
