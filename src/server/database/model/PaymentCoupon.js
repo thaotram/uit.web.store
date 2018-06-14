@@ -56,11 +56,11 @@ class PaymentCoupon extends Model {
             );
         }
         if (query.hasOwnProperty('begin')) {
-            const begin = moment(query.begin, 'DD-MM-YYYY');
+            const begin = moment(query.begin, 'DD-MM-YYYY').toDate();
             paymentCoupons = paymentCoupons.filtered('create >= $0', begin);
         }
         if (query.hasOwnProperty('end')) {
-            const end = moment(query.end, 'DD-MM-YYYY');
+            const end = moment(query.end, 'DD-MM-YYYY').toDate();
             paymentCoupons = paymentCoupons.filtered('create >= $0', end);
         }
         return paymentCoupons;

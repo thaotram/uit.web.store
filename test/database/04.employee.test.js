@@ -10,7 +10,7 @@ describe(filename(__filename), function() {
         const user = realm.objects('User')[0];
         const rawEmployee = {
             name: 'Ng V C',
-            birthdate: new Date(2000, 2, 3),
+            birthdate: '20-2-2000',
             address: '1-62 Lê Lợi, Q.1, TP. HCM',
             phone: '1900646467',
         };
