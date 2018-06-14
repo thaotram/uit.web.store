@@ -8,35 +8,37 @@
                  text="Thu gọn"
                  @click.native="gui_toogleSideBar()"/>
         <line-/>
-        <button- :active="is('home')"
+        <!-- <button- :active="is('home')"
                  icon=""
                  text="Trang chủ" 
                  @click.native="go('/')"/>
-        <line-/>
+        <line-/> -->
         <button- :active="is('admin-pos')"
-                 icon=""
+                 icon=""
                  text="Bán hàng"
                  @click.native="go('/admin/pos')"/>
 
         <!-- Sách -->
-        <button- icon=""
+        <button- :active="match(/^admin-book/)"
+                 icon=""
                  text="Sách"
+                 class="parent"
                  @click.native="go('/admin/book')"/>
         <col- :class="{show: match(/^admin-book/)}"
               size="50"
               class="indent">
             <button- :active="is('admin-book')"
-                     icon=""
+                     icon=""
                      text="Danh mục sách"
                      @click.native="go('/admin/book')"/>
             <button- :active="is('admin-book-add')"
-                     icon=""
+                     icon=""
                      text="Thêm sách"
                      @click.native="go('/admin/book-add')"/>
         </col->
-
-
-        <div class="full"/>
+        <s-/>
+        <button- icon="" 
+                 text="Thông tin"/>
         <button- icon="" 
                  text="Đăng xuất"/>
     </col->
@@ -50,6 +52,7 @@ export default {
         ...'row',
         ...'line',
         ...'button',
+        ...'s',
         ...'label',
         ...'image',
     },
@@ -66,7 +69,7 @@ export default {
         },
         match(regex) {
             if (!this.$route.name) return false;
-            return this.$route.name.match(regex);
+            return this.$route.name.match(regex) !== null;
         },
     },
 };
@@ -75,24 +78,10 @@ export default {
 #sidebar {
     z-index: 2;
 
-    .button:hover + .indent,
-    .indent:hover,
-    .indent.show {
-        > .button {
-            height: 50px;
-            transition: all 0.4s 0s;
-            opacity: 1;
-        }
+    .button.parent.active {
+        background: transparent;
     }
 
-    > .indent > .button {
-        padding-left: 25px;
-        min-height: 0px;
-        height: 0;
-        opacity: 0;
-        transition: all 0.4s 0.5s;
-        overflow: hidden;
-    }
     > .user > .label > .text {
         line-height: 30px;
         height: 30px;
@@ -125,6 +114,23 @@ export default {
         }
         .rotate > .icon {
             transform: rotate(-180deg);
+        }
+        > .button:hover + .indent,
+        > .indent:hover,
+        > .indent.show {
+            > .button {
+                height: 50px;
+                transition: all 0.4s 0s;
+                opacity: 1;
+            }
+        }
+        > .indent > .button {
+            padding-left: 25px;
+            min-height: 0px;
+            height: 0;
+            opacity: 0;
+            transition: all 0.4s 0.5s;
+            overflow: hidden;
         }
     }
 }

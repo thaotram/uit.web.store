@@ -3,6 +3,7 @@
         <col- class="left full noOverflow">
             <row- size="40">
                 <button- text="Thêm sách mới từ đường dẫn tiki" 
+                         icon=""
                          class="shadow round green"/>
                 <s- :s="20"/>
                 <input- class="shadow search-box round full"  

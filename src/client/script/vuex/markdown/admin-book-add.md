@@ -25,7 +25,7 @@ https://tiki.vn/harry-potter-va-hon-da-phu-thuy-tap-1-tai-ban-2017-p580112.html
 https://tiki.vn/sach-van-hoc/c839
 ```
 
-- Sau khi đường dẫn trên được thêm vào ô nhập liệu và nhấp xác nhận. Ứng dụng sẽ bóc tách dữ liệu từ Tiki và thêm các tựa sách vào trong hệ thống CSDL với id của sách chính là ID sản phẩm trên Tiki.
+- Sau khi đường dẫn trên được thêm vào ô nhập liệu và nhấp xác nhận. Ứng dụng sẽ bóc tách dữ liệu từ Tiki và thêm các tựa sách vào trong hệ thống cơ sở dữ liệu với mã sách chính là mã sản phẩm trên Tiki.
 
 #### 3. Lỗi và ngoại lệ:
 
