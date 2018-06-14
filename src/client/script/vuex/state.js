@@ -5,8 +5,8 @@ export default {
         phone: '(028) 372 51993',
     },
     user: {
-        id: '517599748348537',
-        name: 'Phạm Hồng Phúc',
+        id: 715380908507851,
+        name: 'Lê Thị Thảo Trâm',
     },
     gui: {
         fullSideBarSize: true,

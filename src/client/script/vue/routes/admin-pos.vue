@@ -143,7 +143,7 @@
                     <button- class="full green round"
                              icon="" 
                              text="Thanh toán và in hóa đơn"
-                             @click.native="print"/>
+                             @click.native="payAndPrint"/>
                 </row->
             </col->
         </col->
@@ -151,7 +151,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import { toMoney, found } from '../../modules/index';
 
 export default {
@@ -209,8 +209,10 @@ export default {
         }, 100);
     },
     methods: {
-        print() {
+        async payAndPrint() {
+            await this.pos_create_cart_and_export_bill();
             this.$root.$refs.app.print(this.$refs.print);
+            this.pos_remove_sell_books();
         },
         toMoney,
         ...mapMutations([
@@ -218,6 +220,7 @@ export default {
             'pos_remove_sell_books',
             'pos_remove_sell_book',
         ]),
+        ...mapActions(['pos_create_cart_and_export_bill']),
     },
 };
 </script>
