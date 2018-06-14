@@ -6,6 +6,7 @@ import importCoupon from './api/importCoupon.api';
 import orderCoupon from './api/orderCoupon.api';
 import paymentCoupon from './api/paymentCoupon.api';
 import supplier from './api/supplier.api';
+import employee from './api/employee.api';
 
 /**
  *
@@ -20,6 +21,7 @@ export default function(app, realm) {
     orderCoupon(app, realm);
     paymentCoupon(app, realm);
     supplier(app, realm);
+    employee(app, realm);
 
     app.get('/', (req, res) => {
         res.sendFile(path.resolve(__dirname, '../../../dist/client/index.html'));

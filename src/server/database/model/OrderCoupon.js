@@ -54,11 +54,11 @@ class OrderCoupon extends Model {
             orderCoupons = orderCoupons.filtered('supplier.id == $0', query.supplierId);
         }
         if (query.hasOwnProperty('begin')) {
-            const begin = moment(query.begin, 'DD-MM-YYYY');
+            const begin = moment(query.begin, 'DD-MM-YYYY').toDate();
             orderCoupons = orderCoupons.filtered('create >= $0', begin);
         }
         if (query.hasOwnProperty('end')) {
-            const end = moment(query.end, 'DD-MM-YYYY');
+            const end = moment(query.end, 'DD-MM-YYYY').toDate();
             orderCoupons = orderCoupons.filtered('create >= $0', end);
         }
         return orderCoupons;

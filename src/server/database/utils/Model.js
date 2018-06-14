@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class Model {
     /**
      * @param {*} realm
@@ -54,8 +56,11 @@ export default class Model {
         const object = {};
         for (const property in properties) {
             if (properties.hasOwnProperty(property)) {
-                if (['int', 'string', 'date'].indexOf(properties[property]) !== -1) {
+                if (['int', 'string'].indexOf(properties[property]) !== -1) {
                     object[property] = this[property];
+                }
+                if (properties[property] === 'date') {
+                    object[property] = moment(this[property]).format('hh:mm:ss DD-MM-YYYY');
                 }
             }
         }

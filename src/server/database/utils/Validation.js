@@ -12,7 +12,7 @@ export function isBirthdateValid(birthdate) {
 
 export function isAddressValid(address) {
     if (typeof address !== 'string') return false;
-    if (address.length <= 10) return false;
+    if (address.length <= 5) return false;
     return true;
 }
 
