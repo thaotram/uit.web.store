@@ -1,4 +1,4 @@
-import { PaymentCoupon } from '../../database/database';
+import { PaymentCoupon, Supplier, Employee } from '../../database/database';
 
 /**
  *
@@ -6,6 +6,18 @@ import { PaymentCoupon } from '../../database/database';
  * @param {Realm} realm
  */
 export default function(app, realm) {
+    app.post('/api/paymentCoupon/create', async (req, res) => {
+        const employee = Employee.getById(realm, Number(req.body.employeeId));
+        const supplier = Supplier.getById(realm, Number(req.body.supplierId));
+        const paymentCoupon = await PaymentCoupon.create(
+            realm,
+            supplier,
+            employee,
+            req.body.rawPaymentCoupon,
+        );
+        res.send(paymentCoupon.json);
+    });
+
     app.get('/api/paymentCoupons', async (req, res) => {
         const paymentCoupons = await PaymentCoupon.queryPaymentCoupon(realm, req.query);
         if (!paymentCoupons) {
