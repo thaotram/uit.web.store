@@ -33,7 +33,7 @@ class Employee extends Model {
             throw `Employee is exist`;
         }
         Employee.isRawValid(rawEmployee);
-        
+
         return await Employee.write(realm, true, {
             id: Employee.getNextId(realm),
             user: user,
@@ -42,6 +42,32 @@ class Employee extends Model {
             address: rawEmployee.address,
             phone: rawEmployee.phone,
             startDate: new Date(),
+        });
+    }
+
+    /**
+     *
+     * @param {Realm} realm
+     * @param {Object} data
+     */
+    async update(realm, data) {
+        await realm.write(() => {
+            if (data.hasOwnProperty('name')) {
+                isNameValid(data.name);
+                this.name = data.name;
+            }
+            if (data.hasOwnProperty('birthdate')) {
+                isBirthdateValid(data.birthdate);
+                this.birthdate = data.birthdate;
+            }
+            if (data.hasOwnProperty('address')) {
+                isAddressValid(data.address);
+                this.address = data.address;
+            }
+            if (data.hasOwnProperty('phone')) {
+                isPhoneValid(data.phone);
+                this.phone = data.phone;
+            }
         });
     }
 
