@@ -13,6 +13,7 @@ export default {
     },
     data: {
         books: [],
+        employees: [],
     },
     pos: {
         sells: [],
