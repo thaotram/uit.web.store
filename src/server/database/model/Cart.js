@@ -8,6 +8,7 @@ class Cart extends Model {
      * @param {Realm} realm
      * @param {User} user
      * @param {CartDetail} cartDetails
+     * @returns {Promise<Cart>}
      */
     static async create(realm, user, cartDetails) {
         if (
