@@ -8,34 +8,86 @@
                  text="Thu gọn"
                  @click.native="gui_toogleSideBar()"/>
         <line-/>
-        <!-- <button- :active="is('home')"
-                 icon=""
-                 text="Trang chủ" 
-                 @click.native="go('/')"/>
-        <line-/> -->
         <button- :active="is('admin-pos')"
-                 icon=""
+                 icon=""
                  text="Bán hàng"
                  @click.native="go('/admin/pos')"/>
 
         <!-- Sách -->
-        <button- :active="match(/^admin-book/)"
+        <button- :active="is('admin-book')"
                  icon=""
                  text="Sách"
-                 class="parent"
                  @click.native="go('/admin/book')"/>
         <col- :class="{show: match(/^admin-book/)}"
               size="50"
               class="indent">
-            <button- :active="is('admin-book')"
-                     icon=""
-                     text="Danh mục sách"
-                     @click.native="go('/admin/book')"/>
-            <button- :active="is('admin-book-add')"
+            <button- :active="match(/^admin-book-detail/)"
                      icon=""
+                     text="Thông tin sách"
+                     @click.native="go('/admin/book/detail')"/>
+            <button- :active="is('admin-book-add')"
+                     icon=""
                      text="Thêm sách"
-                     @click.native="go('/admin/book-add')"/>
+                     @click.native="go('/admin/book/add')"/>        
         </col->
+
+        <!-- Người dùng -->
+        <button- :active="is('admin-user')"
+                 icon=""
+                 text="Người dùng"
+                 @click.native="go('/admin/user')"/>
+        <col- :class="{show: match(/^admin-user/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-user-feedback')"
+                     icon=""
+                     text="Phản hồi"
+                     @click.native="go('/admin/user/feedback')"/>  
+        </col->
+
+        <!-- Hóa đơn -->
+        <button- :active="is('admin-transaction')"
+                 icon=""
+                 text="Đặt hàng và giao dịch"/>
+        <col- :class="{show: match(/^admin-transaction/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-export-bill')"
+                     icon=""
+                     text="Hóa đơn bán hàng"
+                     @click.native="go('/admin/transaction/export-bill')"/>
+            <button- :active="is('admin-transaction-import-coupon')"
+                     icon=""
+                     text="Phiếu nhập sách"
+                     @click.native="go('/admin/transaction/import-coupon')"/>
+            <button- :active="is('admin-transaction-order-coupon')"
+                     icon=""
+                     text="Phiếu đặt sách"
+                     @click.native="go('/admin/transaction/order-coupon')"/>
+            <button- :active="is('admin-transaction-payment-coupon')"
+                     icon=""
+                     text="Phiếu trả tiền"
+                     @click.native="go('/admin/transaction/payment-coupon')"/>
+        </col->
+
+        <!-- Quản lý hệ thống -->
+        <button- :active="is('admin-management')"
+                 icon=""
+                 text="Quản lý hệ thống"
+                 @click.native="go('/admin/management')"/>
+        <col- :class="{show: match(/^admin-management/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-management-employee')"
+                     icon=""
+                     text="Nhân viên"
+                     @click.native="go('/admin/management/employee')"/>
+            <button- :active="is('admin-management-supplier')"
+                     icon=""
+                     text="Nhà cung cấp"
+                     @click.native="go('/admin/management/supplier')"/>
+        </col-> 
+        
         <s-/>
         <button- icon="" 
                  text="Thông tin"/>
@@ -86,6 +138,24 @@ export default {
         line-height: 30px;
         height: 30px;
     }
+
+    > .button:hover + .indent,
+    > .indent:hover,
+    > .indent.show {
+        > .button {
+            height: 50px;
+            transition: all 0.4s 0s;
+            opacity: 1;
+        }
+    }
+    > .indent > .button {
+        min-height: 0px;
+        height: 0;
+        opacity: 0;
+        transition: all 0.4s 0.5s;
+        overflow: hidden;
+    }
+
     &:not(.fullSize) {
         width: 50px;
         > .user {
@@ -101,6 +171,9 @@ export default {
                 min-width: 30px;
             }
         }
+        > .indent > .button {
+            padding-left: 0;
+        }
     }
     &.fullSize {
         width: $side-width;
@@ -115,22 +188,8 @@ export default {
         .rotate > .icon {
             transform: rotate(-180deg);
         }
-        > .button:hover + .indent,
-        > .indent:hover,
-        > .indent.show {
-            > .button {
-                height: 50px;
-                transition: all 0.4s 0s;
-                opacity: 1;
-            }
-        }
         > .indent > .button {
             padding-left: 25px;
-            min-height: 0px;
-            height: 0;
-            opacity: 0;
-            transition: all 0.4s 0.5s;
-            overflow: hidden;
         }
     }
 }
