@@ -17,7 +17,7 @@
     </div>    
 </template>
 <script>
-import { initialize } from 'style';
+import style, { initialize } from 'style';
 import { getTableStyle } from './table-utils';
 
 export default {
@@ -26,7 +26,7 @@ export default {
         ...'list',
     },
     props: {
-        size: {
+        colSize: {
             type: Array,
             default: () => [],
         },
@@ -40,7 +40,7 @@ export default {
     },
     mounted() {
         this.updateStyle();
-    },
+    },  
     methods: {
         updateStyle() {
             initialize({
