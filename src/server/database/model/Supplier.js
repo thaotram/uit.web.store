@@ -113,6 +113,17 @@ class Supplier extends Model {
         const o = this.object;
         return o;
     }
+
+    get detail() {
+        return {
+            total: this.importCoupons
+                .map(importCoupon => importCoupon.total)
+                .reduce((a, b) => a + b, 0),
+            count: this.importCoupons
+                .map(importCoupon => importCoupon.count)
+                .reduce((a, b) => a + b, 0),
+        };
+    }
 }
 
 Supplier.schema = {

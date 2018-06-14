@@ -32,9 +32,10 @@ new Vue({
         this.load_books();
         this.load_employees();
         this.load_users();
+        this.load_suppliers();
     },
     methods: {
-        ...mapActions(['load_books', 'load_employees', 'load_users']),
+        ...mapActions(['load_books', 'load_employees', 'load_users', 'load_suppliers']),
     },
     render: h => h(app, { ref: 'app' }),
 });

@@ -15,6 +15,7 @@ export default {
         books: [],
         employees: [],
         users: [],
+        suppliers: [],
     },
     pos: {
         sells: [],

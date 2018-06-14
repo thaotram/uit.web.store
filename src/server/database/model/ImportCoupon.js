@@ -64,11 +64,15 @@ class ImportCoupon extends Model {
     }
 
     get total() {
-        let money = 0;
-        this.importDetail.forEach(detail => {
-            money += detail.price * detail.amount;
-        });
-        return money;
+        return this.importCouponDetails
+            .map(detail => detail.price * detail.amount)
+            .reduce((a, b) => a + b, 0);
+    }
+
+    get count() {
+        return this.importCouponDetails
+            .map(detail => detail.amount)
+            .reduce((a, b) => a + b, 0);
     }
 
     get json() {

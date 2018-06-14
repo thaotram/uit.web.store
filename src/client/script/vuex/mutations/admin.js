@@ -19,4 +19,11 @@ export default {
     load_users(state, users) {
         state.data.users = users;
     },
+
+    /**
+     * @param {typeof import("../state").default} state
+     */
+    load_suppliers(state, supplier) {
+        state.data.suppliers = supplier;
+    },
 };

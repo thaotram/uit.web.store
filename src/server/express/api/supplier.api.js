@@ -27,7 +27,10 @@ export default function(app, realm) {
         res.json(supplier.json);
     });
     app.get('/api/suppliers', (req, res) => {
-        const suppliers = realm.objects('Supplier').map(supplier => supplier.json);
+        const suppliers = realm.objects('Supplier').map(supplier => ({
+            ...supplier.json,
+            ...supplier.detail,
+        }));
         res.json(suppliers);
     });
 }

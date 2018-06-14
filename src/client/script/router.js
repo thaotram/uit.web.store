@@ -40,6 +40,11 @@ const router = new VueRouter({
             name: 'admin-management-employee',
             component: () => import('admin-management-employee'),
         },
+        {
+            path: '/admin/management/supplier',
+            name: 'admin-management-supplier',
+            component: () => import('admin-management-supplier'),
+        },
     ],
 });
 
