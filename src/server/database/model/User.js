@@ -41,6 +41,11 @@ class User extends Model {
 
         return null;
     }
+
+    get json() {
+        const o = this.object;
+        return o;
+    }
 }
 
 User.schema = {

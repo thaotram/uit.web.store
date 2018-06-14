@@ -1,4 +1,4 @@
-import { ImportCoupon } from '../../database/database';
+import { ImportCoupon, Supplier, Employee } from '../../database/database';
 
 /**
  *
@@ -6,6 +6,19 @@ import { ImportCoupon } from '../../database/database';
  * @param {Realm} realm
  */
 export default function(app, realm) {
+    app.post('/api/importCoupon/create', async (req, res) => {
+        const employee = Employee.getById(realm, Number(req.body.employeeId));
+        const supplier = Supplier.getById(realm, Number(req.body.supplierId));
+        const importCoupon = await ImportCoupon.create(
+            realm,
+            supplier,
+            employee,
+            req.body.shipper,
+            req.body.importCouponDetails,
+        );
+        res.send(importCoupon.json);
+    });
+
     app.get('/api/importCoupons', async (req, res) => {
         const importCoupons = await ImportCoupon.queryImportCoupon(realm, req.query);
         if (!importCoupons) {

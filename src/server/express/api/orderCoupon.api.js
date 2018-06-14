@@ -1,4 +1,4 @@
-import { OrderCoupon } from '../../database/database';
+import { OrderCoupon, Supplier, Employee } from '../../database/database';
 
 /**
  *
@@ -6,6 +6,18 @@ import { OrderCoupon } from '../../database/database';
  * @param {Realm} realm
  */
 export default function(app, realm) {
+    app.post('/api/orderCoupon/create', async (req, res) => {
+        const employee = Employee.getById(realm, Number(req.body.employeeId));
+        const supplier = Supplier.getById(realm, Number(req.body.supplierId));
+        const orderCoupon = await OrderCoupon.create(
+            realm,
+            supplier,
+            employee,
+            req.body.orderCouponDetails,
+        );
+        res.send(orderCoupon.json);
+    });
+
     app.get('/api/orderCoupons', async (req, res) => {
         const orderCoupons = await OrderCoupon.queryOrderCoupon(realm, req.query);
         if (!orderCoupons) {

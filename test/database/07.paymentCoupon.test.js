@@ -11,7 +11,7 @@ describe(filename(__filename), function() {
             const realm = await database();
             const supplier = realm.objects('Supplier')[0];
             const employee = realm.objects('Employee')[0];
-            const rawPaymentCounpon = {
+            const rawPaymentCoupon = {
                 content: 'Trả Tiền nợ tháng 6',
                 money: 100000000,
             };
@@ -20,7 +20,7 @@ describe(filename(__filename), function() {
                     realm,
                     supplier,
                     employee,
-                    rawPaymentCounpon,
+                    rawPaymentCoupon,
                 );
                 assert.isTrue(paymentCounpon instanceof PaymentCoupon);
                 assert.equal(paymentCounpon.supplier.id, supplier.id);
