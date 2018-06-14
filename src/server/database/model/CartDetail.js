@@ -2,18 +2,17 @@ import Model from '../utils/Model';
 
 class CartDetail extends Model {
     static isRawValid(cartDetail) {
-        if (!Array.isArray(cartDetail)) return false;
+        if (!Array.isArray(cartDetail)) throw 'Danh sách chi tiết giao dịch phải là một mảng';
 
         return cartDetail.every(detail => {
-            if (typeof detail != 'object') return false;
+            if (typeof detail != 'object') throw 'Chi tiết giao dịch phải là kiểu đối tượng';
             if (!detail.hasOwnProperty('id') || !detail.hasOwnProperty('amount')) {
-                return false;
+                throw 'Không có trường dữ liệu id hoặc amount';
             }
             if (typeof detail.id != 'number' || typeof detail.amount != 'number') {
-                return false;
+                throw 'Cả id và amount phải là kiểu số';
             }
-            if (detail.amount <= 0) return false;
-            return true;
+            if (detail.amount <= 0) throw 'Amount phải > 0';
         });
     }
 

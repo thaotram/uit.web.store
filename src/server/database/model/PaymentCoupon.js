@@ -5,9 +5,8 @@ import moment from 'moment';
 
 class PaymentCoupon extends Model {
     static isRawValid(paymentCoupon) {
-        if (!isContentValid(paymentCoupon.content) || !isMoney(paymentCoupon.money))
-            return false;
-        return true;
+        isContentValid(paymentCoupon.content);
+        isMoney(paymentCoupon.money);
     }
 
     /**

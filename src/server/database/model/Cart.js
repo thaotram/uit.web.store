@@ -11,11 +11,9 @@ class Cart extends Model {
      * @returns {Promise<Cart>}
      */
     static async create(realm, user, cartDetails) {
-        if (
-            !(user === null || User.has(realm, user)) ||
-            !CartDetail.isRawValid(cartDetails)
-        ) {
-            throw `User or CartDetail doesn't exist`;
+        CartDetail.isRawValid(cartDetails);
+        if (!(user === undefined || User.has(realm, user))) {
+            throw `User doesn't exist`;
         }
         const cart = await Cart.write(realm, true, {
             id: Cart.getNextId(realm),
@@ -32,7 +30,7 @@ class Cart extends Model {
         });
         return cart;
     }
-    
+
     /**
      * @param {Realm} realm
      * @param {import('../interface').QueryCart} query

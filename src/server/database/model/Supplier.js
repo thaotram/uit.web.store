@@ -3,13 +3,9 @@ import Model from '../utils/Model';
 
 class Supplier extends Model {
     static isRawValid(supplier) {
-        if (
-            !isNameValid(supplier.name) ||
-            !isAddressValid(supplier.address) ||
-            !isPhoneValid(supplier.phone)
-        )
-            return false;
-        return true;
+        isNameValid(supplier.name);
+        isAddressValid(supplier.address);
+        isPhoneValid(supplier.phone);
     }
     /**
      * @param {Realm} realm
@@ -26,9 +22,8 @@ class Supplier extends Model {
      * @returns {Promise<Supplier>}
      */
     static async create(realm, rawSupplier) {
-        if (!Supplier.isRawValid(rawSupplier)) {
-            throw 'Information Error';
-        }
+        Supplier.isRawValid(rawSupplier);
+        
         if (Supplier.getByName(realm, rawSupplier.name) !== undefined) {
             throw 'Supplier is exist';
         }
@@ -37,6 +32,27 @@ class Supplier extends Model {
             name: rawSupplier.name,
             address: rawSupplier.address,
             phone: rawSupplier.phone,
+        });
+    }
+
+    /**
+     *
+     * @param {Realm} realm
+     * @param {Object} data
+     */
+    async update(realm, data) {
+        await realm.write(() => {
+            if (data.hasOwnProperty('name')) {
+                isNameValid(data.name);
+                this.name = data.name;
+            }
+            if (data.hasOwnProperty('address')) {
+                isAddressValid(data.address);
+            }
+            if (data.hasOwnProperty('phone')) {
+                isPhoneValid(data.phone);
+                this.phone = data.phone;
+            }
         });
     }
 

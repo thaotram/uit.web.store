@@ -9,6 +9,12 @@ export default function(app, realm) {
         const supplier = await Supplier.create(realm, req.body);
         res.send(supplier.json);
     });
+    app.post('/api/supplier/edit', async (req, res) => {
+        const supplier = Supplier.getById(realm, req.body.supplierId);
+        await supplier.update(realm, req.body.data);
+        res.send(supplier.json);
+    });
+
     app.get('/api/supplier/:id', (req, res) => {
         const id = Number(req.params.id);
         const supplier = Supplier.getById(realm, id);

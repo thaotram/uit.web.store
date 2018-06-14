@@ -13,14 +13,10 @@ class Employee extends Model {
      * @param {Employee} employee
      */
     static isRawValid(employee) {
-        if (
-            !isNameValid(employee.name) ||
-            !isAddressValid(employee.address) ||
-            !isPhoneValid(employee.phone) ||
-            !isBirthdateValid(employee.birthdate)
-        )
-            return false;
-        return true;
+        isNameValid(employee.name);
+        isAddressValid(employee.address);
+        isPhoneValid(employee.phone);
+        isBirthdateValid(employee.birthdate);
     }
 
     /**
