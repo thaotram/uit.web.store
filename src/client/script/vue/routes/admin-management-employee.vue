@@ -1,16 +1,12 @@
 <template>
-    <row- class="admin admin-book light" >
+    <row- class="admin admin-management-employee light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Thêm sách mới"   
+                <button- text="Thêm nhân viên mới" 
                          icon=""
                          class="shadow round green"/>
                 <s-/>
-                <three-selector- v-model="residual" 
-                                 right="Hết hàng"
-                                 left="Còn hàng"/>
-                <s- :s="20"/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
                         type="text"
@@ -19,46 +15,46 @@
             </row->
             <s- :s="20"/>
             <table-view- :size="size"
-                         :has-content="bookResults.length !== 0"
+                         :has-content="employeeResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row->
                         <div>
-                            Mã
+                            STT
                         </div>
                         <div>
-                            Tên sản phẩm
+                            Nhân viên
                         </div>
                         <div>
-                            Số lượng
+                            Điện thoại
                         </div>
                         <div>
-                            Giá bán
+                            Ngày sinh
                         </div>
                         <div>
-                            Giá bìa
+                            Địa chỉ
                         </div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="book in bookResults"
-                                :key="book.id"
+                    <table-row- v-for="(employee, index) in employeeResults"
+                                :key="employee.id"
                                 class="table-small-item">
                         <div>
-                            {{ book.id }}
+                            {{ index }}
                         </div>
                         <div>
-                            {{ book.name }}
+                            {{ employee.name }}
                         </div>
                         <div>
-                            {{ book.count }}
+                            {{ employee.phone }}
                         </div>
                         <div>
-                            {{ toMoney(book.realPrice) }}
+                            {{ employee.birthdate }}
                         </div>
                         <div>
-                            {{ toMoney(book.coverPrice) }}
+                            {{ employee.address }}
                         </div>
                     </table-row->
                 </template>
@@ -74,14 +70,14 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { toMoney, found } from '../../modules/index';
 
 export default {
     components: {
         ...'button',
         ...'col',
-        ...'dropdown',
+        ...'markdown',
         ...'input',
         ...'label',
         ...'line',
@@ -90,40 +86,32 @@ export default {
         ...'s',
         ...'table-row',
         ...'table-view',
-        ...'three-selector',
     },
     data() {
         return {
             search: '',
-            residual: 0,
             size: [
-                ['0 80px', 'end'],
-                [1, 'start'],
-                ['0 70px', 'center'],
-                ['0 80px', 'end'],
-                ['0 80px', 'end'],
+                ['0 30px', 'end'],
+                ['0 220px', 'start'],
+                ['0 90px', 'end'],
+                ['0 80px', 'center'],
+                [0.8, 'start'],
+                ['0 45px', 'end'],
             ],
         };
     },
     computed: {
-        ...mapState(['data']),
-        bookResults() {
-            return this.data.books.filter(
-                book =>
-                    found(book.name, this.search) &&
-                    ((this.residual === -1 && book.count > 0) ||
-                        (this.residual === 1 && book.count === 0) ||
-                        (this.residual === 0 && true)),
+        ...mapState(['app', 'data']),
+        employeeResults() {
+            return this.data.employees.filter(employee =>
+                found(employee.name, this.search),
             );
         },
-    },
-    methods: {
-        toMoney,
     },
 };
 </script>
 <style lang="scss">
-.admin-book {
+.admin-management-employee {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

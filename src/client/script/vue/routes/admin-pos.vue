@@ -47,7 +47,7 @@
                 <template slot="content">
                     <table-row- v-for="sell in pos.sells"
                                 :key="sell.book.id"
-                                class="book-item">
+                                class="table-small-item">
                         <div>
                             {{ sell.book.id }}
                         </div>
@@ -151,7 +151,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { toMoney, found } from '../../modules/index';
 
 export default {
@@ -204,7 +204,6 @@ export default {
         },
     },
     mounted() {
-        this.load_books();
         setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
@@ -214,7 +213,6 @@ export default {
             this.$root.$refs.app.print(this.$refs.print);
         },
         toMoney,
-        ...mapActions(['load_books']),
         ...mapMutations(['pos_add_sell_book', 'pos_remove_sell_books']),
     },
 };
