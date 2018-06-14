@@ -14,11 +14,11 @@
                         placeholder="Tìm kiếm"/>
             </row->
             <s- :s="20"/>
-            <table-view- :size="size"
+            <table-view- :col-size="size"
                          :has-content="employeeResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
-                    <table-row->
+                    <table-row- size="45">
                         <div>
                             STT
                         </div>
@@ -40,12 +40,18 @@
                 <template slot="content">
                     <table-row- v-for="(employee, index) in employeeResults"
                                 :key="employee.id"
-                                class="table-medium-item">
+                                size="60">
                         <div>
                             {{ index }}
                         </div>
-                        <div>
-                            {{ employee.name }}
+                        <div class="row">
+                            <image- :src="toAvatar(employee.userId)"
+                                    class="round square"
+                                    size="30"/>
+                            <s- :s="10"/>
+                            <span class="full">
+                                {{ employee.name }}
+                            </span>
                         </div>
                         <div>
                             {{ employee.phone }}
@@ -71,7 +77,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { toDate, found } from '../../modules/index';
+import { toDate, found, toAvatar } from '../../modules/index';
 
 export default {
     components: {
@@ -80,6 +86,7 @@ export default {
         ...'markdown',
         ...'input',
         ...'label',
+        ...'image',
         ...'line',
         ...'list',
         ...'row',
@@ -91,7 +98,7 @@ export default {
         return {
             search: '',
             size: [
-                ['0 30px', 'end'],
+                ['0 30px', 'center'],
                 ['0 220px', 'start'],
                 ['0 100px', 'end'],
                 ['0 120px', 'center'],
@@ -110,6 +117,7 @@ export default {
     },
     methods: {
         toDate,
+        toAvatar,
     },
 };
 </script>

@@ -18,11 +18,11 @@
                 </input->
             </row->
             <s- :s="20"/>
-            <table-view- :size="size"
+            <table-view- :col-size="size"
                          :has-content="pos.sells.length !== 0"
                          class="full shadow round">
                 <template slot="header">
-                    <table-row->
+                    <table-row- size="45">
                         <div>
                             Mã
                         </div>
@@ -38,16 +38,16 @@
                         <div>
                             Thành tiền
                         </div>
-                        <button- class="noPadding" 
+                        <button- class="noPadding"
                                  icon=""
                                  @click.native="pos_remove_sell_books"/>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="sell in pos.sells"
+                    <table-row- v-for="sell in pos.sells" 
                                 :key="sell.book.id"
-                                class="table-small-item">
+                                size="45">
                         <div>
                             {{ sell.book.id }}
                         </div>
@@ -213,7 +213,11 @@ export default {
             this.$root.$refs.app.print(this.$refs.print);
         },
         toMoney,
-        ...mapMutations(['pos_add_sell_book', 'pos_remove_sell_books']),
+        ...mapMutations([
+            'pos_add_sell_book',
+            'pos_remove_sell_books',
+            'pos_remove_sell_book',
+        ]),
     },
 };
 </script>
