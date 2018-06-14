@@ -1,7 +1,8 @@
 <template>
     <row- class="admin admin-pos light" >
         <col- class="left full noOverflow">
-            <row- size="40">
+            <row- size="40" 
+                  class="title">
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
@@ -19,7 +20,7 @@
             <s- :s="20"/>
             <table-view- :size="size"
                          :has-content="pos.sells.length !== 0"
-                         class="content full shadow round">
+                         class="full shadow round">
                 <template slot="header">
                     <table-row->
                         <div>
@@ -220,26 +221,24 @@ export default {
 </script>
 <style lang="scss">
 .admin-pos {
-    > *:not(.space) {
-        &.left {
-            > .row > .input.search-box {
-                min-width: 400px;
-            }
+    > .left {
+        > .row.title > .input.search-box {
+            min-width: 400px;
         }
-        &.right {
-            flex: 0 300px;
-            max-width: 300px;
-            min-width: 300px;
-            > .report {
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-            > .pay {
-                padding: 15px;
-                > .pay-row {
-                    font-size: 15px;
-                    padding: 3px 2px;
-                }
+    }
+    > .right {
+        flex: 0 300px;
+        max-width: 300px;
+        min-width: 300px;
+        > .report {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        > .pay {
+            padding: 15px;
+            > .pay-row {
+                font-size: 15px;
+                padding: 3px 2px;
             }
         }
     }

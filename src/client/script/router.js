@@ -25,6 +25,11 @@ const router = new VueRouter({
             name: 'admin-book',
             component: () => import('admin-book'),
         },
+        {
+            path: '/admin/book-add',
+            name: 'admin-book-add',
+            component: () => import('admin-book-add'),
+        },
     ],
 });
 

@@ -1,7 +1,8 @@
 <template>
     <row- class="admin admin-book light" >
-        <col- class="left full noOverflow">
-            <row- size="40">
+        <col- class="full noOverflow">
+            <row- size="40" 
+                  class="title">
                 <button- text="Thêm sách mới" 
                          class="shadow round green"/>
                 <s-/>
@@ -18,7 +19,7 @@
             <s- :s="20"/>
             <table-view- :size="size"
                          :has-content="bookResults.length !== 0"
-                         class="content full shadow round">
+                         class="full shadow round">
                 <template slot="header">
                     <table-row->
                         <div>
@@ -78,7 +79,6 @@ import { toMoney, found } from '../../modules/index';
 export default {
     components: {
         ...'button',
-        ...'three-selector',
         ...'col',
         ...'dropdown',
         ...'input',
@@ -89,12 +89,12 @@ export default {
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'three-selector',
     },
     data() {
         return {
             search: '',
             residual: 0,
-            time: '',
             size: [
                 ['0 80px', 'end'],
                 [1, 'start'],
@@ -127,11 +127,9 @@ export default {
 </script>
 <style lang="scss">
 .admin-book {
-    > *:not(.space) {
-        &.left {
-            > .row > .input.search-box {
-                min-width: 400px;
-            }
+    > .col {
+        > .row.title > .input.search-box {
+            min-width: 400px;
         }
     }
 }

@@ -7,6 +7,10 @@ input::-webkit-inner-spin-button {
     border-radius: 3px;
 }
 
+.scroll {
+    overflow: auto;
+}
+
 .green-text {
     color: #27ae60;
 }

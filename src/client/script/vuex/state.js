@@ -17,4 +17,7 @@ export default {
     pos: {
         sells: [],
     },
+    markdown: {
+        admin_book_add: require('./markdown/admin-book-add.md'),
+    },
 };

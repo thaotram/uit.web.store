@@ -17,6 +17,10 @@
                  icon=""
                  text="Sách"
                  @click.native="$router.push(`/admin/book`)"/>
+        <button- :active="$route.name == `admin-book-add`"
+                 icon=""
+                 text="Thêm sách"
+                 @click.native="$router.push(`/admin/book-add`)"/>
         <button- :active="$route.name == `admin-pos`"
                  icon=""
                  text="Bán hàng"

@@ -4,5 +4,16 @@ $padding: 10px;
     padding: $padding;
     > *:not(.space) {
         padding: $padding;
+        > .title { 
+            > h1 { 
+                font-weight: bold;
+                line-height: 40px;
+                padding: 0 5px;
+            }
+        }
+    }
+
+    .padding {
+        padding: 2 * $padding;
     }
 }
