@@ -30,7 +30,11 @@ const router = new VueRouter({
             name: 'admin-book-add',
             component: () => import('admin-book-add'),
         },
-
+        {
+            path: '/admin/user',
+            name: 'admin-user',
+            component: () => import('admin-user'),
+        },
         {
             path: '/admin/management/employee',
             name: 'admin-management-employee',

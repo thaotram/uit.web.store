@@ -14,11 +14,13 @@ export default {
     data: {
         books: [],
         employees: [],
+        users: [],
     },
     pos: {
         sells: [],
     },
     markdown: {
         admin_book_add: require('./markdown/admin-book-add.md'),
+        admin_user: require('./markdown/admin-user.md'),
     },
 };

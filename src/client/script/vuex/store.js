@@ -27,7 +27,12 @@ export default new Vuex.Store({
             const res = await fetch('/api/employees');
             commit('load_employees', await res.json());
         },
-        
+
+        async load_users({ commit }) {
+            const res = await fetch('/api/users');
+            commit('load_users', await res.json());
+        },
+
         async pos_create_cart_and_export_bill({ state }) {
             return await fetch('/api/exportBill/createWithContent', {
                 method: 'POST',

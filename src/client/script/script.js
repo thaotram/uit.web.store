@@ -31,9 +31,10 @@ new Vue({
     mounted() {
         this.load_books();
         this.load_employees();
+        this.load_users();
     },
     methods: {
-        ...mapActions(['load_books', 'load_employees']),
+        ...mapActions(['load_books', 'load_employees', 'load_users']),
     },
     render: h => h(app, { ref: 'app' }),
 });
