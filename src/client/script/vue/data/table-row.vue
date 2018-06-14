@@ -1,6 +1,5 @@
 <template>
-    <div class="table-row row" 
-         size="45">
+    <div class="table-row row">
         <slot/>
     </div>
 </template>

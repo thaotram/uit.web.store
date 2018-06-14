@@ -40,7 +40,7 @@
                 <template slot="content">
                     <table-row- v-for="(employee, index) in employeeResults"
                                 :key="employee.id"
-                                class="table-small-item">
+                                class="table-medium-item">
                         <div>
                             {{ index }}
                         </div>

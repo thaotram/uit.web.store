@@ -36,11 +36,19 @@ export default {
         },
     },
     updated() {
-        initialize({
-            group: 'table',
-            overwrite: true,
-            style: getTableStyle(this),
-        });
+        this.updateStyle();
+    },
+    mounted() {
+        this.updateStyle();
+    },
+    methods: {
+        updateStyle() {
+            initialize({
+                group: 'table',
+                overwrite: true,
+                style: getTableStyle(this),
+            });
+        },
     },
 };
 </script>

@@ -10,5 +10,15 @@
                 opacity: 1;
             }
         }
+        &.table-medium-item {
+            input {
+                font-size: 17px;
+            }
+            &.list-enter-to,
+            &.list-leave {
+                height: 70px;
+                opacity: 1;
+            }
+        }
     }
 }
