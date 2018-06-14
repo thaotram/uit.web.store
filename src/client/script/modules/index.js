@@ -1,5 +1,6 @@
 export { default as toEnglish } from './src/toEnglish';
 export { default as toMoney } from './src/toMoney';
+export { default as toDate } from './src/toDate';
 export { default as found } from './src/found';
 export { default as facebookInitialize } from './src/facebook.client';
 

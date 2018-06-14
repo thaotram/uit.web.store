@@ -51,7 +51,7 @@
                             {{ employee.phone }}
                         </div>
                         <div>
-                            {{ employee.birthdate }}
+                            {{ toDate(employee.birthdate) }}
                         </div>
                         <div>
                             {{ employee.address }}
@@ -71,7 +71,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { toMoney, found } from '../../modules/index';
+import { toDate, found } from '../../modules/index';
 
 export default {
     components: {
@@ -93,8 +93,8 @@ export default {
             size: [
                 ['0 30px', 'end'],
                 ['0 220px', 'start'],
-                ['0 90px', 'end'],
-                ['0 80px', 'center'],
+                ['0 100px', 'end'],
+                ['0 120px', 'center'],
                 [0.8, 'start'],
                 ['0 45px', 'end'],
             ],
@@ -107,6 +107,9 @@ export default {
                 found(employee.name, this.search),
             );
         },
+    },
+    methods: {
+        toDate,
     },
 };
 </script>
