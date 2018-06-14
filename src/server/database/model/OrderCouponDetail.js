@@ -2,21 +2,20 @@ import Model from '../utils/Model';
 import { Book } from '../database';
 class OrderCouponDetail extends Model {
     static isRawValid(realm, orderCouponDetails) {
-        if (!Array.isArray(orderCouponDetails)) return false;
+        if (!Array.isArray(orderCouponDetails)) throw 'Danh sách chi tiết phiếu đặt phải là một mảng';
 
         return orderCouponDetails.every(detail => {
-            if (typeof detail != 'object') return false;
+            if (typeof detail != 'object') throw 'Chi tiết phiếu đặt phải là kiểu đối tượng';
             if (!detail.hasOwnProperty('bookId') || !detail.hasOwnProperty('amount')) {
-                return false;
+                throw 'Không có trường dữ liệu bookId hoặc amount';
             }
             if (typeof detail.bookId != 'number' || typeof detail.amount != 'number') {
-                return false;
+                throw 'Cả bookId và amount phải là kiểu số';
             }
             if (Book.getById(realm, detail.bookId) == undefined) {
-                return false;
+                throw 'BookId không tồn tại';
             }
-            if (detail.amount <= 0) return false;
-            return true;
+            if (detail.amount <= 0) throw 'Amount phải > 0';
         });
     }
 

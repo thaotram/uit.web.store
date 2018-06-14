@@ -17,12 +17,9 @@ class PaymentCoupon extends Model {
      *
      */
     static async create(realm, supplier, employee, rawPaymentCoupon) {
-        if (
-            !Supplier.has(realm, supplier) ||
-            !Employee.has(realm, employee) ||
-            !PaymentCoupon.isRawValid(rawPaymentCoupon)
-        ) {
-            throw `Supplier, Employee or PaymentCoupon doesn't exist`;
+        PaymentCoupon.isRawValid(rawPaymentCoupon);
+        if (!Supplier.has(realm, supplier) || !Employee.has(realm, employee)) {
+            throw `Supplier, Employee doesn't exist`;
         }
         return await PaymentCoupon.write(realm, true, {
             id: PaymentCoupon.getNextId(realm),

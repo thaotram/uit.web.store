@@ -32,9 +32,8 @@ class Employee extends Model {
         ) {
             throw `Employee is exist`;
         }
-        if (!Employee.isRawValid(rawEmployee)) {
-            throw 'Information Error';
-        }
+        Employee.isRawValid(rawEmployee);
+        
         return await Employee.write(realm, true, {
             id: Employee.getNextId(realm),
             user: user,

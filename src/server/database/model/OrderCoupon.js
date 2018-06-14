@@ -15,12 +15,9 @@ class OrderCoupon extends Model {
      * @param {Object[]} orderCouponDetails
      */
     static async create(realm, supplier, employee, orderCouponDetails) {
-        if (
-            !Supplier.has(realm, supplier) ||
-            !Employee.has(realm, employee) ||
-            !OrderCouponDetail.isRawValid(realm, orderCouponDetails)
-        ) {
-            throw `Supplier, Employee or OrderCouponDetail doesn't exist`;
+        OrderCouponDetail.isRawValid(realm, orderCouponDetails);
+        if (!Supplier.has(realm, supplier) || !Employee.has(realm, employee)) {
+            throw `Supplier, Employee doesn't exist`;
         }
         const orderCoupon = await OrderCoupon.write(realm, true, {
             id: OrderCoupon.getNextId(realm),
