@@ -134,6 +134,10 @@ export default {
         background: transparent;
     }
 
+    .button {
+        transition: all 0.4s;
+    }
+
     > .user > .label > .text {
         line-height: 30px;
         height: 30px;
@@ -144,7 +148,6 @@ export default {
     > .indent.show {
         > .button {
             height: 50px;
-            transition: all 0.4s 0s;
             opacity: 1;
         }
     }
@@ -152,7 +155,7 @@ export default {
         min-height: 0px;
         height: 0;
         opacity: 0;
-        transition: all 0.4s 0.5s;
+        // transition: all 0.4s 0.5s;
         overflow: hidden;
     }
 

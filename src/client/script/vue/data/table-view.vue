@@ -17,7 +17,7 @@
     </div>    
 </template>
 <script>
-import { initialize } from 'style';
+import style, { initialize } from 'style';
 import { getTableStyle } from './table-utils';
 
 export default {
@@ -26,7 +26,7 @@ export default {
         ...'list',
     },
     props: {
-        size: {
+        colSize: {
             type: Array,
             default: () => [],
         },
@@ -36,11 +36,19 @@ export default {
         },
     },
     updated() {
-        initialize({
-            group: 'table',
-            overwrite: true,
-            style: getTableStyle(this),
-        });
+        this.updateStyle();
+    },
+    mounted() {
+        this.updateStyle();
+    },  
+    methods: {
+        updateStyle() {
+            initialize({
+                group: 'table',
+                overwrite: true,
+                style: getTableStyle(this),
+            });
+        },
     },
 };
 </script>

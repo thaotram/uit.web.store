@@ -18,11 +18,11 @@
                         placeholder="Tìm kiếm"/>
             </row->
             <s- :s="20"/>
-            <table-view- :size="size"
+            <table-view- :col-size="size"
                          :has-content="bookResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
-                    <table-row->
+                    <table-row- size="45">
                         <div>
                             Mã
                         </div>
@@ -44,7 +44,7 @@
                 <template slot="content">
                     <table-row- v-for="book in bookResults"
                                 :key="book.id"
-                                class="table-small-item">
+                                size="45">
                         <div>
                             {{ book.id }}
                         </div>

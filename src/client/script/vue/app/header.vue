@@ -7,15 +7,15 @@
         <line-/>
         <row- class="account" 
               size="50">
-            <label- :text="user.name"/>
-            <image- class="round square"
-                    size="30"
-                    src="#"/>
+            <image- :src="toAvatar(user.id)"
+                    class="round square"
+                    size="30"/>
         </row->
     </row->
 </template>
 <script>
 import { mapState } from 'vuex';
+import { toAvatar } from '../../modules/index';
 
 export default {
     components: {
@@ -28,6 +28,9 @@ export default {
     },
     computed: {
         ...mapState(['user']),
+    },
+    methods: {
+        toAvatar,
     },
 };
 </script>

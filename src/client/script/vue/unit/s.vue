@@ -17,6 +17,12 @@ export default {
                 [`.col > .space[size="${this.s}"], .row > .space[size="${this.s}"]`]: {
                     flex: `0 ${this.s}px`,
                 },
+                [`.col > .space[size="${this.s}"]`]: {
+                    minHeight: `${this.s}px`,
+                },
+                [`.row > .space[size="${this.s}"]`]: {
+                    minWidth: `${this.s}px`,
+                },
             });
         }
     },

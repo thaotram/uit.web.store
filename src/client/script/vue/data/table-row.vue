@@ -1,20 +1,28 @@
 <template>
-    <div class="table-row row" 
-         size="45">
+    <div class="table-row row">
         <slot/>
     </div>
 </template>
 <script>
-import style from 'style';
+import style, { getAttribute } from 'style';
 export default {
     mounted() {
         const dpi = window.devicePixelRatio;
+        const size = getAttribute('size', this, 40, true);
+        const rowPadding = 10;
         style({
             '.table-row > *:not(:first-child)': {
                 borderLeftWidth: `${1 / dpi}px`,
             },
             '.content > .table-row': {
                 borderBottomWidth: `${1 / dpi}px`,
+            },
+            [`.table-row[size="${size}"]`]: {
+                lineHeight: `${size - rowPadding * 2}px`,
+            },
+            [`.table-row[size="${size}"], .table-row[size="${size}"].list-enter-to, .table-row[size="${size}"].list-leave`]: {
+                minHeight: `${size}px`,
+                height: `${size}px`,
             },
         });
     },
@@ -29,7 +37,6 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
         box-sizing: content-box;
-        line-height: 25px;
     }
     > input {
         outline: 0;
@@ -40,12 +47,21 @@ export default {
     > div,
     input {
         &:not(.noPadding) {
-            padding: 10px 15px;
+            padding: 10px;
         }
         &:not(:first-child) {
             border-left-style: solid;
             border-left-color: $light-line-color;
         }
+    }
+
+    &,
+    &.list-enter-to,
+    &.list-leave {
+        opacity: 1;
+    }
+    input {
+        font-size: 17px;
     }
 }
 
