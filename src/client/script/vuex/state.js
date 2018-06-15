@@ -25,6 +25,10 @@ export default {
     import_coupon: {
         buys: [],
     },
+    order_coupon: {
+        orders: [],
+    },
+
     markdown: {
         admin_book_add: require('./markdown/admin-book-add.md'),
         admin_book_detail: require('./markdown/admin-book-detail.md'),

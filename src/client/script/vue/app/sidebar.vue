@@ -101,15 +101,36 @@
                  text="Hóa đơn bán hàng"
                  @click.native="go('/admin/transaction/export-bill')"/>
 
+        <!-- Phiếu nhập -->
         <button- :active="is('admin-transaction-import-coupon')"
                  icon=""
                  text="Phiếu nhập sách"
                  @click.native="go('/admin/transaction/import-coupon')"/>
+        <col- :class="{show: match(/^admin-transaction-import-coupon/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-import-coupon-add')"
+                     :class="{hide: !is('admin-transaction-import-coupon-add')}"
+                     icon=""
+                     text="Tạo phiếu nhập"
+                     @click.native="go('/admin/transaction/import-coupon/add')"/>
+        </col->
 
+        <!-- Phiếu đặt -->
         <button- :active="is('admin-transaction-order-coupon')"
                  icon=""
                  text="Phiếu đặt sách"
                  @click.native="go('/admin/transaction/order-coupon')"/>
+        <col- :class="{show: match(/^admin-transaction-order-coupon/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-order-coupon-add')"
+                     :class="{hide: !is('admin-transaction-order-coupon-add')}"
+                     icon=""
+                     text="Tạo phiếu đặt"
+                     @click.native="go('/admin/transaction/order-coupon/add')"/>
+        </col->
+
                  
         <button- :active="is('admin-transaction-payment-coupon')"
                  icon=""

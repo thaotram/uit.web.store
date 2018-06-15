@@ -10,6 +10,7 @@ export default function(app, io, realm) {
     app.post('/api/importCoupons/create', async (req, res) => {
         const employee = Employee.getBySessionId(req.sessionID);
         const supplier = Supplier.getById(realm, Number(req.body.supplierId));
+
         const importCoupon = await ImportCoupon.create(
             realm,
             supplier,
@@ -19,6 +20,7 @@ export default function(app, io, realm) {
         );
 
         io.emit('update', 'importCoupon');
+        io.emit('update', 'book');
         res.send(importCoupon.json);
     });
 

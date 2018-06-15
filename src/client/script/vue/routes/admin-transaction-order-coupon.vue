@@ -3,9 +3,10 @@
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Thêm nhà cung cấp mới" 
+                <button- text="Tạo phiếu đặt" 
                          icon=""
-                         class="shadow round green"/>
+                         class="shadow round green"
+                         @click.native="$router.push('/admin/transaction/order-coupon/add')"/>
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  

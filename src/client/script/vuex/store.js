@@ -9,6 +9,7 @@ import admin from './mutations/admin';
 import gui from './mutations/gui';
 import pos from './mutations/pos';
 import import_coupon from './mutations/import_coupon';
+import order_coupon from './mutations/order_coupon';
 import authorize from './mutations/authorize';
 
 Vue.use(Vuex);
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         ...pos,
         ...authorize,
         ...import_coupon,
+        ...order_coupon,
     },
     actions: {
         ...keys.reduce((object, key) => {
