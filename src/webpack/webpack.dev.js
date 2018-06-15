@@ -5,6 +5,7 @@ import webpack from 'webpack';
 const development = {
     mode: 'development',
     entry: [
+        '@babel/polyfill',
         'webpack-hot-middleware/client',
         'webpack/hot/dev-server',
         './src/client/script/script.js',

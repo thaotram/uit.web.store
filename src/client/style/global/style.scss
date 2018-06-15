@@ -11,14 +11,24 @@
 
 html,
 body {
-    user-select: none;
-    font-family: $text-font;
-    color: rgba(0, 0, 0, 0.87);
-    -webkit-user-select: none;
-    word-wrap: break-word;
-    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: $text-font;
+    font-weight: 300;
     line-height: 1.3em;
+    user-select: none;
+    word-wrap: break-word;
+}
+
+input {
+    font-family: $text-font;
+    font-weight: 300;
+    line-height: 1.3em;
+    font-weight: 400;
+    color: $light-text-color;
+    background: transparent;
 }
 
 li,
@@ -46,9 +56,9 @@ a:hover {
 
 @for $header from 1 through 6 {
     h#{$header} {
-        font-weight: normal;
-        font-size: 1em + (6 - $header) * 0.1em;
-        line-height: 1.5em;
+        font-weight: bold;
+        font-size: 0.8em + (6 - $header) * 0.1em;
+        line-height: 1.2em;
     }
 }
 
@@ -70,13 +80,20 @@ hr {
 }
 
 // ----- scrollbar -----
-$blue: #3498db;
 $scrollbar-size: 12px;
 ::-webkit-scrollbar {
     width: $scrollbar-size;
     height: $scrollbar-size;
+    background-color: $scrollbar-color;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #23232d;
+    background-color: $scrollbar-thumb;
+}
+
+$scrollbar-light: 8px;
+.scrollbar-light {
+    &::-webkit-scrollbar {
+        width: $scrollbar-light;
+    }
 }

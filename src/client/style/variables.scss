@@ -1,5 +1,29 @@
-$text-color: #ccc;
-$color-blue: #3498db;
+$text-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// $text-font: 'Noto Sans', sans-serif;
 
-$text-font: 'Noto Sans', sans-serif;
-$line-size: 1px;
+$color: #38f;
+
+$scrollbar-thumb: rgba(black, 0.2);
+$scrollbar-color: rgba(black, 0.15);
+
+$light-shadow-color: rgba(0, 0, 0, 0.3);
+$light-text-color: #1e1e1e;
+$light-line-color: rgba(black, 0.15);
+$light-background: #ddd;
+$light-background-hover: rgba(black, 0.2);
+$light-background-active: rgba(black, 0.3);
+
+$dark-shadow-color: rgba(0, 0, 0, 0.75);
+$dark-text-color: #738699;
+$dark-line-color: #343d4a;
+$dark-background: #212733;
+$dark-background-hover: rgba(black, 0.2);
+$dark-background-active: rgba(black, 0.3);
+
+$side-width: 250px;
+
+$table-row-height: 20px;
+$table-margin: 15px;
+$table-radius: 5px;
+$light-table-border: rgba(black, 0.2);
+$table-font-size: 15px;

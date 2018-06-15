@@ -1,7 +1,6 @@
 import appConfigClient from './config.client';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import openInEditor from 'express-open-in-editor';
 import session from 'express-session';
 
 const sessionConfig = session({
@@ -33,8 +32,7 @@ export default function(app, io) {
             extended: true,
         }),
     );
-    app.use(cookieParser());
-    app.use('/__open-in-editor', openInEditor({ editor: 'code' }));
+    // app.use(cookieParser());
     app.set('json spaces', 2);
     appConfigClient(app);
 }

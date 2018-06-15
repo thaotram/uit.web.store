@@ -1,0 +1,58 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.round {
+    border-radius: 3px;
+}
+
+.scroll {
+    overflow: auto;
+}
+
+.green-text {
+    color: #27ae60;
+}
+
+.orange-text {
+    color: #e67e22;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.semibold {
+    font-weight: 600;
+}
+
+.noOverflow {
+    overflow: hidden;
+}
+
+.half {
+    flex: 0.5;
+}
+
+.flex-end {
+    align-items: flex-end;
+}
+
+.light {
+    .shadow {
+        box-shadow: 0 0 5px $light-shadow-color;
+        background-color: white;
+    }
+}
+
+.nanobar > .bar {
+    background: $color;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba($color, 0.3);
+}
+
+.dark {
+    box-shadow: 0 0 10px $dark-shadow-color;
+    background: $dark-background;
+}

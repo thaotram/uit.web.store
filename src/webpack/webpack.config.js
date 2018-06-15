@@ -30,14 +30,13 @@ export default {
             {
                 test: /\.scss$/,
                 use: [
-                    {
-                        loader: 'style-loader',
-                    },
-                    {
-                        loader: 'css-loader',
-                    },
+                    'vue-style-loader',
+                    'css-loader',
                     {
                         loader: 'sass-loader',
+                        options: {
+                            data: '@import "src/client/style/variables.scss";',
+                        },
                     },
                 ],
             },
@@ -61,17 +60,24 @@ export default {
                 test: /\.json$/,
                 use: 'json-loader',
             },
+            {
+                test: /\.md$/,
+                use: 'raw-loader',
+            },
         ],
     },
     resolve: {
-        alias: {
-            '@': path.resolve(__dirname, './src/client/script/vue'),
-        },
         modules: [
-            path.resolve(__dirname, '../../node_modules'),
-            path.resolve(__dirname, '../client/script/modules'),
+            'node_modules',
+            'src/client/script/modules/',
+            'src/client/script/vue/app/',
+            'src/client/script/vue/container/',
+            'src/client/script/vue/data/',
+            'src/client/script/vue/project/',
+            'src/client/script/vue/routes/',
+            'src/client/script/vue/unit/',
         ],
-        extensions: ['.js', '.vue', '.json'],
+        extensions: ['.vue', '.js', '.json'],
     },
     plugins: [
         new VueLoaderPlugin(),
