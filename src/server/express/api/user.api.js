@@ -1,3 +1,5 @@
+import { Employee } from '../../database/database';
+
 /**
  *
  * @param {Express.Application} app
@@ -5,6 +7,8 @@
  */
 export default function(app, realm) {
     app.get('/api/users', (req, res) => {
+        Employee.getBySessionId(req.sessionID);
+
         const users = realm.objects('User').map(user => ({
             ...user.json,
             ...user.detail,
