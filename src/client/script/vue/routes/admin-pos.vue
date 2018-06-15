@@ -59,10 +59,10 @@
                                refs="count"
                                min="0">
                         <div>
-                            {{ toMoney(sell.book.realPrice) }}
+                            {{ money(sell.book.realPrice) }}
                         </div>
                         <div>
-                            {{ toMoney(sell.count * sell.book.realPrice) }}
+                            {{ money(sell.count * sell.book.realPrice) }}
                         </div>
                         <button- class="noPadding"
                                  icon=""
@@ -111,15 +111,15 @@
                              class="row">
                             <div>{{ sell.book.name }}</div>
                             <div>{{ sell.count }}</div>
-                            <div>{{ toMoney(sell.book.realPrice) }}</div>
-                            <div>{{ toMoney(sell.count * sell.book.realPrice) }}</div>
+                            <div>{{ money(sell.book.realPrice) }}</div>
+                            <div>{{ money(sell.count * sell.book.realPrice) }}</div>
                         </div>
                         <div class="line"/>
                         <div class="row bold">
                             <div>Tổng cộng</div>
                             <div>{{ count }}</div>
                             <div/>
-                            <div>{{ toMoney(total) }}</div>
+                            <div>{{ money(total) }}</div>
                         </div>
                     </div>
                     <s- :s="20"/>
@@ -136,7 +136,7 @@
                 <row- class="pay-row bold">
                     <span>Khách phải trả:</span>
                     <s-/>
-                    <span class="green-text">{{ toMoney(total) }}</span>
+                    <span class="green-text">{{ money(total) }}</span>
                 </row->
                 <s- :s="10"/>
                 <row- size="40">
@@ -152,7 +152,7 @@
 <script>
 import moment from 'moment';
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { toMoney, found } from '../../modules/index';
+import { money, found } from '../../modules/index';
 
 export default {
     components: {
@@ -209,12 +209,12 @@ export default {
         }, 100);
     },
     methods: {
+        money,
         async payAndPrint() {
             await this.pos_create_cart_and_export_bill();
             this.$root.$refs.app.print(this.$refs.print);
             this.pos_remove_sell_books();
         },
-        toMoney,
         ...mapMutations([
             'pos_add_sell_book',
             'pos_remove_sell_books',

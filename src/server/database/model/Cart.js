@@ -75,7 +75,12 @@ class Cart extends Model {
         const o = this.object;
         o.userId = this.owner ? this.owner.id : undefined;
         const exportBill = this.exportBill[0];
-        if (exportBill !== undefined) o.exportBill = exportBill.jsonWithoutCart;
+        if (exportBill !== undefined) {
+            o.exportBill = {
+                ...exportBill.json,
+                ...exportBill.detail,
+            };
+        }
         o.cartDetails = this.cartDetails.map(cartDetail => cartDetail.json);
         return o;
     }
