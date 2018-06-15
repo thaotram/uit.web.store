@@ -21,10 +21,10 @@
         <col- :class="{show: match(/^admin-book/)}"
               size="50"
               class="indent">
-            <button- :active="match(/^admin-book-detail/)"
+            <!-- <button- :active="match(/^admin-book-detail/)"
                      icon=""
                      text="Thông tin sách"
-                     @click.native="go('/admin/book/detail')"/>
+                     @click.native="go('/admin/book/detail')"/> -->
             <button- :active="is('admin-book-add')"
                      icon=""
                      text="Thêm sách"

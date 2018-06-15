@@ -133,6 +133,18 @@ export default {
     }
 }
 
+.input-color {
+    .input {
+        background: #34495e;
+        input {
+            color: #f1f1f1;
+            &::placeholder {
+                color: rgba(white, 0.4);
+            }
+        }
+    }
+}
+
 .input {
     display: flex;
     position: relative;

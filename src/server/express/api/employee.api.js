@@ -6,10 +6,14 @@ import { Employee, User } from '../../database/database';
  */
 export default function(app, realm) {
     app.post('/api/employee/create', async (req, res) => {
+        // try {
         const userId = Number(req.body.userId);
         const user = User.getById(realm, userId);
         const employee = await Employee.create(realm, user, req.body.employee);
         res.send(employee.json);
+        // } catch (e) {
+        // console.log(e);
+        // }
     });
     app.post('/api/employee/edit', async (req, res) => {
         const employee = Employee.getById(realm, req.body.employeeId);

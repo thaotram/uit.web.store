@@ -76,6 +76,16 @@ const router = new VueRouter({
             component: () => import('admin-management-employee'),
         },
         {
+            path: '/admin/management/employee/add',
+            name: 'admin-management-employee-add',
+            component: () => import('admin-management-employee-add'),
+        },
+        {
+            path: '/admin/management/employee/edit/:id',
+            name: 'admin-management-employee-edit',
+            component: () => import('admin-management-employee-edit'),
+        },
+        {
             path: '/admin/management/supplier',
             name: 'admin-management-supplier',
             component: () => import('admin-management-supplier'),
