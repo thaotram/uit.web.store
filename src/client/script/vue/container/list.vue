@@ -20,6 +20,6 @@ export default {
     opacity: 0 !important;
 }
 .list > * {
-    transition: all 0.5s;
+    transition: height 0.5s, min-height 0.5s, opacity 0.5s, background-color 0.1s;
 }
 </style>

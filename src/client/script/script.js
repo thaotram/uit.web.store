@@ -29,6 +29,9 @@ new Vue({
                 store.commit('authorize', status.res);
                 if (typeof status.res.employeeId === 'number') {
                     router.push('/admin/pos');
+                    keys.forEach(key => {
+                        this[`load_${key}s`]();
+                    });
                 } else {
                     router.push('/authorize/error');
                 }

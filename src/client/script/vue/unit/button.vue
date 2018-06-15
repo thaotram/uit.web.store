@@ -126,4 +126,32 @@ export default {
         background-color: darken($green, 20%) !important;
     }
 }
+
+.button.facebook {
+    $blue: #3b5998;
+    background-color: $blue;
+    color: #f7f7f7;
+    &:hover,
+    &.active,
+    &.active:hover {
+        background-color: darken($blue, 10%);
+    }
+    &:active {
+        background-color: darken($blue, 20%);
+    }
+}
+
+.button.orange {
+    $orange: #e67e22;
+    background-color: $orange;
+    color: #f7f7f7;
+    &:hover,
+    &.active,
+    &.active:hover {
+        background-color: darken($orange, 10%);
+    }
+    &:active {
+        background-color: darken($orange, 20%);
+    }
+}
 </style>

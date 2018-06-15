@@ -47,18 +47,3 @@ export default {
     },
 };
 </script>
-<style lang="scss">
-$blue: #3b5998;
-.authorize-login {
-    .button.facebook {
-        background-color: $blue;
-        color: #f7f7f7;
-        &:hover {
-            background-color: mix(black, $blue, 25%);
-        }
-        &:active {
-            background-color: mix(black, $blue, 50%);
-        }
-    }
-}
-</style>

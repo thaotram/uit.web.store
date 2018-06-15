@@ -36,6 +36,11 @@ const router = new VueRouter({
             component: () => import('admin-book'),
         },
         {
+            path: '/admin/book/detail/:id',
+            name: 'admin-book-detail',
+            component: () => import('admin-book-detail'),
+        },
+        {
             path: '/admin/book/add',
             name: 'admin-book-add',
             component: () => import('admin-book-add'),
