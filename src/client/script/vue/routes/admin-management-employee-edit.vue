@@ -1,10 +1,10 @@
 <template>
-    <row- class="admin admin-management-user-edit light" >
+    <row- class="admin admin-management-employee-edit light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Chỉnh sửa thông tin nhân viên" 
-                         icon=""
+                <button- text="Lưu thông tin đã thay đổi" 
+                         icon=""
                          class="shadow round green"
                          @click.native="submit"/>
             </row->
@@ -12,7 +12,7 @@
             <col- class="full round shadow noOverflow">
                 <div class="full scroll padding">
                     <div class="col">
-                        <h1>Thêm nhân viên mới</h1>
+                        <h1>Cập nhật thông tin nhân viên</h1>
                         <s- :s="20"/>
                         <line-/>
                         <s- :s="20"/>
@@ -71,8 +71,8 @@
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
-import { date, found, avatar, user } from '../../modules/index';
+import { mapState } from 'vuex';
+import { date, avatar, user } from '../../modules/index';
 
 export default {
     components: {
@@ -142,7 +142,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-management-user-edit {
+.admin-management-employee-edit {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

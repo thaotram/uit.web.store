@@ -1,10 +1,10 @@
 <template>
-    <row- class="admin admin-management-supplier-add light" >
+    <row- class="admin admin-management-supplier-edit light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Lưu thông tin đã sửa" 
-                         icon=""
+                <button- text="Lưu thông tin đã thay đổi" 
+                         icon=""
                          class="shadow round green"
                          @click.native="submit"/>
             </row->
@@ -12,7 +12,7 @@
             <col- class="full round shadow noOverflow">
                 <div class="full scroll padding">
                     <div class="col">
-                        <h1>Thêm nhà cung cấp</h1>
+                        <h1>Cập nhật thông tin nhà cung cấp</h1>
                         <s- :s="20"/>
                         <line-/>
                         <s- :s="20"/>
@@ -20,7 +20,7 @@
                             <col- size="40" 
                                   class="flex-end">
                                 <button- class="shadow round green" 
-                                         text="Tên nhà cung cấp"/>
+                                         text="Họ và tên"/>
                                 <button- class="shadow round green" 
                                          text="Địa chỉ"/>
                                 <button- class="shadow round green" 
@@ -32,7 +32,7 @@
                                 <input- v-model="supplier.name"
                                         class="shadow search-box round"
                                         type="text"
-                                        placeholder="Tên nhà cung cấp"/>
+                                        placeholder="Họ và tên nhân viên"/>
                                 <input- v-model="supplier.address"
                                         class="shadow search-box round"
                                         type="text"
@@ -71,16 +71,6 @@ export default {
     },
     data() {
         return {
-            user: {
-                id: null,
-                name: 'Không xác định',
-            },
-            search: '',
-            supplier: {
-                name: '',
-                address: '',
-                phone: '',
-            },
             size: [
                 ['0 30px', 'center'],
                 ['0 220px', 'start'],
@@ -93,18 +83,28 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
+        supplier() {
+            return (
+                this.data.suppliers.find(
+                    supplier => supplier.id == Number(this.$route.params.id),
+                ) || {
+                    name: '',
+                    address: '',
+                    phone: '',
+                }
+            );
+        },
     },
     methods: {
         date,
         avatar,
         async submit() {
-            const res = await fetch('/api/supplier/create', {
+            const res = await fetch('/api/supplier/edit', {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: JSON.stringify({
-                    name: this.supplier.name,
-                    address: this.supplier.address,
-                    phone: this.supplier.phone,
+                    supplierId: this.supplier.id,
+                    data: this.supplier,
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -117,7 +117,12 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-management-supplier-add {
+.admin-management-supplier-edit {
+    > .col {
+        > .row.title > .input.search-box {
+            min-width: 400px;
+        }
+    }
     .input-color {
         .col {
             > .user-input,

@@ -3,7 +3,6 @@ import { filename, itname } from '../utils/utils';
 import { getUserInfo } from '../../src/server/credential/facebook.server';
 import database, { User } from '../../src/server/database/database';
 import nock from 'nock';
-import { FacebookApiException } from 'fb';
 
 describe(filename(__filename), function() {
     this.timeout(1000000);

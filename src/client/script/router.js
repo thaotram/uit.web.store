@@ -95,6 +95,11 @@ const router = new VueRouter({
             name: 'admin-management-supplier-add',
             component: () => import('admin-management-supplier-add'),
         },
+        {
+            path: '/admin/management/supplier/edit/:id',
+            name: 'admin-management-supplier-edit',
+            component: () => import('admin-management-supplier-edit'),
+        },
     ],
 });
 

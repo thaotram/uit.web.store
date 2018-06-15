@@ -32,7 +32,8 @@
                 <template slot="content">
                     <table-row- v-for="(supplier, index) in supplierResults"
                                 :key="supplier.id"
-                                size="45">
+                                size="45"
+                                @click.native="$router.push(`/admin/management/supplier/edit/${supplier.id}`)">
                         <div>
                             {{ index + 1 }}
                         </div>
