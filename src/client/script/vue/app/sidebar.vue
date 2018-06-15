@@ -1,6 +1,6 @@
 <template>
     <col- id="sidebar"
-          :class="{fullSize: gui.fullSideBarSize}"
+          :class="{fullSize: gui.fullSideBarSize, hide: typeof authorize.id !== 'number'}"
           size="50"
           class="dark">
         <button- icon=""
@@ -21,10 +21,10 @@
         <col- :class="{show: match(/^admin-book/)}"
               size="50"
               class="indent">
-            <button- :active="match(/^admin-book-detail/)"
+            <!-- <button- :active="match(/^admin-book-detail/)"
                      icon=""
                      text="Thông tin sách"
-                     @click.native="go('/admin/book/detail')"/>
+                     @click.native="go('/admin/book/detail')"/> -->
             <button- :active="is('admin-book-add')"
                      icon=""
                      text="Thêm sách"
@@ -102,12 +102,13 @@
         <button- icon="" 
                  text="Thông tin"/>
         <button- icon="" 
-                 text="Đăng xuất"/>
+                 text="Đăng xuất"
+                 @click.native="logout"/>
     </col->
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex';
-
+import { Facebook } from '../../modules';
 export default {
     components: {
         ...'col',
@@ -119,7 +120,7 @@ export default {
         ...'image',
     },
     computed: {
-        ...mapState(['user', 'gui']),
+        ...mapState(['authorize', 'gui']),
     },
     methods: {
         ...mapMutations(['gui_toogleSideBar']),
@@ -133,11 +134,18 @@ export default {
             if (!this.$route.name) return false;
             return this.$route.name.match(regex) !== null;
         },
+        logout() {
+            Facebook.FB.logout(this.$root.checkLogin);
+        },
     },
 };
 </script>
 <style lang="scss">
 #sidebar {
+    overflow: hidden;
+    &.hide {
+        width: 0 !important;
+    }
     z-index: 2;
 
     .button.parent.active {
@@ -165,7 +173,6 @@ export default {
         min-height: 0px;
         height: 0;
         opacity: 0;
-        // transition: all 0.4s 0.5s;
         overflow: hidden;
     }
 

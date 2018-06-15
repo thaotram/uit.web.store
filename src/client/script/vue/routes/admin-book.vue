@@ -44,7 +44,8 @@
                 <template slot="content">
                     <table-row- v-for="book in bookResults"
                                 :key="book.id"
-                                size="45">
+                                size="45"
+                                @click.native="$router.push(`/admin/book/detail/${book.id}`)">
                         <div>
                             {{ book.id }}
                         </div>

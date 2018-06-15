@@ -23,6 +23,9 @@ export default {
     },
     markdown: {
         admin_book_add: require('./markdown/admin-book-add.md'),
+        admin_book_detail: require('./markdown/admin-book-detail.md'),
         admin_user: require('./markdown/admin-user.md'),
+        authorize_login: require('./markdown/authorize-login.md'),
+        authorize_error: require('./markdown/authorize-error.md'),
     },
 };

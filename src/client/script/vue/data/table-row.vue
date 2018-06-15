@@ -68,5 +68,12 @@ export default {
 .content > .table-row {
     border-bottom-style: solid;
     border-bottom-color: $light-line-color;
+    cursor: pointer;
+    &:hover {
+        background: rgba(black, 0.2);
+    }
+    &:active {
+        background: rgba(black, 0.4);
+    }
 }
 </style>

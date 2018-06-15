@@ -16,6 +16,16 @@ const router = new VueRouter({
             component: () => import('home'),
         },
         {
+            path: '/authorize/login',
+            name: 'authorize-login',
+            component: () => import('authorize-login'),
+        },
+        {
+            path: '/authorize/error',
+            name: 'authorize-error',
+            component: () => import('authorize-error'),
+        },
+        {
             path: '/admin/pos',
             name: 'admin-pos',
             component: () => import('admin-pos'),
@@ -24,6 +34,11 @@ const router = new VueRouter({
             path: '/admin/book',
             name: 'admin-book',
             component: () => import('admin-book'),
+        },
+        {
+            path: '/admin/book/detail/:id',
+            name: 'admin-book-detail',
+            component: () => import('admin-book-detail'),
         },
         {
             path: '/admin/book/add',
@@ -59,6 +74,16 @@ const router = new VueRouter({
             path: '/admin/management/employee',
             name: 'admin-management-employee',
             component: () => import('admin-management-employee'),
+        },
+        {
+            path: '/admin/management/employee/add',
+            name: 'admin-management-employee-add',
+            component: () => import('admin-management-employee-add'),
+        },
+        {
+            path: '/admin/management/employee/edit/:id',
+            name: 'admin-management-employee-edit',
+            component: () => import('admin-management-employee-edit'),
         },
         {
             path: '/admin/management/supplier',

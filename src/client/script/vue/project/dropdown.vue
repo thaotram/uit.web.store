@@ -56,4 +56,30 @@ export default {
         }
     }
 }
+
+.dropdown.user-dropdown .result {
+    z-index: 10;
+    > .user {
+        cursor: pointer;
+        z-index: 1;
+        border-bottom: 0.85px solid rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+
+        height: 50px;
+        min-height: 50px;
+
+        > .row {
+            padding: 5px;
+            > span {
+                line-height: 40px;
+            }
+        }
+        &:hover {
+            background-color: rgba(black, 0.1);
+        }
+        &:active {
+            background-color: rgba(black, 0.2);
+        }
+    }
+}
 </style>

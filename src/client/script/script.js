@@ -13,28 +13,30 @@ new Vue({
     router,
     store,
     async beforeCreate() {
-        router.push('/');
+        // router.push('/');
 
         await Facebook.initialize();
-        const status = await Facebook.status(socket);
-
-        if (!status.isLogin) {
-            router.push('/login');
-        } else {
-            store.commit('authorize', status.res);
-            if (typeof status.res.employeeId === 'number') {
-                router.push('/admin/pos');
-            } else {
-                router.push('/error/not-authorized');
-            }
-        }
-
-        keys.forEach(key => {
-            this[`load_${key}s`]();
-        });
+        await this.checkLogin();
     },
     methods: {
         ...mapActions(keys.map(key => `load_${key}s`)),
+        async checkLogin() {
+            const status = await Facebook.status(socket);
+            if (!status.isLogin) {
+                store.commit('authorize', {});
+                router.push('/authorize/login');
+            } else {
+                store.commit('authorize', status.res);
+                if (typeof status.res.employeeId === 'number') {
+                    // router.push('/admin/pos');
+                    keys.forEach(key => {
+                        this[`load_${key}s`]();
+                    });
+                } else {
+                    router.push('/authorize/error');
+                }
+            }
+        },
     },
     render: h => h(app, { ref: 'app' }),
 });

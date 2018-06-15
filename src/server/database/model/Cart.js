@@ -39,7 +39,7 @@ class Cart extends Model {
     static async queryCart(realm, query) {
         let carts = realm.objects('Cart');
         if (query.hasOwnProperty('userId')) {
-            carts = carts.filtered('owner.id == $0', query.userId);
+            carts = carts.filtered('owner != null && owner.id == $0', query.userId);
         }
         if (query.hasOwnProperty('isBill')) {
             if (query.isBill == true) {
@@ -73,7 +73,7 @@ class Cart extends Model {
 
     get json() {
         const o = this.object;
-        o.userId = this.owner ? this.owner.id : undefined;
+        o.userId = !this.owner ? undefined : this.owner.id;
         const exportBill = this.exportBill[0];
         if (exportBill !== undefined) {
             o.exportBill = {
