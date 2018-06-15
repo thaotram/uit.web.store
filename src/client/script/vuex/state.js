@@ -5,9 +5,11 @@ export default {
         address: 'Khu phố 6, Phường Linh Trung, Quận Thủ Đức, Thành phố Hồ Chí Minh',
         phone: '(028) 372 51993',
     },
-    user: {
-        id: 715380908507851,
-        name: 'Lê Thị Thảo Trâm',
+    authorize: {
+        id: -1,
+        name: '...',
+        point: 0,
+        employeeId: 1,
     },
     gui: {
         fullSideBarSize: true,

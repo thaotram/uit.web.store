@@ -1,4 +1,4 @@
-import { Book } from '../../database/database';
+import { Book, Employee } from '../../database/database';
 
 /**
  *
@@ -18,6 +18,8 @@ export default function(app, realm) {
         res.json(book.json);
     });
     app.get('/api/books', (req, res) => {
+        Employee.getBySessionId(req.sessionID);
+
         const books = Book.getJsonBooks(realm);
         res.json(books);
     });

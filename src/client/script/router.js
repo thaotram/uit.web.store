@@ -40,7 +40,21 @@ const router = new VueRouter({
             name: 'admin-transaction-export-bill',
             component: () => import('admin-transaction-export-bill'),
         },
-
+        {
+            path: '/admin/transaction/import-coupon',
+            name: 'admin-transaction-import-coupon',
+            component: () => import('admin-transaction-import-coupon'),
+        },
+        {
+            path: '/admin/transaction/order-coupon',
+            name: 'admin-transaction-order-coupon',
+            component: () => import('admin-transaction-order-coupon'),
+        },
+        {
+            path: '/admin/transaction/payment-coupon',
+            name: 'admin-transaction-payment-coupon',
+            component: () => import('admin-transaction-payment-coupon'),
+        },
         {
             path: '/admin/management/employee',
             name: 'admin-management-employee',

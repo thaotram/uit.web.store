@@ -1,7 +1,5 @@
 <template>
-    <row- class="home">
-        home nè
-    </row->
+    <row- class="home"/>
 </template>
 
 <script>

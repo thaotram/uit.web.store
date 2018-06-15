@@ -23,9 +23,9 @@ export async function getUserInfo(access_token) {
 /**
  * @param {Object} req
  * @param {String} sessionID
- * @returns {Number}
+ * @returns {User | undefined}
  */
-export function getUserFromSessionID(req, sessionId) {
+export function getUserByRequestAndSessionID(req, sessionId) {
     const userFromSession = sessionStore[sessionId];
     if (!userFromSession) return;
 
@@ -33,6 +33,15 @@ export function getUserFromSessionID(req, sessionId) {
 
     delete sessionStore[sessionId];
     return;
+}
+
+/**
+ * @param {Object} req
+ * @param {String} sessionID
+ * @returns {User | undefined}
+ */
+export function getUserBySessionID(sessionId) {
+    return sessionStore[sessionId];
 }
 
 /**

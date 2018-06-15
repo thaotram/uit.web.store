@@ -38,6 +38,7 @@ class ExportBill extends Model {
         return {
             total: this.total,
             count: this.count,
+            employeeId: this.employee.id,
         };
     }
 }

@@ -23,11 +23,3 @@ export default function() {
         firstScript.parentNode.insertBefore(script, firstScript);
     });
 }
-
-/**
- *
- * @param {String} id
- */
-export function avatar(id) {
-    return `http://graph.facebook.com/${id}/picture`;
-}

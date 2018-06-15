@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-transaction-export-bill light" >
+    <row- class="admin admin-transaction-payment-coupon light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
@@ -15,52 +15,46 @@
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="cartResults.length !== 0"
+                         :has-content="paymentCouponResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
                         <div>STT</div>
-                        <div>Người mua</div>
-                        <div>Nhân viên</div>
+                        <div>Nhà cung cấp</div>
+                        <div>Người lập phiếu</div>
                         <div>Thời gian</div>
-                        <div>Số lượng</div>
-                        <div>Thành tiền</div>
+                        <div>Nội dung</div>
+                        <div>Số tiền</div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="(cart, index) in cartResults"
-                                :key="cart.id"
+                    <table-row- v-for="(paymentCoupon, index) in paymentCouponResults"
+                                :key="paymentCoupon.id"
                                 size="60">
                         <div>
                             {{ index + 1 }}
                         </div>
+                        <div>
+                            {{ supplier(paymentCoupon.supplierId).name }}
+                        </div>
                         <div class="row">
-                            <image- :src="avatar(cart.userId)"
-                                    class="round square border"
+                            <image- :src="avatar(employee(paymentCoupon.employeeId).id)"
+                                    class="round square bpayment"
                                     size="30"/>
                             <s- :s="10"/>
                             <span class="full">
-                                {{ user(cart.userId).name }}
-                            </span>
-                        </div>
-                        <div class="row">
-                            <image- :src="avatar(employee(cart.exportBill.employeeId).id)"
-                                    class="round square border"
-                                    size="30"/>
-                            <s- :s="10"/>
-                            <span class="full">
-                                {{ employee(cart.exportBill.employeeId).name }}
+                                {{ employee(paymentCoupon.employeeId).name }}
                             </span>
                         </div>
                         <div>
-                            {{ timeAgo(cart.exportBill.create) }}
+                            {{ timeAgo(paymentCoupon.create) }}
                         </div>
                         <div>
-                            {{ cart.exportBill.count }}
+                            {{ paymentCoupon.content }}
                         </div>
                         <div>
-                            {{ money(cart.exportBill.total) }}
+                            {{ money(paymentCoupon.money) }}
                         </div>
                     </table-row->
                 </template>
@@ -77,7 +71,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { avatar, timeAgo, money, user, employee } from '../../modules/index';
+import { avatar, timeAgo, money, user, employee, supplier } from '../../modules/index';
 
 export default {
     components: {
@@ -99,18 +93,25 @@ export default {
             search: '',
             size: [
                 ['0 30px', 'center'],
-                ['1 220px', 'start'],
-                ['1 220px', 'start'],
-                ['0 170px', 'end'],
-                ['0 100px', 'end'],
-                ['0 150px', 'end'],
+                ['0 280px', 'start'],
+                ['0 200px', 'start'],
+                ['0 120px', 'end'],
+                ['1 150px', 'start'],
+                ['0 120px', 'end'],
             ],
         };
     },
     computed: {
         ...mapState(['app', 'data']),
-        cartResults() {
-            return this.data.carts.filter(cart => cart.exportBill !== undefined);
+        paymentCouponResults() {
+            return this.data.paymentCoupons;
+            // return this.data.paymentCoupons.map(paymentCoupon => ({
+            //     ...paymentCoupon,
+            //     type: paymentCoupon.paymentCouponDetails.length,
+            //     count: paymentCoupon.paymentCouponDetails
+            //         .map(detail => detail.count)
+            //         .reduce((a, b) => a + b, 0),
+            // }));
         },
     },
     methods: {
@@ -119,11 +120,12 @@ export default {
         money,
         user,
         employee,
+        supplier,
     },
 };
 </script>
 <style lang="scss">
-.admin-transaction-export-bill {
+.admin-transaction-payment-coupon {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

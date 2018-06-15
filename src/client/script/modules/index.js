@@ -1,15 +1,5 @@
-export { money, english } from './src/string';
-export { timeAgo, date } from './src/time';
-
-export { default as facebookInitialize, avatar } from './src/facebook.client';
-export { found } from './src/string';
-
-export default {
-    /**
-     * @returns {FB}
-     */
-    get FB() {
-        if (window.FB) return window.FB;
-        else throw 'Không thể lấy đối tượng FB khi nó chưa được khởi tạo';
-    },
-};
+export { default as avatar } from './src/avatar';
+export { default as Facebook } from './src/facebook.client';
+export { employee, supplier, user } from './src/fetch';
+export { english, found, money } from './src/string';
+export { date, timeAgo } from './src/time';
