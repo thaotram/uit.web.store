@@ -70,8 +70,9 @@ class Employee extends Model {
                 this.name = data.name;
             }
             if (data.hasOwnProperty('birthdate')) {
-                isBirthdateValid(data.birthdate);
-                this.birthdate = data.birthdate;
+                const birthdate = moment(data.birthdate, 'DD-MM-YYYY').toDate();
+                isBirthdateValid(birthdate);
+                this.birthdate = birthdate;
             }
             if (data.hasOwnProperty('address')) {
                 isAddressValid(data.address);
@@ -87,6 +88,7 @@ class Employee extends Model {
     get json() {
         const o = this.object;
         o.userId = this.user.id;
+        o.birthdate = moment(this.birthdate).format('DD-MM-YYYY');
         return o;
     }
 }

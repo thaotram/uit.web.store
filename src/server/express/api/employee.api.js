@@ -2,9 +2,10 @@ import { Employee, User } from '../../database/database';
 /**
  *
  * @param {Express.Application} app
+ * @param {SocketIO.Server} io
  * @param {Realm} realm
  */
-export default function(app, realm) {
+export default function(app, io, realm) {
     app.post('/api/employee/create', async (req, res) => {
         Employee.getBySessionId(req.sessionID);
 
@@ -15,8 +16,10 @@ export default function(app, realm) {
     });
 
     app.post('/api/employee/edit', async (req, res) => {
-        const employee = Employee.getBySessionId(req.sessionID);
+        const employee = Employee.getById(realm, req.body.employeeId);
         await employee.update(realm, req.body.data);
+
+        io.emit('update', 'employee');
         res.send(employee.json);
     });
 

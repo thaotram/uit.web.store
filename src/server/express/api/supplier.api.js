@@ -2,9 +2,10 @@ import { Supplier, Employee } from '../../database/database';
 /**
  *
  * @param {Express.Application} app
+ * @param {SocketIO.Server} io
  * @param {Realm} realm
  */
-export default function(app, realm) {
+export default function(app, io, realm) {
     app.post('/api/supplier/create', async (req, res) => {
         Employee.getBySessionId(req.sessionID);
 

@@ -3,9 +3,10 @@
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Thêm sách mới"   
-                         icon=""
-                         class="shadow round green"/>
+                <button- text="Thêm sách mới"  
+                         icon="" 
+                         class="shadow round green"
+                         @click.native="$router.push('/admin/book/add')"/>
                 <s-/>
                 <three-selector- v-model="residual" 
                                  right="Hết hàng"

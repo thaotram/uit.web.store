@@ -5,7 +5,8 @@
                   class="title">
                 <button- text="Thêm nhân viên mới" 
                          icon=""
-                         class="shadow round green"/>
+                         class="shadow round green"
+                         @click.native="$router.push('/admin/management/employee/add')"/>
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
@@ -58,7 +59,7 @@
                             {{ employee.phone }}
                         </div>
                         <div>
-                            {{ date(employee.birthdate) }}
+                            {{ employee.birthdate }}
                         </div>
                         <div>
                             {{ employee.address }}

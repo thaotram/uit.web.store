@@ -1,11 +1,13 @@
 import { Book, Employee } from '../../database/database';
+import { writeList } from '../../database/tiki';
 
 /**
  *
  * @param {Express.Application} app
+ * @param {SocketIO.Server} io
  * @param {Realm} realm
  */
-export default function(app, realm) {
+export default function(app, io, realm) {
     app.get('/api/book/:id', (req, res) => {
         Employee.getBySessionId(req.sessionID);
 
@@ -19,11 +21,19 @@ export default function(app, realm) {
         }
         res.json(book.json);
     });
-    
+
     app.get('/api/books', (req, res) => {
         Employee.getBySessionId(req.sessionID);
 
         const books = Book.getJsonBooks(realm);
         res.json(books);
+    });
+
+    app.post('/api/books/tiki', (req, res) => {
+        Employee.getBySessionId(req.sessionID);
+        res.json({
+            log: 'Đang lấy thông tin sách dựa trên đường dẫn',
+        });
+        writeList(realm, req.body.url, io);
     });
 }

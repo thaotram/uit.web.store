@@ -92,16 +92,6 @@ export default {
     },
     data() {
         return {
-            employee: {
-                name: '',
-                address: '',
-                phone: '',
-                birthdate: '',
-            },
-            user: {
-                id: null,
-                name: 'Không xác định',
-            },
             size: [
                 ['0 30px', 'center'],
                 ['0 220px', 'start'],
@@ -114,13 +104,21 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
-    },
-    mounted() {
-        this.employee =
-            this.data.employees.find(
-                employee => employee.id == Number(this.$route.params.id),
-            ) || {};
-        this.user = user(this.employee.userId, this);
+        employee() {
+            return (
+                this.data.employees.find(
+                    employee => employee.id == Number(this.$route.params.id),
+                ) || {
+                    name: '',
+                    address: '',
+                    phone: '',
+                    birthdate: '',
+                }
+            );
+        },
+        user() {
+            return user(this.employee.userId, this);
+        },
     },
     methods: {
         date,
@@ -130,12 +128,14 @@ export default {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: JSON.stringify({
+                    employeeId: this.employee.id,
                     data: this.employee,
                 }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
+            this.$router.push('/admin/management/employee');
         },
     },
 };
