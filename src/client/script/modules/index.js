@@ -1,13 +1,7 @@
-export { money, english } from './src/string';
-export { timeAgo, date } from './src/time';
-
-export {
-    default as facebookInitialize,
-    avatar,
-    user,
-    employee,
-} from './src/facebook.client';
-export { found } from './src/string';
+export { avatar, default as facebookInitialize } from './src/facebook.client';
+export { employee, supplier, user } from './src/fetch';
+export { english, found, money } from './src/string';
+export { date, timeAgo } from './src/time';
 
 export default {
     /**

@@ -36,7 +36,7 @@
                             {{ index + 1 }}
                         </div>
                         <div>
-                            Nhà cung cấp
+                            {{ supplier(importCoupon.supplierId).name }}
                         </div>
                         <div class="row">
                             <image- :src="avatar(employee(importCoupon.employeeId).id)"
@@ -71,7 +71,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { avatar, timeAgo, money, user, employee } from '../../modules/index';
+import { avatar, timeAgo, money, user, employee, supplier } from '../../modules/index';
 
 export default {
     components: {
@@ -121,6 +121,7 @@ export default {
         money,
         user,
         employee,
+        supplier,
     },
 };
 </script>
