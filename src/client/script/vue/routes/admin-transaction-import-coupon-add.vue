@@ -1,12 +1,11 @@
 <template>
-    <row- class="admin admin-transaction-import-coupon light" >
+    <row- class="admin admin-transaction-import-coupon-add light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Tạo phiếu nhập" 
+                <button- text="Thêm nhà cung cấp mới" 
                          icon=""
-                         class="shadow round green"
-                         @click.native="$router.push('/admin/transaction/import-coupon/add')"/>
+                         class="shadow round green"/>
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
@@ -127,7 +126,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-transaction-import-coupon {
+.admin-transaction-import-coupon-add {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

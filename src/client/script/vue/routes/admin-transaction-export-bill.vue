@@ -3,15 +3,10 @@
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Thêm nhà cung cấp mới" 
-                         icon=""
-                         class="shadow round green"/>
-                <s-/>
-                <input- v-model="search" 
-                        class="shadow search-box round"  
-                        type="text"
-                        icon=""
-                        placeholder="Tìm kiếm"/>
+                <button- text="Lập hóa đơn" 
+                         icon=""
+                         class="shadow round green"
+                         @click.native="$router.push('/admin/pos')"/>
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
@@ -76,7 +71,7 @@
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import { avatar, timeAgo, money, user, employee } from '../../modules/index';
 
 export default {
@@ -96,7 +91,6 @@ export default {
     },
     data() {
         return {
-            search: '',
             size: [
                 ['0 30px', 'center'],
                 ['1 220px', 'start'],

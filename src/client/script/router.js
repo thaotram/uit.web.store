@@ -61,14 +61,29 @@ const router = new VueRouter({
             component: () => import('admin-transaction-import-coupon'),
         },
         {
+            path: '/admin/transaction/import-coupon/add',
+            name: 'admin-transaction-import-coupon-add',
+            component: () => import('admin-transaction-import-coupon-add'),
+        },
+        {
             path: '/admin/transaction/order-coupon',
             name: 'admin-transaction-order-coupon',
             component: () => import('admin-transaction-order-coupon'),
         },
         {
+            path: '/admin/transaction/order-coupon/add',
+            name: 'admin-transaction-order-coupon-add',
+            component: () => import('admin-transaction-order-coupon-add'),
+        },
+        {
             path: '/admin/transaction/payment-coupon',
             name: 'admin-transaction-payment-coupon',
             component: () => import('admin-transaction-payment-coupon'),
+        },
+        {
+            path: '/admin/transaction/payment-coupon/add',
+            name: 'admin-transaction-payment-coupon-add',
+            component: () => import('admin-transaction-payment-coupon-add'),
         },
         {
             path: '/admin/management/employee',

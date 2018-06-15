@@ -1,12 +1,11 @@
 <template>
-    <row- class="admin admin-transaction-import-coupon light" >
+    <row- class="admin admin-transaction-order-coupon light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Tạo phiếu nhập" 
+                <button- text="Thêm nhà cung cấp mới" 
                          icon=""
-                         class="shadow round green"
-                         @click.native="$router.push('/admin/transaction/import-coupon/add')"/>
+                         class="shadow round green"/>
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
@@ -16,46 +15,46 @@
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="importCouponResults.length !== 0"
+                         :has-content="orderCouponResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
                         <div>STT</div>
                         <div>Nhà cung cấp</div>
-                        <div>Người ghi phiếu</div>
+                        <div>Người đặt</div>
                         <div>Thời gian</div>
+                        <div>Tựa sách</div>
                         <div>Số lượng</div>
-                        <div>Thành tiền</div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="(importCoupon, index) in importCouponResults"
-                                :key="importCoupon.id"
+                    <table-row- v-for="(orderCoupon, index) in orderCouponResults"
+                                :key="orderCoupon.id"
                                 size="60">
                         <div>
                             {{ index + 1 }}
                         </div>
                         <div>
-                            {{ supplier(importCoupon.supplierId).name }}
+                            {{ supplier(orderCoupon.supplierId).name }}
                         </div>
                         <div class="row">
-                            <image- :src="avatar(employee(importCoupon.employeeId).id)"
+                            <image- :src="avatar(employee(orderCoupon.employeeId).id)"
                                     class="round square border"
                                     size="30"/>
                             <s- :s="10"/>
                             <span class="full">
-                                {{ employee(importCoupon.employeeId).name }}
+                                {{ employee(orderCoupon.employeeId).name }}
                             </span>
                         </div>
                         <div>
-                            {{ timeAgo(importCoupon.create) }}
+                            {{ timeAgo(orderCoupon.create) }}
                         </div>
                         <div>
-                            {{ importCoupon.count }}
+                            {{ orderCoupon.type }}
                         </div>
                         <div>
-                            {{ money(importCoupon.total) }}
+                            {{ orderCoupon.count }}
                         </div>
                     </table-row->
                 </template>
@@ -98,19 +97,17 @@ export default {
                 ['0 250px', 'start'],
                 ['0 170px', 'end'],
                 ['0 100px', 'end'],
-                ['0 150px', 'end'],
+                ['0 100px', 'end'],
             ],
         };
     },
     computed: {
         ...mapState(['app', 'data']),
-        importCouponResults() {
-            return this.data.importCoupons.map(importCoupon => ({
-                ...importCoupon,
-                total: importCoupon.importCouponDetails
-                    .map(detail => detail.count * detail.price)
-                    .reduce((a, b) => a + b, 0),
-                count: importCoupon.importCouponDetails
+        orderCouponResults() {
+            return this.data.orderCoupons.map(orderCoupon => ({
+                ...orderCoupon,
+                type: orderCoupon.orderCouponDetails.length,
+                count: orderCoupon.orderCouponDetails
                     .map(detail => detail.count)
                     .reduce((a, b) => a + b, 0),
             }));
@@ -127,7 +124,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-transaction-import-coupon {
+.admin-transaction-order-coupon {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

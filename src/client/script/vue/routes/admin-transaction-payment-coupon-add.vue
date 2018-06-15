@@ -1,12 +1,11 @@
 <template>
-    <row- class="admin admin-transaction-import-coupon light" >
+    <row- class="admin admin-transaction-payment-coupon light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Tạo phiếu nhập" 
+                <button- text="Thêm nhà cung cấp mới" 
                          icon=""
-                         class="shadow round green"
-                         @click.native="$router.push('/admin/transaction/import-coupon/add')"/>
+                         class="shadow round green"/>
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
@@ -16,46 +15,46 @@
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="importCouponResults.length !== 0"
+                         :has-content="paymentCouponResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
                         <div>STT</div>
                         <div>Nhà cung cấp</div>
-                        <div>Người ghi phiếu</div>
+                        <div>Người lập phiếu</div>
                         <div>Thời gian</div>
-                        <div>Số lượng</div>
-                        <div>Thành tiền</div>
+                        <div>Nội dung</div>
+                        <div>Số tiền</div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="(importCoupon, index) in importCouponResults"
-                                :key="importCoupon.id"
+                    <table-row- v-for="(paymentCoupon, index) in paymentCouponResults"
+                                :key="paymentCoupon.id"
                                 size="60">
                         <div>
                             {{ index + 1 }}
                         </div>
                         <div>
-                            {{ supplier(importCoupon.supplierId).name }}
+                            {{ supplier(paymentCoupon.supplierId).name }}
                         </div>
                         <div class="row">
-                            <image- :src="avatar(employee(importCoupon.employeeId).id)"
-                                    class="round square border"
+                            <image- :src="avatar(employee(paymentCoupon.employeeId).id)"
+                                    class="round square bpayment"
                                     size="30"/>
                             <s- :s="10"/>
                             <span class="full">
-                                {{ employee(importCoupon.employeeId).name }}
+                                {{ employee(paymentCoupon.employeeId).name }}
                             </span>
                         </div>
                         <div>
-                            {{ timeAgo(importCoupon.create) }}
+                            {{ timeAgo(paymentCoupon.create) }}
                         </div>
                         <div>
-                            {{ importCoupon.count }}
+                            {{ paymentCoupon.content }}
                         </div>
                         <div>
-                            {{ money(importCoupon.total) }}
+                            {{ money(paymentCoupon.money) }}
                         </div>
                     </table-row->
                 </template>
@@ -94,26 +93,25 @@ export default {
             search: '',
             size: [
                 ['0 30px', 'center'],
-                ['1 200px', 'start'],
-                ['0 250px', 'start'],
-                ['0 170px', 'end'],
-                ['0 100px', 'end'],
-                ['0 150px', 'end'],
+                ['0 280px', 'start'],
+                ['0 200px', 'start'],
+                ['0 120px', 'end'],
+                ['1 150px', 'start'],
+                ['0 120px', 'end'],
             ],
         };
     },
     computed: {
         ...mapState(['app', 'data']),
-        importCouponResults() {
-            return this.data.importCoupons.map(importCoupon => ({
-                ...importCoupon,
-                total: importCoupon.importCouponDetails
-                    .map(detail => detail.count * detail.price)
-                    .reduce((a, b) => a + b, 0),
-                count: importCoupon.importCouponDetails
-                    .map(detail => detail.count)
-                    .reduce((a, b) => a + b, 0),
-            }));
+        paymentCouponResults() {
+            return this.data.paymentCoupons;
+            // return this.data.paymentCoupons.map(paymentCoupon => ({
+            //     ...paymentCoupon,
+            //     type: paymentCoupon.paymentCouponDetails.length,
+            //     count: paymentCoupon.paymentCouponDetails
+            //         .map(detail => detail.count)
+            //         .reduce((a, b) => a + b, 0),
+            // }));
         },
     },
     methods: {
@@ -127,7 +125,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-transaction-import-coupon {
+.admin-transaction-payment-coupon {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;
