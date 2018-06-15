@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-management-user-add light" >
+    <row- class="admin admin-management-employee-add light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
@@ -139,14 +139,19 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         userResults() {
-            return this.data.users.filter(user => found(user.name, this.search));
+            return this.data.users.filter(user => {
+                return (
+                    this.data.employees.every(employee => employee.userId != user.id) &&
+                    found(user.name, this.search)
+                );
+            });
         },
     },
     methods: {
         date,
         avatar,
-        submit() {
-            fetch('/api/employee/create', {
+        async submit() {
+            await fetch('/api/employee/create', {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: JSON.stringify({
@@ -162,12 +167,13 @@ export default {
                     'Content-Type': 'application/json',
                 },
             });
+            this.$router.push('/admin/management/employee');
         },
     },
 };
 </script>
 <style lang="scss">
-.admin-management-user-add {
+.admin-management-employee-add {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;
