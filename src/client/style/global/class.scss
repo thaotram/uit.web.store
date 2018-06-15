@@ -23,6 +23,10 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
 }
 
+.semibold {
+    font-weight: 600;
+}
+
 .noOverflow {
     overflow: hidden;
 }
@@ -30,7 +34,7 @@ input::-webkit-inner-spin-button {
 .light {
     .shadow {
         box-shadow: 0 0 5px $light-shadow-color;
-        background: white;
+        background-color: white;
     }
 }
 
