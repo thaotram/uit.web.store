@@ -90,6 +90,11 @@ const router = new VueRouter({
             name: 'admin-management-supplier',
             component: () => import('admin-management-supplier'),
         },
+        {
+            path: '/admin/management/supplier/add',
+            name: 'admin-management-supplier-add',
+            component: () => import('admin-management-supplier-add'),
+        },
     ],
 });
 

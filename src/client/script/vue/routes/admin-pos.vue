@@ -211,7 +211,9 @@ export default {
     methods: {
         money,
         async payAndPrint() {
-            await this.pos_create_cart_and_export_bill();
+            const res = await this.pos_create_cart_and_export_bill();
+            if (res.status !== 200) return alert((await res.json()).error);
+
             this.$root.$refs.app.print(this.$refs.print);
             this.pos_remove_sell_books();
         },

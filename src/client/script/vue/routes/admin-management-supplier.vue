@@ -5,7 +5,8 @@
                   class="title">
                 <button- text="Thêm nhà cung cấp mới" 
                          icon=""
-                         class="shadow round green"/>
+                         class="shadow round green"
+                         @click.native="$router.push('/admin/management/supplier/add')"/>
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  

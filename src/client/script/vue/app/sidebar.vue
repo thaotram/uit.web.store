@@ -75,6 +75,7 @@
               size="50"
               class="indent">
             <button- :active="is('admin-management-supplier-add')"
+                     :class="{hide: !is('admin-management-supplier-add')}"
                      icon=""
                      text="Thêm nhà cung cấp"
                      @click.native="go('/admin/management/supplier/add')"/>
