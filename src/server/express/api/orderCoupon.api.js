@@ -6,7 +6,7 @@ import { OrderCoupon, Supplier, Employee } from '../../database/database';
  * @param {Realm} realm
  */
 export default function(app, realm) {
-    app.post('/api/order_coupon/create', async (req, res) => {
+    app.post('/api/orderCoupon/create', async (req, res) => {
         const employee = Employee.getById(realm, Number(req.body.employeeId));
         const supplier = Supplier.getById(realm, Number(req.body.supplierId));
         const orderCoupon = await OrderCoupon.create(
@@ -18,7 +18,7 @@ export default function(app, realm) {
         res.send(orderCoupon.json);
     });
 
-    app.get('/api/order_coupons', async (req, res) => {
+    app.get('/api/orderCoupons', async (req, res) => {
         const orderCoupons = await OrderCoupon.queryOrderCoupon(realm, req.query);
         if (!orderCoupons) {
             res.json({ error: 'Không tìm thấy' });

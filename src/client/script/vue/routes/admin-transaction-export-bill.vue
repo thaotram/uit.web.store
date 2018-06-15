@@ -15,7 +15,7 @@
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="supplierResults.length !== 0"
+                         :has-content="exportBillResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
@@ -29,26 +29,26 @@
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="(supplier, index) in supplierResults"
-                                :key="supplier.id"
+                    <table-row- v-for="(exportBill, index) in exportBillResults"
+                                :key="exportBill.id"
                                 size="45">
                         <div>
                             {{ index + 1 }}
                         </div>
                         <div>
-                            {{ supplier.name }}
+                            {{ exportBill.name }}
                         </div>
                         <div>
-                            {{ supplier.phone }}
+                            {{ exportBill.phone }}
                         </div>
                         <div>
-                            {{ supplier.address }}
+                            {{ exportBill.address }}
                         </div>
                         <div>
-                            {{ supplier.count }}
+                            {{ exportBill.count }}
                         </div>
                         <div>
-                            {{ toMoney(supplier.total) }}
+                            {{ toMoney(exportBill.total) }}
                         </div>
                     </table-row->
                 </template>
@@ -97,10 +97,8 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
-        supplierResults() {
-            return this.data.suppliers.filter(supplier =>
-                found(supplier.name, this.search),
-            );
+        exportBillResults() {
+            return this.data.carts.filter(cart => found(cart.name, this.search));
         },
     },
     methods: {
