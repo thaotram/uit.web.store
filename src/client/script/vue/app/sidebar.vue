@@ -46,6 +46,40 @@
                      @click.native="go('/admin/user/feedback')"/>  
         </col-> -->
 
+        <!-- Thêm nhân viên -->
+        <button- :active="is('admin-management-employee')"
+                 icon=""
+                 text="Nhân viên"
+                 @click.native="go('/admin/management/employee')"/>
+        <col- :class="{show: match(/^admin-management-employee/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-management-employee-edit')"
+                     :class="{hide: !is('admin-management-employee-edit')}"
+                     icon=""
+                     text="Cập nhật thông tin"
+                     @click.native="go('/admin/management/employee/add')"/>
+            <button- :active="is('admin-management-employee-add')"
+                     :class="{hide: !is('admin-management-employee-add')}"
+                     icon=""
+                     text="Thêm nhân viên"
+                     @click.native="go('/admin/management/employee/add')"/>
+        </col->
+
+        <!-- Thêm nhà cung cấp -->
+        <button- :active="is('admin-management-supplier')"
+                 icon=""
+                 text="Nhà cung cấp"
+                 @click.native="go('/admin/management/supplier')"/>
+        <col- :class="{show: match(/^admin-management-supplier/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-management-supplier-add')"
+                     icon=""
+                     text="Thêm nhà cung cấp"
+                     @click.native="go('/admin/management/supplier/add')"/>
+        </col->
+
         <!-- Hóa đơn -->
         <button- :active="is('admin-transaction')"
                  icon=""
@@ -69,34 +103,6 @@
                      icon=""
                      text="Phiếu trả tiền"
                      @click.native="go('/admin/transaction/payment-coupon')"/>
-        </col->
-
-        <!-- Thêm nhân viên -->
-        <button- :active="is('admin-management-employee')"
-                 icon=""
-                 text="Nhân viên"
-                 @click.native="go('/admin/management/employee')"/>
-        <col- :class="{show: match(/^admin-management-employee/)}"
-              size="50"
-              class="indent">
-            <button- :active="is('admin-management-employee-add')"
-                     icon=""
-                     text="Thêm nhân viên"
-                     @click.native="go('/admin/management/employee/add')"/>
-        </col->
-
-        <!-- Thêm nhà cung cấp -->
-        <button- :active="is('admin-management-supplier')"
-                 icon=""
-                 text="Nhà cung cấp"
-                 @click.native="go('/admin/management/supplier')"/>
-        <col- :class="{show: match(/^admin-management-supplier/)}"
-              size="50"
-              class="indent">
-            <button- :active="is('admin-management-supplier-add')"
-                     icon=""
-                     text="Thêm nhà cung cấp"
-                     @click.native="go('/admin/management/supplier/add')"/>
         </col->
 
         <s-/>
