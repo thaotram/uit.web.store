@@ -7,7 +7,7 @@ import { PaymentCoupon, Supplier, Employee } from '../../database/database';
  */
 export default function(app, realm) {
     app.post('/api/paymentCoupon/create', async (req, res) => {
-        const employee = Employee.getById(realm, Number(req.body.employeeId));
+        const employee = Employee.getBySessionId(req.sessionID);
         const supplier = Supplier.getById(realm, Number(req.body.supplierId));
         const paymentCoupon = await PaymentCoupon.create(
             realm,
@@ -19,6 +19,8 @@ export default function(app, realm) {
     });
 
     app.get('/api/paymentCoupons', async (req, res) => {
+        Employee.getBySessionId(req.sessionID);
+
         const paymentCoupons = await PaymentCoupon.queryPaymentCoupon(realm, req.query);
         if (!paymentCoupons) {
             res.json({ error: 'Không tìm thấy' });

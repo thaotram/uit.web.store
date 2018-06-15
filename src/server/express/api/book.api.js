@@ -7,6 +7,8 @@ import { Book, Employee } from '../../database/database';
  */
 export default function(app, realm) {
     app.get('/api/book/:id', (req, res) => {
+        Employee.getBySessionId(req.sessionID);
+
         const id = Number(req.params.id);
         const book = Book.getById(realm, id);
         if (!book) {
@@ -17,6 +19,7 @@ export default function(app, realm) {
         }
         res.json(book.json);
     });
+    
     app.get('/api/books', (req, res) => {
         Employee.getBySessionId(req.sessionID);
 
