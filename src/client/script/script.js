@@ -13,10 +13,16 @@ new Vue({
     router,
     store,
     async beforeCreate() {
-        // router.push('/');
-
         await Facebook.initialize();
         await this.checkLogin();
+    },
+    mounted() {
+        socket.on('connect', () => {
+            socket.on('update', key => {
+                this[`load_${key}s`]();
+                console.log(`load_${key}s`);
+            });
+        });
     },
     methods: {
         ...mapActions(keys.map(key => `load_${key}s`)),

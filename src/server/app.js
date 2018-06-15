@@ -20,7 +20,7 @@ const io = SocketIO(server);
     const realm = await database();
 
     config(app, io);
-    express(wrap(app), realm);
+    express(wrap(app), io, realm);
     socket(io, realm);
 
     server.listen(port, () => {

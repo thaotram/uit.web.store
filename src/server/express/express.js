@@ -12,18 +12,19 @@ import exportBill from './api/exportBill.api';
 /**
  *
  * @param {Express.Application} app
+ * @param {SocketIO.Server} io
  * @param {Realm} realm
  */
-export default function(app, realm) {
-    book(app, realm);
-    user(app, realm);
-    cart(app, realm);
-    importCoupon(app, realm);
-    orderCoupon(app, realm);
-    paymentCoupon(app, realm);
-    supplier(app, realm);
-    employee(app, realm);
-    exportBill(app, realm);
+export default function(app, io, realm) {
+    book(app, io, realm);
+    user(app, io, realm);
+    cart(app, io, realm);
+    importCoupon(app, io, realm);
+    orderCoupon(app, io, realm);
+    paymentCoupon(app, io, realm);
+    supplier(app, io, realm);
+    employee(app, io, realm);
+    exportBill(app, io, realm);
 
     app.get('*', (req, res) => {
         res.status(404).send('Not Found');

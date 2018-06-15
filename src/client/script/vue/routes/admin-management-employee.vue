@@ -58,7 +58,7 @@
                             {{ employee.phone }}
                         </div>
                         <div>
-                            {{ date(employee.birthdate) }}
+                            {{ employee.birthdate }}
                         </div>
                         <div>
                             {{ employee.address }}

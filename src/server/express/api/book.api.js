@@ -3,9 +3,10 @@ import { Book, Employee } from '../../database/database';
 /**
  *
  * @param {Express.Application} app
+ * @param {SocketIO.Server} io
  * @param {Realm} realm
  */
-export default function(app, realm) {
+export default function(app, io, realm) {
     app.get('/api/book/:id', (req, res) => {
         Employee.getBySessionId(req.sessionID);
 
@@ -19,7 +20,7 @@ export default function(app, realm) {
         }
         res.json(book.json);
     });
-    
+
     app.get('/api/books', (req, res) => {
         Employee.getBySessionId(req.sessionID);
 

@@ -3,9 +3,10 @@ import { ExportBill, Employee, Cart, User } from '../../database/database';
 /**
  *
  * @param {Express.Application} app
+ * @param {SocketIO.Server} io
  * @param {Realm} realm
  */
-export default function(app, realm) {
+export default function(app, io, realm) {
     app.post('/api/exportBill/create', async (req, res) => {
         const employee = Employee.getBySessionId(req.sessionID);
         const cart = Cart.getById(realm, Number(req.body.cartId));
