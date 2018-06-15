@@ -21,11 +21,12 @@
         <col- :class="{show: match(/^admin-book/)}"
               size="50"
               class="indent">
-            <!-- <button- :active="match(/^admin-book-detail/)"
+            <button- :active="is('admin-book-detail')"
+                     :class="{hide: !is('admin-book-detail')}"
                      icon=""
-                     text="Thông tin sách"
-                     @click.native="go('/admin/book/detail')"/> -->
+                     text="Thông tin sách"/>
             <button- :active="is('admin-book-add')"
+                     :class="{hide: !is('admin-book-add')}"
                      icon=""
                      text="Thêm sách"
                      @click.native="go('/admin/book/add')"/>        
@@ -154,6 +155,9 @@ export default {
 
     .button {
         transition: all 0.4s;
+        &.hide {
+            height: 0 !important;
+        }
     }
 
     > .user > .label > .text {

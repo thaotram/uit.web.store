@@ -145,8 +145,8 @@ export default {
     methods: {
         date,
         avatar,
-        async submit() {
-            await fetch('/api/employee/create', {
+        submit() {
+            fetch('/api/employee/create', {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: JSON.stringify({

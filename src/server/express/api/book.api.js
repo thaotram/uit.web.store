@@ -1,4 +1,5 @@
 import { Book, Employee } from '../../database/database';
+import { writeList } from '../../database/tiki';
 
 /**
  *
@@ -26,5 +27,13 @@ export default function(app, io, realm) {
 
         const books = Book.getJsonBooks(realm);
         res.json(books);
+    });
+
+    app.post('/api/books/tiki', (req, res) => {
+        Employee.getBySessionId(req.sessionID);
+        res.json({
+            log: 'Đang lấy thông tin sách dựa trên đường dẫn',
+        });
+        writeList(realm, req.body.url, io);
     });
 }

@@ -4,9 +4,11 @@
             <row- size="40">
                 <button- text="Thêm sách mới từ đường dẫn tiki" 
                          icon=""
-                         class="shadow round green"/>
+                         class="shadow round green"
+                         @click.native="submit"/>
                 <s- :s="20"/>
-                <input- class="shadow search-box round full"  
+                <input- v-model="url"
+                        class="shadow round full"
                         type="text"
                         icon=""
                         placeholder="https://tiki.com/*"/>
@@ -37,8 +39,27 @@ export default {
         ...'table-row',
         ...'table-view',
     },
+    data() {
+        return {
+            url: '',
+        };
+    },
     computed: {
         ...mapState(['markdown']),
+    },
+    methods: {
+        submit() {
+            fetch('/api/books/tiki', {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    url: this.url,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        },
     },
 };
 </script>
