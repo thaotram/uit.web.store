@@ -1,6 +1,6 @@
 <template>
     <col- id="sidebar"
-          :class="{fullSize: gui.fullSideBarSize}"
+          :class="{fullSize: gui.fullSideBarSize, hide: typeof authorize.id !== 'number'}"
           size="50"
           class="dark">
         <button- icon=""
@@ -120,7 +120,7 @@ export default {
         ...'image',
     },
     computed: {
-        ...mapState(['user', 'gui']),
+        ...mapState(['authorize', 'gui']),
     },
     methods: {
         ...mapMutations(['gui_toogleSideBar']),
@@ -142,6 +142,10 @@ export default {
 </script>
 <style lang="scss">
 #sidebar {
+    overflow: hidden;
+    &.hide {
+        width: 0 !important;
+    }
     z-index: 2;
 
     .button.parent.active {
