@@ -15,10 +15,7 @@ export default function(app, realm) {
 
     app.get('/api/carts', async (req, res) => {
         const carts = await Cart.queryCart(realm, req.query);
-        if (!carts) {
-            res.json({ error: `Không tìm thấy` });
-            return;
-        }
+        if (!carts) throw `Không tìm thấy`;
         res.json(carts.map(cart => cart.json));
     });
 }

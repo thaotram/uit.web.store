@@ -1,3 +1,4 @@
+import keys from './keys';
 export default {
     app: {
         name: 'Tiệm sách thông minh',
@@ -11,14 +12,15 @@ export default {
     gui: {
         fullSideBarSize: true,
     },
-    data: {
-        books: [],
-        employees: [],
-    },
+    data: keys.reduce((object, key) => {
+        object[`${key}s`] = [];
+        return object;
+    }, {}),
     pos: {
         sells: [],
     },
     markdown: {
         admin_book_add: require('./markdown/admin-book-add.md'),
+        admin_user: require('./markdown/admin-user.md'),
     },
 };

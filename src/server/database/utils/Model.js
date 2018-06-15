@@ -60,7 +60,9 @@ export default class Model {
                     object[property] = this[property];
                 }
                 if (properties[property] === 'date') {
-                    object[property] = moment(this[property]).format('hh:mm:ss DD-MM-YYYY');
+                    object[property] = moment(this[property]).format(
+                        'hh:mm:ss DD-MM-YYYY',
+                    );
                 }
             }
         }

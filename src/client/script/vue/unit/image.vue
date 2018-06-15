@@ -38,8 +38,13 @@ export default {
     background-size: cover;
     background-position: center;
     background-color: white;
+    background-clip: content-box;
+    background-repeat: no-repeat;
     &.square.round {
         border-radius: 50%;
+    }
+    &.border {
+        border: 1px solid rgba(black, 0.2);
     }
 }
 </style>

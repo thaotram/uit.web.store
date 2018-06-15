@@ -25,7 +25,7 @@ class Cart extends Model {
                 id: CartDetail.getNextId(realm),
                 cart: cart,
                 book: Book.getById(realm, cartDetail.id),
-                amount: cartDetail.amount,
+                count: cartDetail.count,
             });
         });
         return cart;
@@ -60,16 +60,20 @@ class Cart extends Model {
     }
 
     get total() {
-        let money = 0;
-        this.cartDetail.forEach(detail => {
-            money += detail.book.realPrice(this.create) * detail.amount;
-        });
-        return money;
+        return this.cartDetails
+            .map(cartDetail => cartDetail.book.realPrice(this.create) * cartDetail.count)
+            .reduce((a, b) => a + b, 0);
+    }
+
+    get count() {
+        return this.cartDetails
+            .map(cartDetail => cartDetail.count)
+            .reduce((a, b) => a + b, 0);
     }
 
     get json() {
         const o = this.object;
-        o.userId = this.owner.id;
+        o.userId = this.owner ? this.owner.id : undefined;
         const exportBill = this.exportBill[0];
         if (exportBill !== undefined) o.exportBill = exportBill.jsonWithoutCart;
         o.cartDetails = this.cartDetails.map(cartDetail => cartDetail.json);

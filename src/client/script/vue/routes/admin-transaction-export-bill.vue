@@ -1,9 +1,9 @@
 <template>
-    <row- class="admin admin-management-employee light" >
+    <row- class="admin admin-transaction-export-bill light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Thêm nhân viên mới" 
+                <button- text="Thêm nhà cung cấp mới" 
                          icon=""
                          class="shadow round green"/>
                 <s-/>
@@ -15,52 +15,40 @@
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="employeeResults.length !== 0"
+                         :has-content="supplierResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
-                        <div>
-                            STT
-                        </div>
-                        <div>
-                            Nhân viên
-                        </div>
-                        <div>
-                            Điện thoại
-                        </div>
-                        <div>
-                            Ngày sinh
-                        </div>
-                        <div>
-                            Địa chỉ
-                        </div>
+                        <div>STT</div>
+                        <div>Hóa đơn xuất</div>
+                        <div>Điện thoại</div>
+                        <div>Địa chỉ</div>
+                        <div>Đã nhập</div>
+                        <div>Tổng cộng</div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="(employee, index) in employeeResults"
-                                :key="employee.id"
-                                size="60">
+                    <table-row- v-for="(supplier, index) in supplierResults"
+                                :key="supplier.id"
+                                size="45">
                         <div>
                             {{ index + 1 }}
                         </div>
-                        <div class="row">
-                            <image- :src="toAvatar(employee.userId)"
-                                    class="round square border"
-                                    size="30"/>
-                            <s- :s="10"/>
-                            <span class="full">
-                                {{ employee.name }}
-                            </span>
+                        <div>
+                            {{ supplier.name }}
                         </div>
                         <div>
-                            {{ employee.phone }}
+                            {{ supplier.phone }}
                         </div>
                         <div>
-                            {{ toDate(employee.birthdate) }}
+                            {{ supplier.address }}
                         </div>
                         <div>
-                            {{ employee.address }}
+                            {{ supplier.count }}
+                        </div>
+                        <div>
+                            {{ toMoney(supplier.total) }}
                         </div>
                     </table-row->
                 </template>
@@ -77,7 +65,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { toDate, found, toAvatar } from '../../modules/index';
+import { toMoney, toDate, found, toAvatar } from '../../modules/index';
 
 export default {
     components: {
@@ -99,30 +87,31 @@ export default {
             search: '',
             size: [
                 ['0 30px', 'center'],
-                ['0 220px', 'start'],
+                ['0.8 220px', 'start'],
+                ['0 120px', 'start'],
+                ['1 280px', 'start'],
                 ['0 100px', 'end'],
-                ['0 120px', 'center'],
-                [0.8, 'start'],
-                ['0 45px', 'end'],
+                ['0 100px', 'end'],
             ],
         };
     },
     computed: {
         ...mapState(['app', 'data']),
-        employeeResults() {
-            return this.data.employees.filter(employee =>
-                found(employee.name, this.search),
+        supplierResults() {
+            return this.data.suppliers.filter(supplier =>
+                found(supplier.name, this.search),
             );
         },
     },
     methods: {
         toDate,
         toAvatar,
+        toMoney,
     },
 };
 </script>
 <style lang="scss">
-.admin-management-employee {
+.admin-transaction-export-bill {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

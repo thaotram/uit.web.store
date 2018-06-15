@@ -30,11 +30,26 @@ const router = new VueRouter({
             name: 'admin-book-add',
             component: () => import('admin-book-add'),
         },
+        {
+            path: '/admin/user',
+            name: 'admin-user',
+            component: () => import('admin-user'),
+        },
+        {
+            path: '/admin/transaction/export-bill',
+            name: 'admin-transaction-export-bill',
+            component: () => import('admin-transaction-export-bill'),
+        },
 
         {
             path: '/admin/management/employee',
             name: 'admin-management-employee',
             component: () => import('admin-management-employee'),
+        },
+        {
+            path: '/admin/management/supplier',
+            name: 'admin-management-supplier',
+            component: () => import('admin-management-supplier'),
         },
     ],
 });

@@ -36,14 +36,14 @@
                  icon=""
                  text="Người dùng"
                  @click.native="go('/admin/user')"/>
-        <col- :class="{show: match(/^admin-user/)}"
+        <!-- <col- :class="{show: match(/^admin-user/)}"
               size="50"
               class="indent">
             <button- :active="is('admin-user-feedback')"
                      icon=""
                      text="Phản hồi"
                      @click.native="go('/admin/user/feedback')"/>  
-        </col->
+        </col-> -->
 
         <!-- Hóa đơn -->
         <button- :active="is('admin-transaction')"

@@ -12,7 +12,7 @@ class Book extends Model {
         const book = await Book.write(realm, true, rawBook.book);
         const lastPrice = book.realPrice();
 
-        if (!lastPrice || lastPrice.price !== rawBook.price) {
+        if (!lastPrice || lastPrice !== rawBook.price) {
             Price.write(realm, true, {
                 id: Price.getNextId(realm),
                 time: new Date(),
@@ -49,10 +49,10 @@ class Book extends Model {
 
     get count() {
         let total = 0;
-        total += this.importCouponDetails.sum('amount');
+        total += this.importCouponDetails.sum('count');
 
         total -= this.cartDetails
-            .map(cartDetail => (cartDetail.isSold ? cartDetail.amount : 0))
+            .map(cartDetail => (cartDetail.isSold ? cartDetail.count : 0))
             .reduce((a, b) => a + b, 0);
 
         return total;

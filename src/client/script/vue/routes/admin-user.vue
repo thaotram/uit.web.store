@@ -1,12 +1,13 @@
 <template>
-    <row- class="admin admin-management-employee light" >
+    <row- class="admin admin-user light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="Thêm nhân viên mới" 
-                         icon=""
-                         class="shadow round green"/>
                 <s-/>
+                <three-selector- v-model="isBuy" 
+                                 right="Chưa mua"
+                                 left="Đã mua"/>
+                <s- :s="10"/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
                         type="text"
@@ -15,7 +16,7 @@
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="employeeResults.length !== 0"
+                         :has-content="userResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
@@ -23,44 +24,44 @@
                             STT
                         </div>
                         <div>
-                            Nhân viên
+                            Người dùng
                         </div>
                         <div>
-                            Điện thoại
+                            Điểm tích lũy
                         </div>
                         <div>
-                            Ngày sinh
+                            Số sách
                         </div>
                         <div>
-                            Địa chỉ
+                            Tổng cộng
                         </div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="(employee, index) in employeeResults"
-                                :key="employee.id"
+                    <table-row- v-for="(user, index) in userResults"
+                                :key="user.id"
                                 size="60">
                         <div>
                             {{ index + 1 }}
                         </div>
                         <div class="row">
-                            <image- :src="toAvatar(employee.userId)"
+                            <image- :src="toAvatar(user.id)"
                                     class="round square border"
                                     size="30"/>
                             <s- :s="10"/>
                             <span class="full">
-                                {{ employee.name }}
+                                {{ user.name }}
                             </span>
                         </div>
                         <div>
-                            {{ employee.phone }}
+                            {{ user.point }}
                         </div>
                         <div>
-                            {{ toDate(employee.birthdate) }}
+                            {{ user.count }}
                         </div>
                         <div>
-                            {{ employee.address }}
+                            {{ toMoney(user.total) }}
                         </div>
                     </table-row->
                 </template>
@@ -73,60 +74,78 @@
                 </template>
             </table-view->
         </col->
+        <col- class="right">
+            <col- class="full shadow noOverflow round">
+                <markdown- :value="markdown.admin_user" 
+                           class="full scroll"/> 
+            </col->
+        </col->
     </row->
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { toDate, found, toAvatar } from '../../modules/index';
+import { toMoney, toDate, found, toAvatar } from '../../modules/index';
 
 export default {
     components: {
         ...'button',
+        ...'checkbox',
         ...'col',
-        ...'markdown',
+        ...'image',
         ...'input',
         ...'label',
-        ...'image',
         ...'line',
         ...'list',
+        ...'markdown',
         ...'row',
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'three-selector',
     },
     data() {
         return {
             search: '',
+            isBuy: 0,
             size: [
                 ['0 30px', 'center'],
-                ['0 220px', 'start'],
+                ['1 220px', 'start'],
                 ['0 100px', 'end'],
-                ['0 120px', 'center'],
-                [0.8, 'start'],
-                ['0 45px', 'end'],
+                ['0 80px', 'center'],
+                ['0 120px', 'end'],
             ],
         };
     },
     computed: {
-        ...mapState(['app', 'data']),
-        employeeResults() {
-            return this.data.employees.filter(employee =>
-                found(employee.name, this.search),
+        ...mapState(['app', 'data', 'markdown']),
+        userResults() {
+            return this.data.users.filter(
+                user =>
+                    found(user.name, this.search) &&
+                    ((this.isBuy === -1 && user.count > 0) ||
+                        (this.isBuy === 1 && user.count === 0) ||
+                        (this.isBuy === 0 && true)),
             );
         },
     },
     methods: {
         toDate,
         toAvatar,
+        toMoney,
     },
 };
 </script>
 <style lang="scss">
-.admin-management-employee {
+.admin-user {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;
         }
+    }
+    > .right {
+        flex: 0 500px;
+        max-width: 500px;
+        min-width: 500px;
     }
 }
 </style>
