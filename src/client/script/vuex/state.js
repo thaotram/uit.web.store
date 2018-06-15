@@ -18,8 +18,12 @@ export default {
         object[`${key}s`] = [];
         return object;
     }, {}),
+
     pos: {
         sells: [],
+    },
+    import_coupon: {
+        buys: [],
     },
     markdown: {
         admin_book_add: require('./markdown/admin-book-add.md'),

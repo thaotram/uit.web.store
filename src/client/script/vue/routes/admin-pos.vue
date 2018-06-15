@@ -122,15 +122,15 @@
                 <line-/>
                 <s- :s="15"/>
                 <div class="semibold">
-                    Điểm thưởng: 
+                    Điểm thưởng: {{ user.point }}
                 </div>
                 <s- :s="5"/>
                 <div class="semibold">
-                    Số sách đã mua: 
+                    Số sách đã mua: {{ user.count }}
                 </div>
                 <s- :s="5"/>
                 <div class="semibold">
-                    Tổng tiền đã mua: 
+                    Tổng tiền đã mua: {{ money(user.total) }}
                 </div>
             </div>
             <s- :s="20"/>
@@ -150,7 +150,7 @@
                     <button- class="full green round"
                              icon="" 
                              text="Thanh toán và in hóa đơn"
-                             @click.native="payAndPrint"/>
+                             @click.native="submit"/>
                 </row->
             </col->
         </col->
@@ -260,7 +260,7 @@ export default {
                     name: 'Khách vãng lai',
                 },
                 ...this.data.users.filter(user => {
-                    return found(user.name, this.search_user);
+                    return found(user.name, this.search_user) && user.id !== this.user.id;
                 }),
             ];
         },
@@ -283,7 +283,7 @@ export default {
     methods: {
         money,
         avatar,
-        async payAndPrint() {
+        async submit() {
             const res = await fetch('/api/exportBill/createWithContent', {
                 method: 'POST',
                 credentials: 'same-origin',
@@ -310,7 +310,6 @@ export default {
             'pos_remove_sell_books',
             'pos_remove_sell_book',
         ]),
-        ...mapActions(['pos_create_cart_and_export_bill']),
     },
 };
 </script>

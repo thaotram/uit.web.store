@@ -136,19 +136,6 @@ export default {
         .small {
             font-size: 0.9em;
         }
-
-        div,
-        span {
-            &.red {
-                color: #e74c3c;
-            }
-            &.green {
-                color: #2ecc71;
-            }
-            &.violet {
-                color: #9b59b6;
-            }
-        }
     }
 }
 </style>
