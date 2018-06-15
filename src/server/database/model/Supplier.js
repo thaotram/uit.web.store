@@ -55,58 +55,39 @@ class Supplier extends Model {
         });
     }
 
-    get loan() {
-        let money = 0;
-        money += this.paymentCoupons.sum('money');
-        this.importCoupons.forEach(importCoupon => (money -= importCoupon.total));
-        return money;
-    }
     /**
-     * công nợ đến thời điểm bất kỳ
-     * vd: tháng, năm, quý
-     * @param {Date} end
+     *
+     * @param {Realm} realm
+     * @param {{begin: Date, end: Date}} query
      */
-    async loanTo(end) {
-        return new Promise((resolve, reject) => {
-            let money = 0;
-            if (typeof end != 'object' || end.constructor.name !== 'Date') {
-                reject(`Date is invalid`);
-                return;
+    queryLoan(query) {
+        let paymentCoupons = this.paymentCoupons;
+        let importCoupons = this.importCoupons;
+        if (query.hasOwnProperty('begin')) {
+            if (query.begin instanceof Date) {
+                paymentCoupons = paymentCoupons.filtered('create > $0', query.begin);
+                importCoupons = importCoupons.filtered('create > $0', query.begin);
             }
+        }
+        if (query.hasOwnProperty('end')) {
+            if (query.end instanceof Date) {
+                paymentCoupons = paymentCoupons.filtered('create < $0', query.end);
+                importCoupons = importCoupons.filtered('create < $0', query.end);
+            }
+        }
+        return (
+            -paymentCoupons.sum('money') +
+            importCoupons
+                .map(importCoupon => importCoupon.total)
+                .reduce((a, b) => a + b, 0)
+        );
+    }
 
-            money += this.paymentCoupons.filtered('create < $0', end).sum('money');
-            this.importCoupons
-                .filtered('create < $0', end)
-                .forEach(importCoupon => (money -= importCoupon.total));
-            resolve(money);
-        });
-    }
     /**
-     * công nợ trong 1 khoảng thời gian
-     * vd: tháng, năm, quý
-     * @param {Date} begin
-     * @param {Date} end
+     * số tiền nợ Nhà cung cấp là số tiền mà mình nợ nhà cung cấp
      */
-    async loanAround(begin, end) {
-        return new Promise((resolve, reject) => {
-            let money = 0;
-            if (
-                typeof end != 'object' ||
-                end.constructor.name !== 'Date' ||
-                typeof begin != 'object' ||
-                begin.constructor.name !== 'Date'
-            ) {
-                reject(`Date is invalid`);
-                return;
-            }
-            money += this.paymentCoupons
-                .filtered('$0 < create AND create < $1', begin, end)
-                .sum('money');
-            this.importCoupons
-                .filtered('$0 < create AND create < $1', begin, end)
-                .forEach(importCoupon => (money -= importCoupon.total));
-            resolve(money);
-        });
+    get loan() {
+        return this.queryLoan({});
     }
 
     get json() {
@@ -122,6 +103,7 @@ class Supplier extends Model {
             count: this.importCoupons
                 .map(importCoupon => importCoupon.count)
                 .reduce((a, b) => a + b, 0),
+            loan: this.loan,
         };
     }
 }
