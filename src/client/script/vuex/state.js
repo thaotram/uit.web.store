@@ -1,3 +1,4 @@
+import keys from './keys';
 export default {
     app: {
         name: 'Tiệm sách thông minh',
@@ -11,12 +12,10 @@ export default {
     gui: {
         fullSideBarSize: true,
     },
-    data: {
-        books: [],
-        employees: [],
-        users: [],
-        suppliers: [],
-    },
+    data: keys.reduce((object, key) => {
+        object[`${key}s`] = [];
+        return object;
+    }, {}),
     pos: {
         sells: [],
     },

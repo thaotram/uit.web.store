@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-management-supplier light" >
+    <row- class="admin admin-transaction-export-bill light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
@@ -20,7 +20,7 @@
                 <template slot="header">
                     <table-row- size="45">
                         <div>STT</div>
-                        <div>Nhà cung cấp</div>
+                        <div>Hóa đơn xuất</div>
                         <div>Điện thoại</div>
                         <div>Địa chỉ</div>
                         <div>Đã nhập</div>
@@ -111,7 +111,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-management-supplier {
+.admin-transaction-export-bill {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

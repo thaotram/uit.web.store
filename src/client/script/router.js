@@ -36,6 +36,12 @@ const router = new VueRouter({
             component: () => import('admin-user'),
         },
         {
+            path: '/admin/transaction/export-bill',
+            name: 'admin-transaction-export-bill',
+            component: () => import('admin-transaction-export-bill'),
+        },
+
+        {
             path: '/admin/management/employee',
             name: 'admin-management-employee',
             component: () => import('admin-management-employee'),

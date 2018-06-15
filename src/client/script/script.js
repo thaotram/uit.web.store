@@ -1,12 +1,12 @@
 import Vue from 'vue';
-import router from './router';
-import store from './vuex/store';
-import app from './vue/app/app.vue';
-import { socket } from './socket/socket';
-import('../style/index.scss');
-
+import { mapActions } from 'vuex';
 import modules, { facebookInitialize } from './modules';
-import { mapState, mapActions } from 'vuex';
+import router from './router';
+import { socket } from './socket/socket';
+import app from './vue/app/app.vue';
+import keys from './vuex/keys';
+import store from './vuex/store';
+import('../style/index.scss');
 
 new Vue({
     el: '#app',
@@ -29,13 +29,12 @@ new Vue({
         });
     },
     mounted() {
-        this.load_books();
-        this.load_employees();
-        this.load_users();
-        this.load_suppliers();
+        keys.forEach(key => {
+            this[`load_${key}s`]();
+        });
     },
     methods: {
-        ...mapActions(['load_books', 'load_employees', 'load_users', 'load_suppliers']),
+        ...mapActions(keys.map(key => `load_${key}s`)),
     },
     render: h => h(app, { ref: 'app' }),
 });

@@ -20,16 +20,27 @@ class ExportBill extends Model {
     }
 
     get total() {
-        let money = 0;
-        this.cart.cartDetail.forEach(detail => {
-            money += detail.book.realPrice(this.create) * detail.count;
-        });
-        return money;
+        return this.cart.cartDetails
+            .map(detail => detail.book.realPrice(this.create) * detail.count)
+            .reduce((a, b) => a + b, 0);
+    }
+
+    get count() {
+        return this.cart.cartDetails
+            .map(detail => detail.count)
+            .reduce((a, b) => a + b, 0);
     }
 
     get json() {
         const o = this.object;
         return o;
+    }
+
+    get detail() {
+        return {
+            total: this.total,
+            count: this.count,
+        };
     }
 
     get jsonWithoutCart() {

@@ -1,29 +1,8 @@
-export default {
-    /**
-     * @param {typeof import("../state").default} state
-     */
-    load_books(state, books) {
-        state.data.books = books;
-    },
+import keys from '../keys';
 
-    /**
-     * @param {typeof import("../state").default} state
-     */
-    load_employees(state, employees) {
-        state.data.employees = employees;
-    },
-
-    /**
-     * @param {typeof import("../state").default} state
-     */
-    load_users(state, users) {
-        state.data.users = users;
-    },
-
-    /**
-     * @param {typeof import("../state").default} state
-     */
-    load_suppliers(state, supplier) {
-        state.data.suppliers = supplier;
-    },
-};
+export default keys.reduce((object, key) => {
+    object[`load_${key}s`] = (state, data) => {
+        state.data[`${key}s`] = data;
+    };
+    return object;
+}, {});
