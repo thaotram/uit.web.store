@@ -79,52 +79,59 @@
             </table-view->
         </col->
         <col- class="right noOverflow">
-            <div ref="print" 
-                 class="shadow round full report">
-                <col- class="bill">
-                    <row- class="header"
-                          size="40">
-                        <div class="logo"/>
-                        <s- :s="10"/>
-                        <span class="logo-text d full">{{ app.name }}</span>
-                    </row->
-                    <s- :s="5"/>
-                    <p class="text">- Địa chỉ: {{ app.address }}</p>
-                    <p class="text">- Điện thoại: {{ app.phone }}</p>
-                    <s- :s="8"/>
-                    <div class="line"/>
-                    <s- :s="8"/>
-                    <p class="text bold big center">HÓA ĐƠN BÁN LẺ</p>
-                    <s- :s="8"/>
-                    <div class="bill-table">
-                        <p class="text">Thời gian: {{ time }}</p>
-                        <s- :s="8"/>
-                        <div class="row">
-                            <div>Tên sách</div>
-                            <div>SL</div>
-                            <div>Đơn giá</div>
-                            <div>Thành tiền</div>
+            <div class="row user-input"
+                 size="40">
+                <input- v-model="search_user"
+                        icon=""
+                        class="shadow search-box round full"
+                        type="text"
+                        placeholder="Tên tài khoản người dùng">
+                    <dropdown- :size="50" 
+                               class="user-dropdown">
+                        <div v-for="_user in userResults" 
+                             :key="_user.id"
+                             class="user"
+                             @click="user = _user">
+                            <row- size="40">
+                                <image- :src="avatar(_user.id)"
+                                        class="round square border"
+                                        size="30"/>
+                                <s- :s="10"/>
+                                <span class="full">
+                                    {{ _user.name }}
+                                </span>
+                            </row->
                         </div>
-                        <div class="line"/>
-                        <div v-for="sell in pos.sells" 
-                             :key="sell.book.id"
-                             class="row">
-                            <div>{{ sell.book.name }}</div>
-                            <div>{{ sell.count }}</div>
-                            <div>{{ money(sell.book.realPrice) }}</div>
-                            <div>{{ money(sell.count * sell.book.realPrice) }}</div>
-                        </div>
-                        <div class="line"/>
-                        <div class="row bold">
-                            <div>Tổng cộng</div>
-                            <div>{{ count }}</div>
-                            <div/>
-                            <div>{{ money(total) }}</div>
-                        </div>
-                    </div>
-                    <s- :s="20"/>
-                    <p class="text bold center">Xin cảm ơn quý khách!</p>
-                </col->
+                    </dropdown->
+                </input->
+            </div>
+            <s- :s="20"/>
+            <div class="col full shadow round padding">
+                <div class="row user" 
+                     size="40">
+                    <image- :src="avatar(user.id)"
+                            class="round square border"
+                            size="30"/>
+                    <s- :s="10"/>
+                    <span class="full semibold" 
+                          style="line-height: 40px">
+                        {{ user.name }}
+                    </span>
+                </div>
+                <s- :s="15"/>
+                <line-/>
+                <s- :s="15"/>
+                <div class="semibold">
+                    Điểm thưởng: 
+                </div>
+                <s- :s="5"/>
+                <div class="semibold">
+                    Số sách đã mua: 
+                </div>
+                <s- :s="5"/>
+                <div class="semibold">
+                    Tổng tiền đã mua: 
+                </div>
             </div>
             <s- :s="20"/>
             <col- class="shadow round pay">
@@ -147,12 +154,60 @@
                 </row->
             </col->
         </col->
+
+        <div ref="print" 
+             class="shadow round full report">
+            <col- class="bill">
+                <row- class="header"
+                      size="40">
+                    <div class="logo"/>
+                    <s- :s="10"/>
+                    <span class="logo-text d full">{{ app.name }}</span>
+                </row->
+                <s- :s="5"/>
+                <p class="text">- Địa chỉ: {{ app.address }}</p>
+                <p class="text">- Điện thoại: {{ app.phone }}</p>
+                <s- :s="8"/>
+                <div class="line"/>
+                <s- :s="8"/>
+                <p class="text bold big center">HÓA ĐƠN BÁN LẺ</p>
+                <s- :s="8"/>
+                <div class="bill-table">
+                    <p class="text">Thời gian: {{ time }}</p>
+                    <s- :s="8"/>
+                    <div class="row">
+                        <div>Tên sách</div>
+                        <div>SL</div>
+                        <div>Đơn giá</div>
+                        <div>Thành tiền</div>
+                    </div>
+                    <div class="line"/>
+                    <div v-for="sell in pos.sells" 
+                         :key="sell.book.id"
+                         class="row">
+                        <div>{{ sell.book.name }}</div>
+                        <div>{{ sell.count }}</div>
+                        <div>{{ money(sell.book.realPrice) }}</div>
+                        <div>{{ money(sell.count * sell.book.realPrice) }}</div>
+                    </div>
+                    <div class="line"/>
+                    <div class="row bold">
+                        <div>Tổng cộng</div>
+                        <div>{{ count }}</div>
+                        <div/>
+                        <div>{{ money(total) }}</div>
+                    </div>
+                </div>
+                <s- :s="20"/>
+                <p class="text bold center">Xin cảm ơn quý khách!</p>
+            </col->
+        </div>
     </row->
 </template>
 <script>
 import moment from 'moment';
 import { mapState, mapMutations, mapActions } from 'vuex';
-import { money, found } from '../../modules/index';
+import { money, found, avatar } from '../../modules/index';
 
 export default {
     components: {
@@ -160,6 +215,7 @@ export default {
         ...'button',
         ...'col',
         ...'dropdown',
+        ...'image',
         ...'input',
         ...'label',
         ...'line',
@@ -171,6 +227,11 @@ export default {
     },
     data() {
         return {
+            user: {
+                id: null,
+                name: 'Khách vãng lai',
+            },
+            search_user: '',
             search: '',
             time: '',
             size: [
@@ -192,6 +253,17 @@ export default {
                     !this.pos.sells.some(saleBook => saleBook.book.id === book.id),
             );
         },
+        userResults() {
+            return [
+                {
+                    id: '',
+                    name: 'Khách vãng lai',
+                },
+                ...this.data.users.filter(user => {
+                    return found(user.name, this.search_user);
+                }),
+            ];
+        },
         total() {
             return this.pos.sells
                 .map(book => book.book.realPrice * book.count)
@@ -210,8 +282,24 @@ export default {
     },
     methods: {
         money,
+        avatar,
         async payAndPrint() {
-            const res = await this.pos_create_cart_and_export_bill();
+            const res = await fetch('/api/exportBill/createWithContent', {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    employeeId: 1,
+                    userId: this.user.id,
+                    cartDetails: this.pos.sells.map(sell => ({
+                        id: sell.book.id,
+                        count: sell.count,
+                    })),
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
             if (res.status !== 200) return alert((await res.json()).error);
 
             this.$root.$refs.app.print(this.$refs.print);
@@ -237,10 +325,6 @@ export default {
         flex: 0 300px;
         max-width: 300px;
         min-width: 300px;
-        > .report {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
         > .pay {
             padding: 15px;
             > .pay-row {
@@ -248,6 +332,11 @@ export default {
                 padding: 3px 2px;
             }
         }
+    }
+    .report {
+        position: absolute;
+        z-index: -1;
+        visibility: hidden;
     }
 }
 </style>

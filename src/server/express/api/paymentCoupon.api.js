@@ -16,6 +16,8 @@ export default function(app, io, realm) {
             employee,
             req.body.rawPaymentCoupon,
         );
+        
+        io.emit('update', 'paymentCoupon');
         res.send(paymentCoupon.json);
     });
 

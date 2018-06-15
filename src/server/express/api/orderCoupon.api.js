@@ -16,6 +16,8 @@ export default function(app, io, realm) {
             employee,
             req.body.orderCouponDetails,
         );
+
+        io.emit('update', 'orderCoupon');
         res.send(orderCoupon.json);
     });
 

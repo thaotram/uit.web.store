@@ -17,6 +17,8 @@ export default function(app, io, realm) {
             req.body.shipper,
             req.body.importCouponDetails,
         );
+
+        io.emit('update', 'importCoupons');
         res.send(importCoupon.json);
     });
 

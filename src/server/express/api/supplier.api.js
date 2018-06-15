@@ -10,6 +10,8 @@ export default function(app, io, realm) {
         Employee.getBySessionId(req.sessionID);
 
         const supplier = await Supplier.create(realm, req.body);
+
+        io.emit('update', 'supplier');
         res.send(supplier.json);
     });
 
@@ -18,6 +20,8 @@ export default function(app, io, realm) {
 
         const supplier = Supplier.getById(realm, req.body.supplierId);
         await supplier.update(realm, req.body.data);
+
+        io.emit('update', 'supplier');
         res.send(supplier.json);
     });
 
