@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { mapActions } from 'vuex';
-import modules, { facebookInitialize } from './modules';
+import { Facebook } from './modules';
 import router from './router';
 import { socket } from './socket/socket';
 import app from './vue/app/app.vue';
@@ -13,20 +13,17 @@ new Vue({
     router,
     store,
     async beforeCreate() {
-        await facebookInitialize();
-        const FB = modules.FB;
+        await Facebook.initialize();
+        const status = await Facebook.status(socket);
 
-        FB.getLoginStatus(response => {
-            if (response.status === 'connected') {
-                const req = {
-                    token: response.authResponse.accessToken,
-                    id: Number(response.authResponse.userID),
-                };
-                socket.emit('login', req, res => {
-                    console.log('Thông tin đăng nhập ở đây nè!', res);
-                });
-            }
-        });
+        if (!status.isLogin) {
+            router.push('/login');
+        } else if (typeof status.res.employeeId === 'number') {
+            store.commit('authorize', status.res);
+            router.push('/admin/pos');
+        } else {
+            router.push('/error/not-authorized');
+        }
     },
     mounted() {
         keys.forEach(key => {

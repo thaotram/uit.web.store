@@ -43,8 +43,7 @@ class User extends Model {
     }
 
     get json() {
-        const o = this.object;
-        return o;
+        return this.object;
     }
 
     get detail() {

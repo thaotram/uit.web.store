@@ -7,7 +7,7 @@
         <line-/>
         <row- class="account" 
               size="50">
-            <image- :src="avatar(user.id)"
+            <image- :src="avatar(authorize.id)"
                     class="round square"
                     size="30"/>
         </row->
@@ -27,7 +27,7 @@ export default {
         ...'label',
     },
     computed: {
-        ...mapState(['user']),
+        ...mapState(['authorize']),
     },
     methods: {
         avatar,
