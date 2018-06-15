@@ -10,7 +10,7 @@
                     <span>Còn lại: <span class="orange-text bold">{{ book.count }}</span></span>
                     <s-/>
                     <span class="green-text bold">
-                        {{ toMoney(book.realPrice) }}
+                        {{ format.money(book.realPrice) }}
                     </span>
                 </row->
             </col->
@@ -18,7 +18,7 @@
     </col->
 </template>
 <script>
-import { toMoney } from '../../modules/';
+import { format } from '../../modules/';
 export default {
     components: {
         ...'row',
@@ -40,7 +40,7 @@ export default {
         },
     },
     methods: {
-        toMoney,
+        format,
     },
 };
 </script>

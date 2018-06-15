@@ -46,7 +46,7 @@
                             {{ index + 1 }}
                         </div>
                         <div class="row">
-                            <image- :src="toAvatar(user.id)"
+                            <image- :src="avatar(user.id)"
                                     class="round square border"
                                     size="30"/>
                             <s- :s="10"/>
@@ -61,7 +61,7 @@
                             {{ user.count }}
                         </div>
                         <div>
-                            {{ toMoney(user.total) }}
+                            {{ money(user.total) }}
                         </div>
                     </table-row->
                 </template>
@@ -84,7 +84,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { toMoney, toDate, found, toAvatar } from '../../modules/index';
+import { money, found, avatar } from '../../modules/index';
 
 export default {
     components: {
@@ -129,9 +129,8 @@ export default {
         },
     },
     methods: {
-        toDate,
-        toAvatar,
-        toMoney,
+        money,
+        avatar,
     },
 };
 </script>

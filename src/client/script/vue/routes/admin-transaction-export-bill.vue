@@ -15,40 +15,42 @@
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="exportBillResults.length !== 0"
+                         :has-content="cartResults.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
                         <div>STT</div>
-                        <div>Hóa đơn xuất</div>
-                        <div>Điện thoại</div>
-                        <div>Địa chỉ</div>
-                        <div>Đã nhập</div>
-                        <div>Tổng cộng</div>
+                        <div>Người mua</div>
+                        <div>Thời gian</div>
+                        <div>Số lượng</div>
+                        <div>Thành tiền</div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="(exportBill, index) in exportBillResults"
-                                :key="exportBill.id"
-                                size="45">
+                    <table-row- v-for="(cart, index) in cartResults"
+                                :key="cart.id"
+                                size="60">
                         <div>
                             {{ index + 1 }}
                         </div>
-                        <div>
-                            {{ exportBill.name }}
+                        <div class="row">
+                            <image- :src="avatar(cart.userId)"
+                                    class="round square border"
+                                    size="30"/>
+                            <s- :s="10"/>
+                            <span class="full">
+                                {{ toUserName(cart.userId) }}
+                            </span>
                         </div>
                         <div>
-                            {{ exportBill.phone }}
+                            {{ timeAgo(cart.exportBill.create) }}
                         </div>
                         <div>
-                            {{ exportBill.address }}
+                            {{ cart.exportBill.count }}
                         </div>
                         <div>
-                            {{ exportBill.count }}
-                        </div>
-                        <div>
-                            {{ toMoney(exportBill.total) }}
+                            {{ money(cart.exportBill.total) }}
                         </div>
                     </table-row->
                 </template>
@@ -65,7 +67,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import { toMoney, toDate, found, toAvatar } from '../../modules/index';
+import { avatar, timeAgo, money } from '../../modules/index';
 
 export default {
     components: {
@@ -87,24 +89,28 @@ export default {
             search: '',
             size: [
                 ['0 30px', 'center'],
-                ['0.8 220px', 'start'],
-                ['0 120px', 'start'],
-                ['1 280px', 'start'],
+                ['1 220px', 'start'],
+                ['0 170px', 'end'],
                 ['0 100px', 'end'],
-                ['0 100px', 'end'],
+                ['0 150px', 'end'],
             ],
         };
     },
     computed: {
         ...mapState(['app', 'data']),
-        exportBillResults() {
-            return this.data.carts.filter(cart => found(cart.name, this.search));
+        cartResults() {
+            return this.data.carts.filter(cart => cart.exportBill !== undefined);
         },
     },
     methods: {
-        toDate,
-        toAvatar,
-        toMoney,
+        avatar,
+        timeAgo,
+        money,
+        toUserName(id) {
+            const user = this.data.users.find(user => user.id == id);
+            if (user) return user.name;
+            return '?';
+        },
     },
 };
 </script>

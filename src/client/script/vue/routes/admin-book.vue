@@ -55,10 +55,10 @@
                             {{ book.count }}
                         </div>
                         <div>
-                            {{ toMoney(book.realPrice) }}
+                            {{ money(book.realPrice) }}
                         </div>
                         <div>
-                            {{ toMoney(book.coverPrice) }}
+                            {{ money(book.coverPrice) }}
                         </div>
                     </table-row->
                 </template>
@@ -75,7 +75,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import { toMoney, found } from '../../modules/index';
+import { money, found } from '../../modules';
 
 export default {
     components: {
@@ -118,7 +118,7 @@ export default {
         },
     },
     methods: {
-        toMoney,
+        money,
     },
 };
 </script>

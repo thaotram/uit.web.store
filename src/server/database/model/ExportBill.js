@@ -26,9 +26,7 @@ class ExportBill extends Model {
     }
 
     get count() {
-        return this.cart.cartDetails
-            .map(detail => detail.count)
-            .reduce((a, b) => a + b, 0);
+        return this.cart.cartDetails.sum('count');
     }
 
     get json() {
@@ -41,11 +39,6 @@ class ExportBill extends Model {
             total: this.total,
             count: this.count,
         };
-    }
-
-    get jsonWithoutCart() {
-        const o = this.object;
-        return o;
     }
 }
 

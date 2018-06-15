@@ -7,7 +7,7 @@
         <line-/>
         <row- class="account" 
               size="50">
-            <image- :src="toAvatar(user.id)"
+            <image- :src="avatar(user.id)"
                     class="round square"
                     size="30"/>
         </row->
@@ -15,7 +15,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import { toAvatar } from '../../modules/index';
+import { avatar } from '../../modules/index';
 
 export default {
     components: {
@@ -30,7 +30,7 @@ export default {
         ...mapState(['user']),
     },
     methods: {
-        toAvatar,
+        avatar,
     },
 };
 </script>

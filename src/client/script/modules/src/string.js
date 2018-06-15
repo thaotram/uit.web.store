@@ -1,8 +1,21 @@
 /**
+ * @param {String} data
+ * @param {String} search
+ * @return {Boolean}
+ */
+export function found(data, search) {
+    return (
+        english(data)
+            .toLowerCase()
+            .indexOf(english(search).toLowerCase()) != -1
+    );
+}
+
+/**
  *
  * @param {String} string
  */
-export default function(string) {
+export function english(string) {
     if (typeof string != 'string') return '';
     return string
         .replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a')
@@ -19,4 +32,13 @@ export default function(string) {
         .replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, 'U')
         .replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, 'Y')
         .replace(/Đ/g, 'D');
+}
+
+const NumberFormat = new Intl.NumberFormat('vi', { style: 'currency', currency: 'VND' });
+/**
+ *
+ * @param {Number} number
+ */
+export function money(number) {
+    return NumberFormat.format(number);
 }

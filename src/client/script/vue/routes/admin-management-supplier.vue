@@ -48,7 +48,7 @@
                             {{ supplier.count }}
                         </div>
                         <div>
-                            {{ toMoney(supplier.total) }}
+                            {{ money(supplier.total) }}
                         </div>
                     </table-row->
                 </template>
@@ -64,8 +64,8 @@
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
-import { toMoney, toDate, found, toAvatar } from '../../modules/index';
+import { mapState } from 'vuex';
+import { money, found, avatar } from '../../modules/index';
 
 export default {
     components: {
@@ -104,9 +104,8 @@ export default {
         },
     },
     methods: {
-        toDate,
-        toAvatar,
-        toMoney,
+        money,
+        avatar,
     },
 };
 </script>

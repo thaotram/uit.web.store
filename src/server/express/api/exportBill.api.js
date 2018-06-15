@@ -13,9 +13,12 @@ export default function(app, realm) {
         res.send(exportBill.json);
     });
 
-    app.post('/api/exportBill/create_with_content', async (req, res) => {
+    app.post('/api/exportBill/createWithContent ', async (req, res) => {
         const employee = Employee.getById(realm, Number(req.body.employeeId));
-        const user = typeof req.body.userId == 'number' ? User.getById(realm, Number(req.body.userId)) : undefined;
+        const user =
+            typeof req.body.userId == 'number'
+                ? User.getById(realm, Number(req.body.userId))
+                : undefined;
         const cart = await Cart.create(realm, user, req.body.cartDetails);
         const exportBill = await ExportBill.create(realm, cart, employee);
         res.send(exportBill.json);
