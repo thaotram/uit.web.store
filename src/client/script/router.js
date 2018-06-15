@@ -16,6 +16,16 @@ const router = new VueRouter({
             component: () => import('home'),
         },
         {
+            path: '/authorize/login',
+            name: 'authorize-login',
+            component: () => import('authorize-login'),
+        },
+        {
+            path: '/authorize/error',
+            name: 'authorize-error',
+            component: () => import('authorize-error'),
+        },
+        {
             path: '/admin/pos',
             name: 'admin-pos',
             component: () => import('admin-pos'),

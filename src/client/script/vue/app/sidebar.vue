@@ -102,12 +102,13 @@
         <button- icon="" 
                  text="Thông tin"/>
         <button- icon="" 
-                 text="Đăng xuất"/>
+                 text="Đăng xuất"
+                 @click.native="logout"/>
     </col->
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex';
-
+import { Facebook } from '../../modules';
 export default {
     components: {
         ...'col',
@@ -132,6 +133,9 @@ export default {
         match(regex) {
             if (!this.$route.name) return false;
             return this.$route.name.match(regex) !== null;
+        },
+        logout() {
+            Facebook.FB.logout(this.$root.checkLogin);
         },
     },
 };
@@ -165,7 +169,6 @@ export default {
         min-height: 0px;
         height: 0;
         opacity: 0;
-        // transition: all 0.4s 0.5s;
         overflow: hidden;
     }
 
