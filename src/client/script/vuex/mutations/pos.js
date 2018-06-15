@@ -14,7 +14,6 @@ export default {
      * @param {typeof import("../state").default} state
      */
     pos_remove_sell_book(state, sell) {
-        // console.log(sell);
         const index = state.pos.sells.indexOf(sell);
         if (index === -1) return;
         state.pos.sells.splice(index, 1);

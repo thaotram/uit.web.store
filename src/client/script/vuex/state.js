@@ -6,8 +6,8 @@ export default {
         phone: '(028) 372 51993',
     },
     authorize: {
-        id: 715380908507851,
-        name: 'Lê Thị Thảo Trâm',
+        id: -1,
+        name: '...',
         point: 0,
         employeeId: 1,
     },

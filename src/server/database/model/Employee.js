@@ -20,6 +20,19 @@ class Employee extends Model {
     }
 
     /**
+     *
+     * @param {String} sessionId
+     * @returns {Employee}
+     */
+    static getBySessionId(sessionId) {
+        const user = User.getBySessionId(sessionId);
+        if (!user) throw 'Không tìm thấy phiên đăng nhập';
+        if (!user.employee[0]) throw 'Không phải là phiên đăng nhập của nhân viên';
+
+        return user.employee[0];
+    }
+
+    /**
      * @param {Realm} realm
      * @param {Employee} rawEmployee
      */

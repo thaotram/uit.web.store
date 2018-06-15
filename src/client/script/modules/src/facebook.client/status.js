@@ -6,7 +6,6 @@ import Facebook from './index';
  */
 export default function(socket) {
     return new Promise(resolve => {
-        console.log(Facebook);
         Facebook.default.FB.getLoginStatus(response => {
             if (response.status === 'connected') {
                 const req = {

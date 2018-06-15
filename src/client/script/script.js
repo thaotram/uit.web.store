@@ -13,19 +13,22 @@ new Vue({
     router,
     store,
     async beforeCreate() {
+        router.push('/');
+
         await Facebook.initialize();
         const status = await Facebook.status(socket);
 
         if (!status.isLogin) {
             router.push('/login');
-        } else if (typeof status.res.employeeId === 'number') {
-            store.commit('authorize', status.res);
-            router.push('/admin/pos');
         } else {
-            router.push('/error/not-authorized');
+            store.commit('authorize', status.res);
+            if (typeof status.res.employeeId === 'number') {
+                router.push('/admin/pos');
+            } else {
+                router.push('/error/not-authorized');
+            }
         }
-    },
-    mounted() {
+
         keys.forEach(key => {
             this[`load_${key}s`]();
         });

@@ -1,5 +1,6 @@
 import {
-    getUserFromSessionID,
+    getUserByRequestAndSessionID,
+    getUserBySessionID,
     getUserInfo,
     setUserSession,
 } from '../../credential/facebook.server';
@@ -13,7 +14,7 @@ class User extends Model {
      * @param {String} sessionID
      */
     static async get(realm, req, sessionID) {
-        const userFromSession = getUserFromSessionID(req, sessionID);
+        const userFromSession = getUserByRequestAndSessionID(req, sessionID);
         if (userFromSession instanceof User) {
             return userFromSession;
         }
@@ -40,6 +41,15 @@ class User extends Model {
         }
 
         return null;
+    }
+
+    /**
+     *
+     * @param {String} sessionID
+     * @returns {User | undefined}
+     */
+    static getBySessionId(sessionID) {
+        return getUserBySessionID(sessionID);
     }
 
     get json() {
