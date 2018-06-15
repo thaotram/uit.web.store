@@ -46,6 +46,16 @@ const router = new VueRouter({
             component: () => import('admin-transaction-import-coupon'),
         },
         {
+            path: '/admin/transaction/order-coupon',
+            name: 'admin-transaction-order-coupon',
+            component: () => import('admin-transaction-order-coupon'),
+        },
+        {
+            path: '/admin/transaction/payment-coupon',
+            name: 'admin-transaction-payment-coupon',
+            component: () => import('admin-transaction-payment-coupon'),
+        },
+        {
             path: '/admin/management/employee',
             name: 'admin-management-employee',
             component: () => import('admin-management-employee'),
