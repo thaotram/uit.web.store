@@ -18,6 +18,7 @@ export default function(app, io, realm) {
         );
 
         io.emit('update', 'paymentCoupon');
+        io.emit('update', 'supplier');
         res.send(paymentCoupon.json);
     });
 

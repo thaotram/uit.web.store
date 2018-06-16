@@ -20,6 +20,7 @@ export default function(app, io, realm) {
         );
 
         io.emit('update', 'importCoupon');
+        io.emit('update', 'supplier');
         io.emit('update', 'book');
         res.send(importCoupon.json);
     });

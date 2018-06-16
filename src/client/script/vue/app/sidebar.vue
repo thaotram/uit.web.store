@@ -147,7 +147,8 @@
         </col->
 
         <s-/>
-        <button- icon="" 
+        <button- :active="is('information')" 
+                 icon=""
                  text="Thông tin"
                  @click.native="go('/information')"/>
         <button- icon="" 
