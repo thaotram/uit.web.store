@@ -3,6 +3,21 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+div,
+span {
+    &:not(.button) {
+        &.red {
+            color: #e74c3c;
+        }
+        &.green {
+            color: #2ecc71;
+        }
+        &.violet {
+            color: #9b59b6;
+        }
+    }
+}
+
 .round {
     border-radius: 3px;
 }

@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-management-employee-edit light" >
+    <row- class="admin admin-management-supplier-edit light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
@@ -12,7 +12,7 @@
             <col- class="full round shadow noOverflow">
                 <div class="full scroll padding">
                     <div class="col">
-                        <h1>Cập nhật thông tin nhân viên</h1>
+                        <h1>Cập nhật thông tin nhà cung cấp</h1>
                         <s- :s="20"/>
                         <line-/>
                         <s- :s="20"/>
@@ -25,43 +25,22 @@
                                          text="Địa chỉ"/>
                                 <button- class="shadow round green" 
                                          text="Số điện thoại"/>
-                                <button- class="shadow round green" 
-                                         text="Ngày sinh"/>
-                                <button- class="shadow round green" 
-                                         text="Tài khoản"/>
                             </col->
                             <s- :s="10"/>
                             <col- size="40" 
                                   class="full">
-                                <input- v-model="employee.name"
+                                <input- v-model="supplier.name"
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Họ và tên nhân viên"/>
-                                <input- v-model="employee.address"
+                                <input- v-model="supplier.address"
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Địa chỉ chi tiết hiện tại"/>
-                                <input- v-model="employee.phone"
+                                <input- v-model="supplier.phone"
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Số di động hoặc nhà riêng"/>
-                                <input- v-model="employee.birthdate"
-                                        class="shadow search-box round"
-                                        type="text"
-                                        placeholder="Ngày sinh"/>
-                                <div class="row user-input"
-                                     size="40">
-                                    <div class="row user" 
-                                         size="40">
-                                        <image- :src="avatar(user.id)"
-                                                class="round square border"
-                                                size="30"/>
-                                        <s- :s="10"/>
-                                        <span class="full">
-                                            {{ user.name }}
-                                        </span>
-                                    </div>
-                                </div>
                             </col->
                         </row->
                     </div>
@@ -72,7 +51,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import { date, avatar, user } from '../../modules/index';
+import { date, avatar } from '../../modules/index';
 
 export default {
     components: {
@@ -104,45 +83,41 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
-        employee() {
+        supplier() {
             return (
-                this.data.employees.find(
-                    employee => employee.id == Number(this.$route.params.id),
+                this.data.suppliers.find(
+                    supplier => supplier.id == Number(this.$route.params.id),
                 ) || {
                     name: '',
                     address: '',
                     phone: '',
-                    birthdate: '',
                 }
             );
-        },
-        user() {
-            return user(this.employee.userId, this);
         },
     },
     methods: {
         date,
         avatar,
         async submit() {
-            const res = await fetch('/api/employee/edit', {
+            const res = await fetch('/api/supplier/edit', {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: JSON.stringify({
-                    employeeId: this.employee.id,
-                    data: this.employee,
+                    supplierId: this.supplier.id,
+                    data: this.supplier,
                 }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
             if (res.status !== 200) return alert((await res.json()).error);
-            this.$router.push('/admin/management/employee');
+            this.$router.push('/admin/management/supplier');
         },
     },
 };
 </script>
 <style lang="scss">
-.admin-management-employee-edit {
+.admin-management-supplier-edit {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

@@ -94,7 +94,7 @@
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import { date, found, avatar } from '../../modules/index';
 
 export default {
@@ -151,7 +151,7 @@ export default {
         date,
         avatar,
         async submit() {
-            await fetch('/api/employee/create', {
+            const res = await fetch('/api/employee/create', {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: JSON.stringify({
@@ -167,6 +167,7 @@ export default {
                     'Content-Type': 'application/json',
                 },
             });
+            if (res.status !== 200) return alert((await res.json()).error);
             this.$router.push('/admin/management/employee');
         },
     },

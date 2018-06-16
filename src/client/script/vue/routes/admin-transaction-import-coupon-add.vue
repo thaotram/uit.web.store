@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-pos light" >
+    <row- class="admin admin-import-coupon light" >
         <col- class="left full noOverflow">
             <row- size="40" 
                   class="title">
@@ -13,13 +13,13 @@
                         <book-search-item- v-for="book in searchResults" 
                                            :book="book"
                                            :key="book.id"
-                                           @click.native="pos_add_sell_book(book)"/>
+                                           @click.native="import_coupon_add_buy_book(book)"/>
                     </dropdown->
                 </input->
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="pos.sells.length !== 0"
+                         :has-content="import_coupon.buys.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
@@ -33,40 +33,47 @@
                             Số lượng
                         </div>
                         <div>
-                            Đơn giá
+                            Giá bìa
+                        </div>
+                        <div>
+                            Giá mua
                         </div>
                         <div>
                             Thành tiền
                         </div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="pos_remove_sell_books"/>
+                                 @click.native="import_coupon_remove_buy_books"/>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="sell in pos.sells" 
-                                :key="sell.book.id"
+                    <table-row- v-for="buy in import_coupon.buys" 
+                                :key="buy.book.id"
                                 size="45">
                         <div>
-                            {{ sell.book.id }}
+                            {{ buy.book.id }}
                         </div>
                         <div>
-                            {{ sell.book.name }}
+                            {{ buy.book.name }}
                         </div>
-                        <input v-model.number="sell.count"
+                        <input v-model.number="buy.count"
                                type="number"
                                refs="count"
                                min="0">
                         <div>
-                            {{ money(sell.book.realPrice) }}
+                            {{ money(buy.book.coverPrice) }}
                         </div>
+                        <input v-model.number="buy.price"
+                               type="number"
+                               refs="count"
+                               min="0">
                         <div>
-                            {{ money(sell.count * sell.book.realPrice) }}
+                            {{ money(buy.count * buy.price) }}
                         </div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="pos_remove_sell_book(sell)"/>
+                                 @click.native="import_coupon_remove_buy_book(buy)"/>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -81,25 +88,23 @@
         <col- class="right noOverflow">
             <div class="row user-input"
                  size="40">
-                <input- v-model="search_user"
+                <input- v-model="search_supplier"
                         icon=""
                         class="shadow search-box round full"
                         type="text"
-                        placeholder="Tên tài khoản người dùng">
+                        placeholder="Tên nhà cung cấp">
                     <dropdown- :size="50" 
                                class="user-dropdown">
-                        <div v-for="_user in userResults" 
-                             :key="_user.id"
+                        <div v-for="supplier_ in supplierResults" 
+                             :key="supplier_.id"
                              class="user"
-                             @click="user = _user">
+                             @click="supplier = supplier_">
                             <row- size="40">
-                                <image- :src="avatar(_user.id)"
-                                        class="round square border"
-                                        size="30"/>
                                 <s- :s="10"/>
                                 <span class="full">
-                                    {{ _user.name }}
+                                    {{ supplier_.name }}
                                 </span>
+                                <s- :s="10"/>
                             </row->
                         </div>
                     </dropdown->
@@ -109,28 +114,34 @@
             <div class="col full shadow round padding">
                 <div class="row user" 
                      size="40">
-                    <image- :src="avatar(user.id)"
-                            class="round square border"
-                            size="30"/>
-                    <s- :s="10"/>
-                    <span class="full semibold" 
-                          style="line-height: 40px">
-                        {{ user.name }}
+                    <span class="full bold" 
+                          style="line-height: 1.5em; font-size: 1.1em">
+                        {{ supplier.name }}
                     </span>
                 </div>
-                <s- :s="15"/>
+                <s- :s="10"/>
                 <line-/>
-                <s- :s="15"/>
+                <s- :s="10"/>
                 <div class="semibold">
-                    Điểm thưởng: {{ user.point }}
+                    Địa chỉ: {{ supplier.address }}
                 </div>
                 <s- :s="5"/>
                 <div class="semibold">
-                    Số sách đã mua: {{ user.count }}
+                    Số điện thoại: {{ supplier.phone }}
+                </div>
+                <s- :s="10"/>
+                <line-/>
+                <s- :s="10"/>
+                <div class="semibold">
+                    Số sách đã nhập: <span class="green">{{ supplier.count }}</span>
                 </div>
                 <s- :s="5"/>
                 <div class="semibold">
-                    Tổng tiền đã mua: {{ money(user.total) }}
+                    Đã mua: <span class="violet">{{ money(supplier.total) }}</span>
+                </div>
+                <s- :s="5"/>
+                <div class="semibold">
+                    Còn nợ: <span class="red">{{ money(supplier.loan) }}</span>
                 </div>
             </div>
             <s- :s="20"/>
@@ -141,15 +152,15 @@
                     <span class="green-text">{{ count }}</span>
                 </row->
                 <row- class="pay-row bold">
-                    <span>Khách phải trả:</span>
+                    <span>Tổng tiền:</span>
                     <s-/>
                     <span class="green-text">{{ money(total) }}</span>
                 </row->
                 <s- :s="10"/>
                 <row- size="40">
                     <button- class="full green round"
-                             icon="" 
-                             text="Thanh toán và in hóa đơn"
+                             icon="" 
+                             text="Ghi phiếu nhập sách"
                              @click.native="submit"/>
                 </row->
             </col->
@@ -178,17 +189,17 @@
                     <div class="row">
                         <div>Tên sách</div>
                         <div>SL</div>
-                        <div>Đơn giá</div>
+                        <div>Giá mua</div>
                         <div>Thành tiền</div>
                     </div>
                     <div class="line"/>
-                    <div v-for="sell in pos.sells" 
-                         :key="sell.book.id"
+                    <div v-for="buy in import_coupon.buys" 
+                         :key="buy.book.id"
                          class="row">
-                        <div>{{ sell.book.name }}</div>
-                        <div>{{ sell.count }}</div>
-                        <div>{{ money(sell.book.realPrice) }}</div>
-                        <div>{{ money(sell.count * sell.book.realPrice) }}</div>
+                        <div>{{ buy.book.name }}</div>
+                        <div>{{ buy.count }}</div>
+                        <div>{{ money(buy.book.realPrice) }}</div>
+                        <div>{{ money(buy.count * buy.book.realPrice) }}</div>
                     </div>
                     <div class="line"/>
                     <div class="row bold">
@@ -227,11 +238,11 @@ export default {
     },
     data() {
         return {
-            user: {
+            supplier: {
                 id: null,
-                name: 'Khách vãng lai',
+                name: '< Tên nhà cung cấp >',
             },
-            search_user: '',
+            search_supplier: '',
             search: '',
             time: '',
             size: [
@@ -240,38 +251,33 @@ export default {
                 ['0 70px', 'center'],
                 ['0 80px', 'end'],
                 ['0 80px', 'end'],
+                ['0 80px', 'end'],
                 ['0 45px', 'end'],
             ],
         };
     },
     computed: {
-        ...mapState(['app', 'data', 'pos']),
+        ...mapState(['app', 'data', 'import_coupon']),
         searchResults() {
             return this.data.books.filter(
                 book =>
                     found(book.name, this.search) &&
-                    !this.pos.sells.some(saleBook => saleBook.book.id === book.id),
+                    !this.import_coupon.buys.some(buy => buy.book.id === book.id),
             );
         },
-        userResults() {
-            return [
-                {
-                    id: '',
-                    name: 'Khách vãng lai',
-                },
-                ...this.data.users.filter(user => {
-                    return found(user.name, this.search_user) && user.id !== this.user.id;
-                }),
-            ];
+        supplierResults() {
+            return this.data.suppliers.filter(supplier => {
+                return found(supplier.name, this.search_supplier);
+            });
         },
         total() {
-            return this.pos.sells
-                .map(book => book.book.realPrice * book.count)
+            return this.import_coupon.buys
+                .map(buy => buy.price * buy.count)
                 .reduce((a, b) => a + b, 0);
         },
         count() {
-            return this.pos.sells
-                .map(book => book.count)
+            return this.import_coupon.buys
+                .map(buy => buy.count)
                 .reduce((a, b) => Number(a) + Number(b), 0);
         },
     },
@@ -284,37 +290,36 @@ export default {
         money,
         avatar,
         async submit() {
-            const res = await fetch('/api/exportBill/createWithContent', {
+            const res = await fetch('/api/importCoupons/create', {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: JSON.stringify({
-                    employeeId: 1,
-                    userId: this.user.id,
-                    cartDetails: this.pos.sells.map(sell => ({
-                        id: sell.book.id,
-                        count: sell.count,
+                    supplierId: this.supplier.id,
+                    shipper: 'Không rõ',
+                    importCouponDetails: this.import_coupon.buys.map(buy => ({
+                        bookId: buy.book.id,
+                        count: buy.count,
+                        price: buy.price,
                     })),
                 }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-
             if (res.status !== 200) return alert((await res.json()).error);
-
-            this.$root.$refs.app.print(this.$refs.print);
-            this.pos_remove_sell_books();
+            // this.$root.$refs.app.print(this.$refs.print);
+            this.import_coupon_remove_buy_books();
         },
         ...mapMutations([
-            'pos_add_sell_book',
-            'pos_remove_sell_books',
-            'pos_remove_sell_book',
+            'import_coupon_add_buy_book',
+            'import_coupon_remove_buy_book',
+            'import_coupon_remove_buy_books',
         ]),
     },
 };
 </script>
 <style lang="scss">
-.admin-pos {
+.admin-import-coupon {
     > .left {
         > .row.title > .input.search-box {
             min-width: 400px;

@@ -1,4 +1,3 @@
-import path from 'path';
 import book from './api/book.api';
 import user from './api/user.api';
 import cart from './api/cart.api';

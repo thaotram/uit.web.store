@@ -29,7 +29,7 @@ export default {
         updateStyle() {
             const size = getAttribute('size', this, 40);
             style({
-                [`[size="${size}"] > .image.square, .image.square[size="${size}"]`]: {
+                [`.image.square[size="${size}"]`]: {
                     height: `${size}px`,
                     width: `${size}px`,
                     minWidth: `${size}px`,

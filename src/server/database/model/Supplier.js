@@ -47,6 +47,7 @@ class Supplier extends Model {
             }
             if (data.hasOwnProperty('address')) {
                 isAddressValid(data.address);
+                this.address = data.address;
             }
             if (data.hasOwnProperty('phone')) {
                 isPhoneValid(data.phone);

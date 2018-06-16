@@ -8,7 +8,21 @@
                 <s- :s="20"/>
                 <button- text="Cập nhật giá" 
                          icon=""
-                         class="shadow round orange"/>
+                         class="shadow round orange"
+                         @click.native="updatePrice = !updatePrice"/>
+                <s- :s="20"/>
+                <row- :class="{hide: updatePrice}"
+                      size="40"
+                      class="shadow round noOverflow">
+                    <input- v-model="price"
+                            style="width: 200px"
+                            type="number"
+                            placeholder="Số tiền"/>
+                    <line-/>
+                    <button- icon="" 
+                             class="green"
+                             @click.native="submitPrice"/>
+                </row->
                 <s-/>
             </row->
             <s- :s="20"/>
@@ -82,6 +96,12 @@ export default {
         ...'table-row',
         ...'table-view',
     },
+    data() {
+        return {
+            price: '',
+            updatePrice: false,
+        };
+    },
     computed: {
         book() {
             return (
@@ -93,6 +113,20 @@ export default {
     },
     methods: {
         money,
+        async submitPrice() {
+            const res = await fetch('/api/books/price/create', {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    bookId: Number(this.book.id),
+                    price: Number(this.price),
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (res.status !== 200) return alert((await res.json()).error);
+        },
     },
 };
 </script>
@@ -136,19 +170,9 @@ export default {
         .small {
             font-size: 0.9em;
         }
-
-        div,
-        span {
-            &.red {
-                color: #e74c3c;
-            }
-            &.green {
-                color: #2ecc71;
-            }
-            &.violet {
-                color: #9b59b6;
-            }
-        }
+    }
+    .row.hide {
+        display: none;
     }
 }
 </style>

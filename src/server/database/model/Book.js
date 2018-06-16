@@ -13,7 +13,7 @@ class Book extends Model {
         const lastPrice = book.realPrice();
 
         if (!lastPrice || lastPrice !== rawBook.price) {
-            Price.write(realm, true, {
+            await Price.write(realm, true, {
                 id: Price.getNextId(realm),
                 time: new Date(),
                 price: rawBook.price,
@@ -26,13 +26,20 @@ class Book extends Model {
     /**
      * @param {Date?} time
      */
-    realPrice(time) {
+    realPriceObject(time) {
         let prices = this.prices;
         if (typeof time instanceof Date) {
             prices = prices.filtered(`time <= $0`, time);
         }
         prices = prices.sorted('time', true);
-        const price = prices[0];
+        return prices[0];
+    }
+
+    /**
+     * @param {Date?} time
+     */
+    realPrice(time) {
+        const price = this.realPriceObject(time);
         return price == null ? 0 : price.price;
     }
 

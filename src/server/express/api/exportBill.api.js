@@ -24,6 +24,7 @@ export default function(app, io, realm) {
         const cart = await Cart.create(realm, user, req.body.cartDetails);
         const exportBill = await ExportBill.create(realm, cart, employee);
 
+        io.emit('update', 'cart');
         res.send(exportBill.json);
     });
 }
