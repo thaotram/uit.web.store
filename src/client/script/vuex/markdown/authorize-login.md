@@ -11,3 +11,5 @@
 - Việc bạn mua sách gì khi nào và bao nhiêu là những thông tin hoàn toàn riêng tư của khách hàng.
 - Nhà sách xin cam kết bảo mật các thông tin này.
 - Ngoài ra, về mặt cơ chế bản mật của Facebook, nhà sách cũng sẽ không thể truy xuất được thêm các thông tin cá nhân khác của người dùng.
+
+![Book Store](https://i.imgur.com/m55I9a2.jpg)

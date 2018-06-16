@@ -3,9 +3,10 @@ import { OrderCoupon, Supplier, Employee } from '../../database/database';
 /**
  *
  * @param {Express.Application} app
+ * @param {SocketIO.Server} io
  * @param {Realm} realm
  */
-export default function(app, realm) {
+export default function(app, io, realm) {
     app.post('/api/orderCoupon/create', async (req, res) => {
         const employee = Employee.getBySessionId(req.sessionID);
         const supplier = Supplier.getById(realm, Number(req.body.supplierId));
@@ -15,6 +16,8 @@ export default function(app, realm) {
             employee,
             req.body.orderCouponDetails,
         );
+
+        io.emit('update', 'orderCoupon');
         res.send(orderCoupon.json);
     });
 

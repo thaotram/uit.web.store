@@ -4,7 +4,13 @@ import getList from './getList';
 import getRawBook from './getRawBook';
 import readline from 'readline';
 
-export default async function(realm, url) {
+/**
+ *
+ * @param {Realm} realm
+ * @param {String} url
+ * @param {SocketIO.Server} io
+ */
+export default async function(realm, url, io) {
     const bookIds = await getList(url);
 
     let count = 0;
@@ -14,18 +20,23 @@ export default async function(realm, url) {
         async bookId => {
             const rawBook = await getRawBook(bookId);
             await Book.create(realm, rawBook);
-            log(++count, bookIds.length);
+            log(++count, bookIds.length, io);
         },
         {
             concurrency: 4,
         },
-    ).finally(() => {
-        readline.clearLine(process.stdout, 0);
-        readline.cursorTo(process.stdout, 0);
-    });
+    )
+        .catch(e => {
+            console.log(e);
+        })
+        .finally(() => {
+            readline.clearLine(process.stdout, 0);
+            readline.cursorTo(process.stdout, 0);
+            if (io) io.emit('update', 'book');
+        });
 }
 
-function log(a, b) {
+function log(a, b, io) {
     const max = 50;
     const char = '▓';
     const length = b > max ? max : b;
@@ -33,5 +44,6 @@ function log(a, b) {
     const start = Math.round((a / b) * length);
     const loading = ''.padStart(start, char).padEnd(length, '░');
 
+    if (io) io.emit('update_book', `${loading} : ${a} / ${b}`);
     process.stdout.write(`\r ${loading} : ${a} / ${b} `);
 }

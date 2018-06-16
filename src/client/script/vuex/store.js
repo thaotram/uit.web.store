@@ -8,6 +8,8 @@ import keys from './keys';
 import admin from './mutations/admin';
 import gui from './mutations/gui';
 import pos from './mutations/pos';
+import import_coupon from './mutations/import_coupon';
+import order_coupon from './mutations/order_coupon';
 import authorize from './mutations/authorize';
 
 Vue.use(Vuex);
@@ -20,6 +22,8 @@ export default new Vuex.Store({
         ...gui,
         ...pos,
         ...authorize,
+        ...import_coupon,
+        ...order_coupon,
     },
     actions: {
         ...keys.reduce((object, key) => {
@@ -31,22 +35,5 @@ export default new Vuex.Store({
             };
             return object;
         }, {}),
-
-        async pos_create_cart_and_export_bill({ state }) {
-            return await fetch('/api/exportBill/createWithContent', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    employeeId: 1,
-                    cartDetails: state.pos.sells.map(sell => ({
-                        id: sell.book.id,
-                        count: sell.count,
-                    })),
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-        },
     },
 });

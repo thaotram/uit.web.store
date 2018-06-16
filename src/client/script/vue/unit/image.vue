@@ -19,15 +19,23 @@ export default {
             };
         },
     },
+    updated() {
+        this.updateStyle();
+    },
     mounted() {
-        const size = getAttribute('size', this, 40);
-        style({
-            [`[size="${size}"] > .image.square, .image.square[size="${size}"]`]: {
-                height: `${size}px`,
-                width: `${size}px`,
-                minWidth: `${size}px`,
-            },
-        });
+        this.updateStyle();
+    },
+    methods: {
+        updateStyle() {
+            const size = getAttribute('size', this, 40);
+            style({
+                [`.image.square[size="${size}"]`]: {
+                    height: `${size}px`,
+                    width: `${size}px`,
+                    minWidth: `${size}px`,
+                },
+            });
+        },
     },
 };
 </script>

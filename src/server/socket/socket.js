@@ -17,6 +17,8 @@ export default function(io, realm) {
             const o = user.json;
             const employee = user.employee[0];
             if (employee !== undefined) o.employeeId = employee.id;
+
+            io.emit('update', 'user');
             res(o);
         });
 

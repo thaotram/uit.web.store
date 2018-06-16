@@ -1,6 +1,6 @@
 <template>
     <col- id="sidebar"
-          :class="{fullSize: gui.fullSideBarSize, hide: typeof authorize.id !== 'number'}"
+          :class="{fullSize: gui.fullSideBarSize, hide: typeof authorize.employeeId !== 'number'}"
           size="50"
           class="dark">
         <button- icon=""
@@ -21,11 +21,12 @@
         <col- :class="{show: match(/^admin-book/)}"
               size="50"
               class="indent">
-            <!-- <button- :active="match(/^admin-book-detail/)"
+            <button- :active="is('admin-book-detail')"
+                     :class="{hide: !is('admin-book-detail')}"
                      icon=""
-                     text="Thông tin sách"
-                     @click.native="go('/admin/book/detail')"/> -->
+                     text="Thông tin sách"/>
             <button- :active="is('admin-book-add')"
+                     :class="{hide: !is('admin-book-add')}"
                      icon=""
                      text="Thêm sách"
                      @click.native="go('/admin/book/add')"/>        
@@ -45,31 +46,6 @@
                      @click.native="go('/admin/user/feedback')"/>  
         </col-> -->
 
-        <!-- Hóa đơn -->
-        <button- :active="is('admin-transaction')"
-                 icon=""
-                 text="Đặt hàng và giao dịch"/>
-        <col- :class="{show: match(/^admin-transaction/)}"
-              size="50"
-              class="indent">
-            <button- :active="is('admin-transaction-export-bill')"
-                     icon=""
-                     text="Hóa đơn bán hàng"
-                     @click.native="go('/admin/transaction/export-bill')"/>
-            <button- :active="is('admin-transaction-import-coupon')"
-                     icon=""
-                     text="Phiếu nhập sách"
-                     @click.native="go('/admin/transaction/import-coupon')"/>
-            <button- :active="is('admin-transaction-order-coupon')"
-                     icon=""
-                     text="Phiếu đặt sách"
-                     @click.native="go('/admin/transaction/order-coupon')"/>
-            <button- :active="is('admin-transaction-payment-coupon')"
-                     icon=""
-                     text="Phiếu trả tiền"
-                     @click.native="go('/admin/transaction/payment-coupon')"/>
-        </col->
-
         <!-- Thêm nhân viên -->
         <button- :active="is('admin-management-employee')"
                  icon=""
@@ -78,7 +54,13 @@
         <col- :class="{show: match(/^admin-management-employee/)}"
               size="50"
               class="indent">
+            <button- :active="is('admin-management-employee-edit')"
+                     :class="{hide: !is('admin-management-employee-edit')}"
+                     icon=""
+                     text="Cập nhật thông tin"
+                     @click.native="go('/admin/management/employee/add')"/>
             <button- :active="is('admin-management-employee-add')"
+                     :class="{hide: !is('admin-management-employee-add')}"
                      icon=""
                      text="Thêm nhân viên"
                      @click.native="go('/admin/management/employee/add')"/>
@@ -92,15 +74,83 @@
         <col- :class="{show: match(/^admin-management-supplier/)}"
               size="50"
               class="indent">
+            <button- :active="is('admin-management-supplier-edit')"
+                     :class="{hide: !is('admin-management-supplier-edit')}"
+                     icon=""
+                     text="Cập nhật thông tin"
+                     @click.native="go('/admin/management/supplier/add')"/>
             <button- :active="is('admin-management-supplier-add')"
+                     :class="{hide: !is('admin-management-supplier-add')}"
                      icon=""
                      text="Thêm nhà cung cấp"
                      @click.native="go('/admin/management/supplier/add')"/>
         </col->
 
+        <!-- <button- :active="is('admin-transaction')"
+                 icon=""
+                 text="Đặt hàng và giao dịch"/>
+        <col- :class="{show: match(/^admin-transaction/)}"
+              size="50"
+              class="indent">
+            
+        </col-> -->
+
+        <!-- Hóa đơn -->
+        <button- :active="is('admin-transaction-export-bill')"
+                 icon=""
+                 text="Hóa đơn bán hàng"
+                 @click.native="go('/admin/transaction/export-bill')"/>
+
+        <!-- Phiếu nhập -->
+        <button- :active="is('admin-transaction-import-coupon')"
+                 icon=""
+                 text="Phiếu nhập sách"
+                 @click.native="go('/admin/transaction/import-coupon')"/>
+        <col- :class="{show: match(/^admin-transaction-import-coupon/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-import-coupon-add')"
+                     :class="{hide: !is('admin-transaction-import-coupon-add')}"
+                     icon=""
+                     text="Tạo phiếu nhập"
+                     @click.native="go('/admin/transaction/import-coupon/add')"/>
+        </col->
+
+        <!-- Phiếu đặt -->
+        <button- :active="is('admin-transaction-order-coupon')"
+                 icon=""
+                 text="Phiếu đặt sách"
+                 @click.native="go('/admin/transaction/order-coupon')"/>
+        <col- :class="{show: match(/^admin-transaction-order-coupon/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-order-coupon-add')"
+                     :class="{hide: !is('admin-transaction-order-coupon-add')}"
+                     icon=""
+                     text="Tạo phiếu đặt"
+                     @click.native="go('/admin/transaction/order-coupon/add')"/>
+        </col->
+
+                 
+        <button- :active="is('admin-transaction-payment-coupon')"
+                 icon=""
+                 text="Phiếu trả tiền"
+                 @click.native="go('/admin/transaction/payment-coupon')"/>
+        <col- :class="{show: match(/^admin-transaction-payment-coupon/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-payment-coupon-add')"
+                     :class="{hide: !is('admin-transaction-payment-coupon-add')}"
+                     icon=""
+                     text="Tạo phiếu đặt"
+                     @click.native="go('/admin/transaction/payment-coupon/add')"/>
+        </col->
+
         <s-/>
-        <button- icon="" 
-                 text="Thông tin"/>
+        <button- :active="is('information')" 
+                 icon=""
+                 text="Thông tin"
+                 @click.native="go('/information')"/>
         <button- icon="" 
                  text="Đăng xuất"
                  @click.native="logout"/>
@@ -154,6 +204,9 @@ export default {
 
     .button {
         transition: all 0.4s;
+        &.hide {
+            height: 0 !important;
+        }
     }
 
     > .user > .label > .text {
