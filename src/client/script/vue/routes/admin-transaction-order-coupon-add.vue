@@ -66,7 +66,7 @@
                         </div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="pos_remove_order_book(order)"/>
+                                 @click.native="order_coupon_remove_order_book(order)"/>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -299,7 +299,7 @@ export default {
             });
             if (res.status !== 200) return alert((await res.json()).error);
             // this.$root.$refs.app.print(this.$refs.print);
-            // this.pos_remove_order_books();
+            this.order_coupon_remove_order_books();
         },
         ...mapMutations([
             'order_coupon_add_order_book',

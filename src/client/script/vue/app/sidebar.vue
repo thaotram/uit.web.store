@@ -136,7 +136,15 @@
                  icon=""
                  text="Phiếu trả tiền"
                  @click.native="go('/admin/transaction/payment-coupon')"/>
-
+        <col- :class="{show: match(/^admin-transaction-payment-coupon/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-payment-coupon-add')"
+                     :class="{hide: !is('admin-transaction-payment-coupon-add')}"
+                     icon=""
+                     text="Tạo phiếu đặt"
+                     @click.native="go('/admin/transaction/payment-coupon/add')"/>
+        </col->
 
         <s-/>
         <button- icon="" 

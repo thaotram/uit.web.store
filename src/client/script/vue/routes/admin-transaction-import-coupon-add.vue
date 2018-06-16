@@ -50,8 +50,7 @@
                 <template slot="content">
                     <table-row- v-for="buy in import_coupon.buys" 
                                 :key="buy.book.id"
-                                size="45"
-                                @click.native="import_coupon_remove_buy_book(buy)">
+                                size="45">
                         <div>
                             {{ buy.book.id }}
                         </div>
@@ -74,7 +73,7 @@
                         </div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="pos_remove_buy_book(buy)"/>
+                                 @click.native="import_coupon_remove_buy_book(buy)"/>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -309,7 +308,7 @@ export default {
             });
             if (res.status !== 200) return alert((await res.json()).error);
             // this.$root.$refs.app.print(this.$refs.print);
-            // this.pos_remove_buy_books();
+            this.import_coupon_remove_buy_books();
         },
         ...mapMutations([
             'import_coupon_add_buy_book',
