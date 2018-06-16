@@ -142,7 +142,7 @@
             <button- :active="is('admin-transaction-payment-coupon-add')"
                      :class="{hide: !is('admin-transaction-payment-coupon-add')}"
                      icon=""
-                     text="Tạo phiếu đặt"
+                     text="Tạo phiếu trả"
                      @click.native="go('/admin/transaction/payment-coupon/add')"/>
         </col->
 
