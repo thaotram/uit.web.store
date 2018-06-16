@@ -35,5 +35,6 @@ export default {
         admin_user: require('./markdown/admin-user.md'),
         authorize_login: require('./markdown/authorize-login.md'),
         authorize_error: require('./markdown/authorize-error.md'),
+        information: require('./markdown/information.md'),
     },
 };

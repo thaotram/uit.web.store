@@ -148,7 +148,8 @@
 
         <s-/>
         <button- icon="" 
-                 text="Thông tin"/>
+                 text="Thông tin"
+                 @click.native="go('/information')"/>
         <button- icon="" 
                  text="Đăng xuất"
                  @click.native="logout"/>

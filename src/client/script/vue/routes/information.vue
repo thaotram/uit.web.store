@@ -1,31 +1,21 @@
 <template>
-    <row- class="admin authorize-error light" >
+    <row- class="admin authorize-login light" >
         <col- class="left full noOverflow">
-            <s- :s="60"/>
+            <s- :s="30"/>
             <row- class="full">
-                <s- :s="120"/>
+                <s- :s="30"/>
                 <col- class="shadow full round noOverflow">
-                    <markdown- :value="markdown.authorize_error"
+                    <markdown- :value="markdown.information"
                                class="full scroll"/>
                 </col->
-                <s- :s="120"/>
+                <s- :s="30"/>
             </row->
-            <s- :s="60"/>
-            <row- size="40">
-                <s-/>
-                <button- text="Đăng xuất" 
-                         icon=""
-                         class="shadow round facebook"
-                         @click.native="logout"/>
-                <s-/>
-            </row->
-            <s- :s="60"/>
+            <s- :s="30"/>
         </col->
     </row->
 </template>
 <script>
 import { mapState } from 'vuex';
-import { Facebook } from '../../modules/';
 
 export default {
     components: {
@@ -44,11 +34,6 @@ export default {
     },
     computed: {
         ...mapState(['markdown']),
-    },
-    methods: {
-        logout() {
-            Facebook.FB.logout(this.$root.checkLogin);
-        },
     },
 };
 </script>

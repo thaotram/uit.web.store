@@ -2,7 +2,7 @@
     <row- class="admin authorize-login light" >
         <col- class="left full noOverflow">
             <s- :s="60"/>
-            <row->
+            <row- class="full">
                 <s- :s="120"/>
                 <col- class="shadow full round noOverflow">
                     <markdown- :value="markdown.authorize_login"

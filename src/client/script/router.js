@@ -11,11 +11,6 @@ const nanobar = new Nanobar({
 const router = new VueRouter({
     routes: [
         {
-            path: '/',
-            name: 'home',
-            component: () => import('home'),
-        },
-        {
             path: '/authorize/login',
             name: 'authorize-login',
             component: () => import('authorize-login'),
@@ -114,6 +109,11 @@ const router = new VueRouter({
             path: '/admin/management/supplier/edit/:id',
             name: 'admin-management-supplier-edit',
             component: () => import('admin-management-supplier-edit'),
+        },
+        {
+            path: '/information',
+            name: 'information',
+            component: () => import('information'),
         },
     ],
 });
