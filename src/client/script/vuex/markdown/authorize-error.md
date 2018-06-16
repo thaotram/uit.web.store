@@ -1,20 +1,20 @@
 ## Đăng nhập không hợp lệ
 
-#### 1. Là khách hàng:
-
-![Sắp ra mắt](https://i.imgur.com/mdqHwprr.jpg)
+#### 1. Nếu bạn là khách hàng:
 
 ```
-Xin lỗi chức năng này sẽ sớm được ra mắt.
+Vui lòng đợi cho đến khi chức năng này được ra mắt.
 Bây giờ bạn đã được tạo một tài khoản người dùng để tích điểm.
 ```
 
-#### 2. Là nhân viên:
+#### 2. Nếu bạn là nhân viên:
 
 ```
 Vui lòng liên hệ với quản lý để được cấp quyền
 ```
+
 hoặc
+
 ```
 Đăng xuất và đăng nhập lại bằng một tài khoản khác
 ```

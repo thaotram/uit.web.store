@@ -12,6 +12,7 @@ export default function(app, io, realm) {
         const userId = Number(req.body.userId);
         const user = User.getById(realm, userId);
         const cart = await Cart.create(realm, user, req.body.cartDetails);
+        
         res.send(cart.json);
     });
 

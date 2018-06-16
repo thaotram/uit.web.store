@@ -1,10 +1,15 @@
 <template>
     <row- class="admin authorize-login light" >
         <col- class="left full noOverflow">
-            <col- class="shadow full round noOverflow">
-                <markdown- :value="markdown.authorize_login"
-                           class="full scroll"/>
-            </col->
+            <s- :s="60"/>
+            <row->
+                <s- :s="120"/>
+                <col- class="shadow full round noOverflow">
+                    <markdown- :value="markdown.authorize_login"
+                               class="full scroll"/>
+                </col->
+                <s- :s="120"/>
+            </row->
             <s- :s="60"/>
             <row- size="40">
                 <s-/>

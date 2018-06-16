@@ -1,6 +1,6 @@
 <template>
     <col- id="sidebar"
-          :class="{fullSize: gui.fullSideBarSize, hide: typeof authorize.id !== 'number'}"
+          :class="{fullSize: gui.fullSideBarSize, hide: typeof authorize.employeeId !== 'number'}"
           size="50"
           class="dark">
         <button- icon=""
