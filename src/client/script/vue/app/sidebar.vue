@@ -29,7 +29,7 @@
                      :class="{hide: !is('admin-book-create')}"
                      icon=""
                      text="Thêm sách"
-                     @click.native="go('/admin/book/add')"/>        
+                     @click.native="go('/admin/book/create')"/>        
         </col->
 
         <!-- Người dùng -->
@@ -58,12 +58,12 @@
                      :class="{hide: !is('admin-management-employee-edit')}"
                      icon=""
                      text="Cập nhật thông tin"
-                     @click.native="go('/admin/management/employee/add')"/>
+                     @click.native="go('/admin/management/employee/create')"/>
             <button- :active="is('admin-management-employee-create')"
                      :class="{hide: !is('admin-management-employee-create')}"
                      icon=""
                      text="Thêm nhân viên"
-                     @click.native="go('/admin/management/employee/add')"/>
+                     @click.native="go('/admin/management/employee/create')"/>
         </col->
 
         <!-- Thêm nhà cung cấp -->
@@ -78,12 +78,12 @@
                      :class="{hide: !is('admin-management-supplier-edit')}"
                      icon=""
                      text="Cập nhật thông tin"
-                     @click.native="go('/admin/management/supplier/add')"/>
+                     @click.native="go('/admin/management/supplier/create')"/>
             <button- :active="is('admin-management-supplier-create')"
                      :class="{hide: !is('admin-management-supplier-create')}"
                      icon=""
                      text="Thêm nhà cung cấp"
-                     @click.native="go('/admin/management/supplier/add')"/>
+                     @click.native="go('/admin/management/supplier/create')"/>
         </col->
 
         <!-- <button- :active="is('admin-transaction')"
@@ -113,7 +113,7 @@
                      :class="{hide: !is('admin-transaction-import-coupon-create')}"
                      icon=""
                      text="Tạo phiếu nhập"
-                     @click.native="go('/admin/transaction/import-coupon/add')"/>
+                     @click.native="go('/admin/transaction/import-coupon/create')"/>
         </col->
 
         <!-- Phiếu đặt -->
@@ -128,7 +128,7 @@
                      :class="{hide: !is('admin-transaction-order-coupon-create')}"
                      icon=""
                      text="Tạo phiếu đặt"
-                     @click.native="go('/admin/transaction/order-coupon/add')"/>
+                     @click.native="go('/admin/transaction/order-coupon/create')"/>
         </col->
 
                  
@@ -143,7 +143,7 @@
                      :class="{hide: !is('admin-transaction-payment-coupon-create')}"
                      icon=""
                      text="Tạo phiếu trả"
-                     @click.native="go('/admin/transaction/payment-coupon/add')"/>
+                     @click.native="go('/admin/transaction/payment-coupon/create')"/>
         </col->
 
         <s-/>

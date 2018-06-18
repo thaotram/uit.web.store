@@ -6,7 +6,7 @@
                 <button- text="Thêm phiếu trả" 
                          icon=""
                          class="shadow round green"
-                         @click.native="$router.push('/admin/transaction/payment-coupon/add')"/>
+                         @click.native="$router.push('/admin/transaction/payment-coupon/create')"/>
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
