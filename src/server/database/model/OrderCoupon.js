@@ -57,7 +57,7 @@ class OrderCoupon extends Model {
         }
         return orderCoupons;
     }
-
+ 
     get json() {
         const o = this.object;
         o.supplierId = this.supplier.id;

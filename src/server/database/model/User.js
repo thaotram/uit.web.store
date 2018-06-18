@@ -66,6 +66,14 @@ class User extends Model {
         };
     }
 
+    get history() {
+        return {
+            history: {
+                carts: this.carts.map(cart => cart.json),
+            },
+        };
+    }
+
     get detail() {
         return {
             total: this.carts.map(cart => cart.total).reduce((a, b) => a + b, 0),
