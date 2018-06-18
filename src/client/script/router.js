@@ -51,6 +51,11 @@ const router = new VueRouter({
             component: () => import('admin-transaction-export-bill'),
         },
         {
+            path: '/admin/transaction/export-bill/:id',
+            name: 'admin-transaction-export-bill-detail',
+            component: () => import('admin-transaction-export-bill-detail'),
+        },
+        {
             path: '/admin/transaction/import-coupon',
             name: 'admin-transaction-import-coupon',
             component: () => import('admin-transaction-import-coupon'),

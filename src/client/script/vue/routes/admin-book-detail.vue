@@ -77,7 +77,7 @@
     </row->
 </template>
 <script>
-import { money } from '../../modules/';
+import { money, create } from '../../modules/';
 import { mapState } from 'vuex';
 
 export default {
@@ -113,18 +113,10 @@ export default {
     },
     methods: {
         money,
-        // Sửa lại hàm submit này
         async submit() {
-            const res = await fetch('/api/books/price/create', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    bookId: Number(this.book.id),
-                    price: Number(this.price),
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await create({
+                bookId: Number(this.book.id),
+                price: Number(this.price),
             });
             if (res.error) return alert(res.error);
         },

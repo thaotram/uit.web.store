@@ -1,12 +1,12 @@
 <template>
     <col- id="sidebar"
-          :class="{fullSize: gui.fullSideBarSize, hide: typeof authorize.employeeId !== 'number'}"
+          :class="{fullSize: fullSideBar, hide: typeof authorize.employeeId !== 'number'}"
           size="50"
           class="dark">
         <button- icon=""
                  class="rotate"
                  text="Thu gọn"
-                 @click.native="gui_toogleSideBar()"/>
+                 @click.native="fullSideBar = !fullSideBar"/>
         <line-/>
         <button- :active="is('admin-pos')"
                  icon=""
@@ -169,11 +169,15 @@ export default {
         ...'label',
         ...'image',
     },
+    data() {
+        return {
+            fullSideBar: false,
+        };
+    },
     computed: {
-        ...mapState(['authorize', 'gui']),
+        ...mapState(['authorize']),
     },
     methods: {
-        ...mapMutations(['gui_toogleSideBar']),
         go(name) {
             this.$router.push(name);
         },

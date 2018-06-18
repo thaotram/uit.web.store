@@ -7,12 +7,6 @@
 import style, { getAttribute } from 'style';
 
 export default {
-    props: {
-        debug: {
-            type: Boolean,
-            default: false,
-        },
-    },
     mounted() {
         const size = getAttribute('size', this, 40);
         style({

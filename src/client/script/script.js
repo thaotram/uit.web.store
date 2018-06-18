@@ -1,6 +1,6 @@
 import money from 'v-money';
 import Vue from 'vue';
-import { Facebook } from './modules';
+import { Facebook, read } from './modules';
 import router from './router';
 import { initialize, socket } from './socket/socket';
 import app from './vue/app/app.vue';
@@ -29,10 +29,11 @@ new Vue({
             } else {
                 store.commit('authorize', status.res);
                 if (typeof status.res.employeeId === 'number') {
-                    router.push('/admin/pos');
-                    models.forEach(_ =>
-                        this.$store.dispatch('read', { return: 'json', _ }),
-                    );
+                    // router.push('/admin/pos');
+
+                    // models.forEach(_ =>
+                    //     this.$store.dispatch('read', { return: 'json', _ }),
+                    // );
                 } else {
                     router.push('/authorize/error');
                 }

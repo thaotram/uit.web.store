@@ -3,22 +3,22 @@ import Model from '../utils/Model';
 
 class Price extends Model {
     /**
-     * @param {{bookId: Number, price: Number}} data
+     * @param {{price: Number, book: Book}} create
      */
-    static async create(data) {
-        const book = await Book.getById(data.bookId);
-        if (!book) throw 'Không tìm thấy sách';
+    static async create(create) {
+        const book = create.book;
+        if (!Book.has(create.book)) throw 'Không tìm thấy sách';
 
         /**
          * @type {Price}
          */
         const lastPrice = book.realPriceObject();
 
-        if (!lastPrice || lastPrice !== data.price) {
+        if (!lastPrice || lastPrice !== create.price) {
             return await Price.write({
                 id: Price.nextId,
                 time: new Date(),
-                price: data.price,
+                price: create.price,
                 book: book,
             });
         }
