@@ -16,7 +16,7 @@ class OrderCoupon extends Model {
 
         OrderCouponDetail.isRawValid(create.details);
         if (!Supplier.has(create.supplier) || !Employee.has(employee)) {
-            throw `Supplier, Employee doesn't exist`;
+            throw `Nhân viên hoặc nhà cung cấp không tồn tại`;
         }
         const orderCoupon = await OrderCoupon.write({
             id: OrderCoupon.nextId,
@@ -57,7 +57,7 @@ class OrderCoupon extends Model {
         }
         return orderCoupons;
     }
- 
+
     get json() {
         const o = this.object;
         o.supplierId = this.supplier.id;

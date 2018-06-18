@@ -18,7 +18,7 @@ class PaymentCoupon extends Model {
     static async create(supplier, employee, paymentCoupon) {
         PaymentCoupon.isRawValid(paymentCoupon);
         if (!Supplier.has(supplier) || !Employee.has(employee)) {
-            throw `Supplier, Employee doesn't exist`;
+            throw `Nhân viên hoặc nhà cung cấp không tồn tại`;
         }
         return await PaymentCoupon.write({
             id: PaymentCoupon.nextId,

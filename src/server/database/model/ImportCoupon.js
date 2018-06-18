@@ -18,7 +18,7 @@ class ImportCoupon extends Model {
         ImportCouponDetail.isRawValid(create.details);
 
         if (!Supplier.has(create.supplier) || !Employee.has(create.employee)) {
-            throw `Supplier, Employee doesn't exist`;
+            throw `Nhân viên hoặc nhà cung cấp không tồn tại`;
         }
         if (typeof shipper !== 'string') return false;
 

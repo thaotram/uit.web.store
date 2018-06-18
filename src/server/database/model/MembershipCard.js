@@ -8,10 +8,10 @@ class MembershipCard extends Model {
      */
     static async create(user, employee) {
         if (!User.has(user) || !Employee.has(employee)) {
-            throw `User or employee doesn't exist`;
+            throw `Người dùng hoặc nhân viên không tồn tại`;
         }
         if (user.billOwns.length === 0) {
-            throw 'Dont Create';
+            throw 'Không thể tạo';
         }
         return await MembershipCard.write({
             id: MembershipCard.nextId,

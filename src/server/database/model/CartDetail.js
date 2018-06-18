@@ -41,4 +41,9 @@ CartDetail.schema = {
     },
 };
 
+CartDetail.permission = {
+    user: [],
+    employee: [],
+};
+
 export default CartDetail;

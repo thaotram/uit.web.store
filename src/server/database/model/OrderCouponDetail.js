@@ -41,4 +41,9 @@ OrderCouponDetail.schema = {
     },
 };
 
+OrderCouponDetail.permission = {
+    user: [],
+    employee: [],
+};
+
 export default OrderCouponDetail;

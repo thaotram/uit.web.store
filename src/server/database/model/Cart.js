@@ -11,7 +11,7 @@ class Cart extends Model {
     static async create(create) {
         CartDetail.isRawValid(create.details);
         if (!(create.user === undefined || User.has(create.user))) {
-            throw `User doesn't exist`;
+            throw `Người dùng không tồn tại`;
         }
         const cart = await Cart.write({
             id: Cart.nextId,
