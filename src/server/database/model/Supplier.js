@@ -133,4 +133,9 @@ Supplier.schema = {
     },
 };
 
+Supplier.permission = {
+    user: [],
+    employee: ['read', 'create', 'update'],
+};
+
 export default Supplier;

@@ -81,4 +81,9 @@ PaymentCoupon.schema = {
     },
 };
 
+PaymentCoupon.permission = {
+    user: [],
+    employee: ['read', 'create'],
+};
+
 export default PaymentCoupon;

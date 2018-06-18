@@ -101,4 +101,9 @@ User.schema = {
     },
 };
 
+User.permission = {
+    user: [],
+    employee: ['read', 'update'],
+};
+
 export default User;

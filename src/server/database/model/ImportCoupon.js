@@ -102,4 +102,9 @@ ImportCoupon.schema = {
     },
 };
 
+ImportCoupon.permission = {
+    user: [],
+    employee: ['read', 'create'],
+};
+
 export default ImportCoupon;
