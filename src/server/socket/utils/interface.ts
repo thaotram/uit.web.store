@@ -1,4 +1,4 @@
-import { Model, Employee, User, Supplier, Book } from '../../../database/database';
+import { Model, Employee, User, Supplier, Book } from '../../database/database';
 
 type operator = '=' | '>' | '<' | '>=' | '<=';
 
@@ -17,10 +17,36 @@ export interface Read extends Operators {
 
     return?: string;
 
-    employee: Employee;
+    authorize: User;
 }
 
 export interface Create extends Object {
+    _: string;
+    model: Model;
+
+    return?: string;
+
+    authorize: User;
+
+    details?: {};
+
+    name?: string;
+    phone?: string;
+    address?: string;
+    birthdate?: string;
+
+    userId?: number;
+    bookId?: number;
+    supplierId?: number;
+    employeeId?: number;
+
+    user?: User;
+    book?: Book;
+    supplier?: Supplier;
+    employee?: Employee;
+}
+
+export interface Update extends Object {
     _: string;
     model: Model;
 

@@ -36,7 +36,7 @@ const router = new VueRouter({
             component: () => import('admin-book-detail'),
         },
         {
-            path: '/admin/book/add',
+            path: '/admin/book/create',
             name: 'admin-book-create',
             component: () => import('admin-book-create'),
         },
@@ -56,7 +56,7 @@ const router = new VueRouter({
             component: () => import('admin-transaction-import-coupon'),
         },
         {
-            path: '/admin/transaction/import-coupon/add',
+            path: '/admin/transaction/import-coupon/create',
             name: 'admin-transaction-import-coupon-create',
             component: () => import('admin-transaction-import-coupon-create'),
         },
@@ -66,7 +66,7 @@ const router = new VueRouter({
             component: () => import('admin-transaction-order-coupon'),
         },
         {
-            path: '/admin/transaction/order-coupon/add',
+            path: '/admin/transaction/order-coupon/create',
             name: 'admin-transaction-order-coupon-create',
             component: () => import('admin-transaction-order-coupon-create'),
         },
@@ -76,7 +76,7 @@ const router = new VueRouter({
             component: () => import('admin-transaction-payment-coupon'),
         },
         {
-            path: '/admin/transaction/payment-coupon/add',
+            path: '/admin/transaction/payment-coupon/create',
             name: 'admin-transaction-payment-coupon-create',
             component: () => import('admin-transaction-payment-coupon-create'),
         },
@@ -86,7 +86,7 @@ const router = new VueRouter({
             component: () => import('admin-management-employee'),
         },
         {
-            path: '/admin/management/employee/add',
+            path: '/admin/management/employee/create',
             name: 'admin-management-employee-create',
             component: () => import('admin-management-employee-create'),
         },
@@ -101,7 +101,7 @@ const router = new VueRouter({
             component: () => import('admin-management-supplier'),
         },
         {
-            path: '/admin/management/supplier/add',
+            path: '/admin/management/supplier/create',
             name: 'admin-management-supplier-create',
             component: () => import('admin-management-supplier-create'),
         },

@@ -10,22 +10,27 @@ class ImportCoupon extends Model {
      * @param {String} shipper
      * @param {Object[]} importCouponDetails
      */
-    static async create(supplier, employee, shipper, importCouponDetails) {
-        ImportCouponDetail.isRawValid(importCouponDetails);
-        if (!Supplier.has(supplier) || !Employee.has(employee)) {
+    /**
+     * @param {import('../../socket/utils/interface').Create} create
+     */
+    static async create(create) {
+        const employee = create.authorize.staff;
+        ImportCouponDetail.isRawValid(create.details);
+
+        if (!Supplier.has(create.supplier) || !Employee.has(create.employee)) {
             throw `Supplier, Employee doesn't exist`;
         }
         if (typeof shipper !== 'string') return false;
 
         const importCoupon = await ImportCoupon.write({
             id: ImportCoupon.nextId,
-            supplier: supplier,
+            supplier: create.supplier,
             employee: employee,
             create: new Date(),
-            shipper: shipper,
+            shipper: create.shipper,
         });
 
-        await Promise.map(importCouponDetails, importCouponDetail => {
+        await Promise.map(create.details, importCouponDetail => {
             ImportCouponDetail.write({
                 id: ImportCouponDetail.nextId,
                 importCoupon: importCoupon,

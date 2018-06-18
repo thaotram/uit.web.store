@@ -2,7 +2,7 @@ import { Cart, Employee } from '../database';
 import Model from '../utils/Model';
 class ExportBill extends Model {
     /**
-     * @param {import('../../express/api/utils/interface').Create} create
+     * @param {import('../../socket/utils/interface').Create} create
      */
     static async create(create) {
         const employee = create.authorize.staff;

@@ -9,22 +9,22 @@ class OrderCoupon extends Model {
      *     { bookId: 1517213, count: 1 },
      *     { bookId: 1517213, count: 1 },
      * ];
-     * @param {Employee} employee
-     * @param {Supplier} supplier
-     * @param {Object[]} orderCouponDetails
+     * @param {import('../../socket/utils/interface').Create} create
      */
-    static async create(supplier, employee, orderCouponDetails) {
-        OrderCouponDetail.isRawValid(orderCouponDetails);
-        if (!Supplier.has(supplier) || !Employee.has(employee)) {
+    static async create(create) {
+        const employee = create.authorize.staff;
+
+        OrderCouponDetail.isRawValid(create.details);
+        if (!Supplier.has(create.supplier) || !Employee.has(employee)) {
             throw `Supplier, Employee doesn't exist`;
         }
         const orderCoupon = await OrderCoupon.write({
             id: OrderCoupon.nextId,
-            supplier: supplier,
+            supplier: create.supplier,
             employee: employee,
             create: new Date(),
         });
-        await Promise.map(orderCouponDetails, orderCouponDetail => {
+        await Promise.map(create.details, orderCouponDetail => {
             OrderCouponDetail.write({
                 id: OrderCouponDetail.nextId,
                 orderCoupon: orderCoupon,

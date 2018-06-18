@@ -3,10 +3,10 @@ import Model from '../utils/Model';
 import { isAddressValid, isNameValid, isPhoneValid } from '../utils/Validation';
 
 class Supplier extends Model {
-    static isRawValid(supplier) {
-        isNameValid(supplier.name);
-        isAddressValid(supplier.address);
-        isPhoneValid(supplier.phone);
+    static isRawValid(create) {
+        isNameValid(create.name);
+        isAddressValid(create.address);
+        isPhoneValid(create.phone);
     }
     /**
      * @param {String} name
@@ -16,19 +16,19 @@ class Supplier extends Model {
     }
 
     /**
-     * @param {Supplier} rawSupplier
+     * @param {import('../../socket/utils/interface').Create} create
      * @returns {Promise<Supplier>}
      */
-    static async create(rawSupplier) {
-        Supplier.isRawValid(rawSupplier);
-        if (Supplier.getByName(rawSupplier.name) !== undefined) {
-            throw 'Supplier is exist';
+    static async create(create) {
+        Supplier.isRawValid(create);
+        if (Supplier.getByName(create.name) !== undefined) {
+            throw 'Nhà cung cấp không được trùng tên';
         }
         return await Supplier.write({
             id: Supplier.nextId,
-            name: rawSupplier.name,
-            address: rawSupplier.address,
-            phone: rawSupplier.phone,
+            name: create.name,
+            address: create.address,
+            phone: create.phone,
         });
     }
 

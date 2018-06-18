@@ -2,7 +2,7 @@
  * @typedef {import('./interface').Read} Read
  */
 import Models from './Models';
-import { Employee } from '../../database/database';
+import { User } from '../../database/database';
 
 /**
  * @param {Read} read
@@ -16,7 +16,8 @@ export default function standardizeRead(read, sessionID) {
     if (!Model) throw `Không có kiểu đối tượng: ${read._}`;
     read.model = Model;
 
-    read.employee = Employee.getBySessionId(sessionID);
+    read.authorize = User.getBySessionId(sessionID);
+    if (!read.authorize) throw 'Không tìm thấy phiên đăng nhập';
 
     read.operators = read.operators || {};
     read.return = read.return || 'json';

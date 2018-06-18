@@ -296,7 +296,7 @@ export default {
         },
 
         add_item(book) {
-            this.items.push({ book, count: 1 });
+            this.items.push({ book, count: 1, price: book.coverPrice });
         },
 
         remove_item(item) {
