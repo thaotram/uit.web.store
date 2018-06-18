@@ -7,8 +7,8 @@ export const socket = io();
  */
 export function initialize(self) {
     socket.on('connect', () => {
-        socket.on('update', async _ => {
-            self.$store.dispatch('read', { return: 'json', _ });
-        });
+        // socket.on('update', async _ => {
+        //     self.$store.dispatch('read', { return: 'json', _ });
+        // });
     });
 }

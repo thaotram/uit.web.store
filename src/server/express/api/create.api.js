@@ -8,7 +8,7 @@ import { Model, Employee } from '../../database/database';
  */
 export default function(app, io, realm) {
     app.post('/api/create', async (req, res) => {
-        const create = standardizeCreate(req);
+        const create = standardizeCreate(req.body, req.sessionID);
 
         await create.model.create(create);
 

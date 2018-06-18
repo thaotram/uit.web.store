@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 // import VuexPersistedstate from 'vuex-persistedstate';
 import state from './state';
-import { read } from '../modules/src/fetch';
+import { read } from '../modules';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -19,10 +19,9 @@ export default new Vuex.Store({
     },
     actions: {
         async read({ commit }, body) {
-            const data = await read(body);
             commit('set_data', {
                 _: `${body._}s`,
-                data: await data.json(),
+                data: await read(body),
             });
         },
     },

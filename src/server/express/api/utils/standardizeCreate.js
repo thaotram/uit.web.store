@@ -5,19 +5,18 @@ import Models from './Models';
 import { Employee, User, Book, Supplier } from '../../../database/database';
 
 /**
- * @param {{body: Create, sessionID: string}} req
+ * @param {Create} create
+ * @param {string} sessionID
  * @return {Create}
  */
-export default function standardizeCreate(req) {
-    const create = req.body;
-    if (typeof create._ !== 'string')
-        throw `{read.model} phải là chuỗi: ${create._}`;
+export default function standardizeCreate(create, sessionID) {
+    if (typeof create._ !== 'string') throw `{read.model} phải là chuỗi: ${create._}`;
 
     const Model = Models.find(m => m.schema.name === create._);
     if (!Model) throw `Không có kiểu đối tượng: ${create._}`;
     create.model = Model;
 
-    create.authorize = User.getBySessionId(req.sessionID);
+    create.authorize = User.getBySessionId(sessionID);
     if (!create.authorize) throw 'Không tìm thấy phiên đăng nhập';
 
     if (create.hasOwnProperty('employeeId')) {
