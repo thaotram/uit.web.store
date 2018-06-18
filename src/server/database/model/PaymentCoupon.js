@@ -10,22 +10,21 @@ class PaymentCoupon extends Model {
     }
 
     /**
-     * @param {Employee} employee
-     * @param {Supplier} supplier
-     * @param {PaymentCoupon} paymentCoupon
-     *
+     * @param {import('../../socket/utils/interface').Create} create
      */
-    static async create(supplier, employee, paymentCoupon) {
-        PaymentCoupon.isRawValid(paymentCoupon);
-        if (!Supplier.has(supplier) || !Employee.has(employee)) {
+    static async create(create) {
+        const employee = create.authorize.staff;
+
+        PaymentCoupon.isRawValid(create);
+        if (!Supplier.has(create.supplier) || !Employee.has(employee)) {
             throw `Nhân viên hoặc nhà cung cấp không tồn tại`;
         }
         return await PaymentCoupon.write({
             id: PaymentCoupon.nextId,
-            supplier: supplier,
+            supplier: create.supplier,
             employee: employee,
-            content: paymentCoupon.content,
-            money: paymentCoupon.money,
+            content: create.content,
+            money: create.money,
             create: new Date(),
         });
     }
