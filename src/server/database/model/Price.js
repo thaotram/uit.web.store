@@ -24,6 +24,13 @@ class Price extends Model {
         }
         throw 'Không thể tạo giá mới bằng với giá cũ';
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: Price.schema.name,
+            data: this.json,
+        });
+    }
 }
 
 Price.schema = {
@@ -41,7 +48,7 @@ Price.schema = {
 
 Price.permission = {
     user: [],
-    employee: ['read', 'create', 'update'],
+    employee: ['read', 'create'],
 };
 
 export default Price;

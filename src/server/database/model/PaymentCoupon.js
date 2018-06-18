@@ -59,6 +59,24 @@ class PaymentCoupon extends Model {
         return paymentCoupons;
     }
 
+    /**
+     * @param {SocketIO.Server} io
+     */
+    notification(io) {
+        io.emit('push', {
+            name: PaymentCoupon.schema.name,
+            data: this.json,
+        });
+        io.emit('update', {
+            name: Supplier.schema.name,
+            data: this.supplier.json,
+        });
+        io.emit('update', {
+            name: Employee.schema.name,
+            data: this.employee.json,
+        });
+    }
+
     get json() {
         const o = this.object;
         o.employeeId = this.employee.id;

@@ -99,6 +99,17 @@ class Employee extends Model {
         o.birthdate = moment(this.birthdate).format('DD-MM-YYYY');
         return o;
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: Employee.schema.name,
+            data: this.json,
+        });
+        io.emit('push', {
+            name: User.schema.name,
+            data: this.user.json,
+        });
+    }
 }
 
 Employee.schema = {

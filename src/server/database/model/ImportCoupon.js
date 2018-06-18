@@ -1,4 +1,4 @@
-import { db, Book, Employee, ImportCouponDetail, Supplier } from '../database';
+import { db, Book, Employee, ImportCouponDetail, Supplier, Price } from '../database';
 import Promise from 'bluebird';
 import moment from 'moment';
 import Model from '../utils/Model';
@@ -85,6 +85,29 @@ class ImportCoupon extends Model {
             importCouponDetail => importCouponDetail.json,
         );
         return o;
+    }
+
+    notification(io) {
+        io.emit('push', {
+            name: ImportCoupon.schema.name,
+            data: this.json,
+        });
+
+        this.importCouponDetails.forEach(importCouponDetail => {
+            io.emit('update', {
+                name: Book.schema.name,
+                data: importCouponDetail.book.json,
+            });
+        });
+
+        io.emit('update', {
+            name: Supplier.schema.name,
+            data: this.supplier.json,
+        });
+        io.emit('update', {
+            name: Employee.schema.name,
+            data: this.employee.json,
+        });
     }
 }
 

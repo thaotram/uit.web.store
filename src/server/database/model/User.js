@@ -80,6 +80,13 @@ class User extends Model {
             count: this.carts.map(cart => cart.count).reduce((a, b) => a + b, 0),
         };
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: User.schema.name,
+            data: this.json,
+        });
+    }
 }
 
 User.schema = {

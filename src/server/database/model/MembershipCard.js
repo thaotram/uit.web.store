@@ -25,6 +25,21 @@ class MembershipCard extends Model {
     get json() {
         return this.object;
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: MembershipCard.schema.name,
+            data: this.json,
+        });
+        io.emit('update', {
+            name: User.schema.name,
+            data: this.user.json,
+        });
+        io.emit('update', {
+            name: Employee.schema.name,
+            data: this.employee.json,
+        });
+    }
 }
 
 MembershipCard.schema = {

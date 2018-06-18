@@ -69,6 +69,13 @@ class Book extends Model {
 
         return total;
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: Book.schema.name,
+            data: this.json,
+        });
+    }
 }
 
 Book.schema = {

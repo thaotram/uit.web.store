@@ -67,6 +67,21 @@ class OrderCoupon extends Model {
         );
         return o;
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: OrderCoupon.schema.name,
+            data: this.json,
+        });
+        io.emit('update', {
+            name: Supplier.schema.name,
+            data: this.supplier.json,
+        });
+        io.emit('update', {
+            name: Employee.schema.name,
+            data: this.employee.json,
+        });
+    }
 }
 
 OrderCoupon.schema = {

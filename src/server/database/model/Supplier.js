@@ -113,6 +113,13 @@ class Supplier extends Model {
             loan: this.loan,
         };
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: Supplier.schema.name,
+            data: this.json,
+        });
+    }
 }
 
 Supplier.schema = {

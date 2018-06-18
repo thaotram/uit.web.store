@@ -91,6 +91,25 @@ class Cart extends Model {
     get exportBill_() {
         return this.exportBill[0];
     }
+
+    notification(io) {
+        io.emit('push', {
+            name: Cart.schema.name,
+            data: this.json,
+        });
+        this.cartDetails.forEach(cartDetail => {
+            io.emit('update', {
+                name: Book.schema.name,
+                data: cartDetail.book.json,
+            });
+        });
+        if (this.owner !== null) {
+            io.emit('push', {
+                name: User.schema.name,
+                data: this.owner.json,
+            });
+        }
+    }
 }
 
 Cart.schema = {

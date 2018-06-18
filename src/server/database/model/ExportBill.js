@@ -1,4 +1,4 @@
-import { Cart, Employee } from '../database';
+import { Cart, Employee, Book, User } from '../database';
 import Model from '../utils/Model';
 class ExportBill extends Model {
     /**
@@ -38,6 +38,36 @@ class ExportBill extends Model {
             count: this.count,
             employeeId: this.employee ? this.employee.id : null,
         };
+    }
+
+    notification(io) {
+        io.emit('push', {
+            name: ExportBill.schema.name,
+            data: this.json,
+        });
+        io.emit('push', {
+            name: Cart.schema.name,
+            data: this.cart.json,
+        });
+
+        this.cart.cartDetails.forEach(cartDetail => {
+            io.emit('update', {
+                name: Book.schema.name,
+                data: cartDetail.book.json,
+            });
+        });
+
+        io.emit('update', {
+            name: Employee.schema.name,
+            data: this.employee.json,
+        });
+
+        if (this.cart.owner !== null) {
+            io.emit('update', {
+                name: User.schema.name,
+                data: this.cart.owner.json,
+            });
+        }
     }
 }
 
