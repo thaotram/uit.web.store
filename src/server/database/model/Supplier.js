@@ -33,21 +33,21 @@ class Supplier extends Model {
     }
 
     /**
-     * @param {Object} data
+     * @param {import('../../socket/utils/interface').Update} update
      */
-    async update(data) {
+    async update(update) {
         await db.realm.write(() => {
-            if (data.hasOwnProperty('name')) {
-                isNameValid(data.name);
-                this.name = data.name;
+            if (update.hasOwnProperty('name')) {
+                isNameValid(update.name);
+                this.name = update.name;
             }
-            if (data.hasOwnProperty('address')) {
-                isAddressValid(data.address);
-                this.address = data.address;
+            if (update.hasOwnProperty('address')) {
+                isAddressValid(update.address);
+                this.address = update.address;
             }
-            if (data.hasOwnProperty('phone')) {
-                isPhoneValid(data.phone);
-                this.phone = data.phone;
+            if (update.hasOwnProperty('phone')) {
+                isPhoneValid(update.phone);
+                this.phone = update.phone;
             }
         });
     }

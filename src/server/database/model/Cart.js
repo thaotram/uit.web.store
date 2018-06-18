@@ -5,7 +5,7 @@ import moment from 'moment';
 
 class Cart extends Model {
     /**
-     * @param {import('../../express/api/utils/interface').Create} create
+     * @param {import('../../socket/utils/interface').Create} create
      * @returns {Promise<Cart>}
      */
     static async create(create) {

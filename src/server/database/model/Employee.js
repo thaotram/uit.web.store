@@ -34,7 +34,7 @@ class Employee extends Model {
     }
 
     /**
-     * @param {import('../../express/api/utils/interface').Create} create
+     * @param {import('../../socket/utils/interface').Create} create
      */
     static async create(create) {
         if (!User.has(create.user)) {
@@ -57,26 +57,26 @@ class Employee extends Model {
     }
 
     /**
-     * @param {Object} data
+     * @param {import('../../socket/utils/interface').Update} update
      */
-    async update(data) {
+    async update(update) {
         await db.realm.write(() => {
-            if (data.hasOwnProperty('name')) {
-                isNameValid(data.name);
-                this.name = data.name;
+            if (update.hasOwnProperty('name')) {
+                isNameValid(update.name);
+                this.name = update.name;
             }
-            if (data.hasOwnProperty('birthdate')) {
-                const birthdate = moment(data.birthdate, 'DD-MM-YYYY').toDate();
+            if (update.hasOwnProperty('birthdate')) {
+                const birthdate = moment(update.birthdate, 'DD-MM-YYYY').toDate();
                 isBirthdateValid(birthdate);
                 this.birthdate = birthdate;
             }
-            if (data.hasOwnProperty('address')) {
-                isAddressValid(data.address);
-                this.address = data.address;
+            if (update.hasOwnProperty('address')) {
+                isAddressValid(update.address);
+                this.address = update.address;
             }
-            if (data.hasOwnProperty('phone')) {
-                isPhoneValid(data.phone);
-                this.phone = data.phone;
+            if (update.hasOwnProperty('phone')) {
+                isPhoneValid(update.phone);
+                this.phone = update.phone;
             }
         });
     }
