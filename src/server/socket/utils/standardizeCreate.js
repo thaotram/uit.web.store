@@ -2,7 +2,7 @@
  * @typedef {import('./interface').Create} Create
  */
 import Models from './Models';
-import { Employee, User, Book, Supplier } from '../../../database/database';
+import { Employee, User, Book, Supplier } from '../../database/database';
 
 /**
  * @param {Create} create

@@ -17,10 +17,10 @@ const server = http.createServer(app);
 const io = SocketIO(server);
 
 (async function() {
-    const realm = await Database.initialize();
+    await Database.initialize();
 
     config(app, io);
-    express(wrap(app), io, realm);
+    express(app);
     socket(io);
 
     server.listen(port, () => {
@@ -38,22 +38,3 @@ const io = SocketIO(server);
         );
     });
 })();
-
-/**
- * @param {Express.Application} app
- * @returns {Express.Application}
- */
-function wrap(app) {
-    const _ = handler => async (req, res) => {
-        try {
-            await handler(req, res);
-        } catch (e) {
-            console.log(e);
-            res.status(400).json({ error: String(e) });
-        }
-    };
-    return {
-        get: (name, handler) => app.get(name, _(handler)),
-        post: (name, handler) => app.post(name, _(handler)),
-    };
-}

@@ -1,4 +1,4 @@
-import { standardizeRead } from '../../express/api/utils/utils';
+import { standardizeRead } from '../utils/utils';
 
 /**
  * @param {SocketIO.Server} io

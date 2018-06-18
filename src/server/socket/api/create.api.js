@@ -1,4 +1,4 @@
-import { standardizeCreate } from '../../express/api/utils/utils';
+import { standardizeCreate } from '../utils/utils';
 
 /**
  * @param {SocketIO.Server} io
@@ -6,7 +6,7 @@ import { standardizeCreate } from '../../express/api/utils/utils';
  */
 export default function(io, client) {
     client.on('api/create', async (body, res) => {
-        const create = standardizeCreate(req);
+        const create = standardizeCreate(body, client.request.sessionID);
 
         await create.model.create(create);
 

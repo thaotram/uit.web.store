@@ -2,7 +2,7 @@
  * @typedef {import('./interface').Read} Read
  */
 import Models from './Models';
-import { Employee } from '../../../database/database';
+import { Employee } from '../../database/database';
 
 /**
  * @param {Read} read

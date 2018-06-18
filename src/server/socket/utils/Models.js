@@ -13,7 +13,7 @@ import {
     Price,
     Supplier,
     User,
-} from '../../../database/database';
+} from '../../database/database';
 
 /**
  * @type {Model[]}
