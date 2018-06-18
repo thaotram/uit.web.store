@@ -92,6 +92,16 @@ class Supplier extends Model {
         };
     }
 
+    get history() {
+        return {
+            history: {
+                orderCoupons: this.orderCoupons.map(e => e.json),
+                importCoupons: this.importCoupons.map(e => e.json),
+                paymentCoupons: this.paymentCoupons.map(e => e.json),
+            },
+        };
+    }
+
     get detail() {
         return {
             total: this.importCoupons

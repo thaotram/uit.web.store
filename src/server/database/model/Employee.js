@@ -7,6 +7,7 @@ import {
 import { db, User } from '../database';
 import Model from '../utils/Model';
 import moment from 'moment';
+import MembershipCard from './MembershipCard';
 
 class Employee extends Model {
     /**
@@ -78,6 +79,18 @@ class Employee extends Model {
                 this.phone = data.phone;
             }
         });
+    }
+
+    get history() {
+        return {
+            history: {
+                exportBills: this.exportBills.map(e => e.json),
+                orderCoupons: this.orderCoupons.map(e => e.json),
+                importCoupons: this.importCoupons.map(e => e.json),
+                paymentCoupons: this.paymentCoupons.map(e => e.json),
+                membershipCards: this.membershipCards.map(e => e.json),
+            },
+        };
     }
 
     get json() {

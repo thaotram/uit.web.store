@@ -21,6 +21,10 @@ class MembershipCard extends Model {
             valid: true,
         });
     }
+
+    get json() {
+        return this.object;
+    }
 }
 
 MembershipCard.schema = {
