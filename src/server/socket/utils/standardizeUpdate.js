@@ -1,13 +1,13 @@
 /**
- * @typedef {import('./interface').Create} Create
+ * @typedef {import('./interface').Update} Update
  */
 import Models from './Models';
 import { Employee, User, Book, Supplier } from '../../database/database';
 
 /**
- * @param {Create} update
+ * @param {Update} update
  * @param {string} sessionID
- * @return {Create}
+ * @return {Update}
  */
 export default function standardizeUpdate(update, sessionID) {
     if (typeof update._ !== 'string') throw `{read.model} phải là chuỗi: ${update._}`;
