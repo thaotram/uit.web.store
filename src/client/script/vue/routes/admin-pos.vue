@@ -296,7 +296,7 @@ export default {
                     count: item.count,
                 })),
             });
-            if (!res.error) return alert(res.error);
+            if (res.error) return alert(res.error);
             this.$root.$refs.app.print(this.$refs.print);
             this.items = [];
         },

@@ -99,7 +99,7 @@ export default {
                 address: this.supplier.address,
                 phone: this.supplier.phone,
             });
-            if (res.status !== 200) return alert((await res.json()).error);
+            if (res.error) return alert(res.error);
             this.$router.push('/admin/management/supplier');
         },
     },

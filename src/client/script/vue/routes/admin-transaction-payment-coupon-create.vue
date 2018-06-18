@@ -177,7 +177,7 @@ export default {
                     money: Number(this.payment.money),
                 },
             });
-            if (res.status !== 200) return alert((await res.json()).error);
+            if (res.error) return alert(res.error);
             this.$router.push('/admin/transaction/payment-coupon');
         },
         ...mapMutations([

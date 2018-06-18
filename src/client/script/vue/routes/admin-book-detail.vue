@@ -126,7 +126,7 @@ export default {
                     'Content-Type': 'application/json',
                 },
             });
-            if (res.status !== 200) return alert((await res.json()).error);
+            if (res.error) return alert(res.error);
         },
     },
 };
