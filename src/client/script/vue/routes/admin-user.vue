@@ -8,7 +8,7 @@
                                  right="Chưa mua"
                                  left="Đã mua"/>
                 <s- :s="10"/>
-                <input- v-model="search" 
+                <input- v-model="filterUserName" 
                         class="shadow search-box round"  
                         type="text"
                         icon=""
@@ -105,7 +105,7 @@ export default {
     },
     data() {
         return {
-            search: '',
+            filterUserName: '',
             isBuy: 0,
             size: [
                 ['0 30px', 'center'],
@@ -119,9 +119,9 @@ export default {
     computed: {
         ...mapState(['app', 'data', 'markdown']),
         userResults() {
-            return this.data.users.filter(
+            return this.data.Users.filter(
                 user =>
-                    found(user.name, this.search) &&
+                    found(user.name, this.filterUserName) &&
                     ((this.isBuy === -1 && user.count > 0) ||
                         (this.isBuy === 1 && user.count === 0) ||
                         (this.isBuy === 0 && true)),

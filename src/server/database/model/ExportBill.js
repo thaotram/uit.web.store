@@ -2,19 +2,17 @@ import { Cart, Employee } from '../database';
 import Model from '../utils/Model';
 class ExportBill extends Model {
     /**
-     * @param {Realm} realm
-     * @param {Cart} cart
-     * @param {Employee} employee
+     * @param {import('../../express/api/utils/interface').Create} create
      */
-    static async create(realm, cart, employee) {
-        if (!Cart.has(realm, cart)) throw 'Giỏ hàng không tồn tại';
-        if (!Employee.has(realm, employee)) throw 'Nhân viên không tồn tại';
-        if (cart.exportBill[0] !== undefined) throw 'Hóa đơn xuất đã tồn tại';
+    static async create(create) {
+        const employee = create.authorize.staff;
 
-        return await ExportBill.write(realm, true, {
-            id: ExportBill.getNextId(realm),
-            employee: employee,
-            cart: cart,
+        const cart = await Cart.create(create);
+
+        return await ExportBill.write({
+            id: ExportBill.nextId,
+            employee,
+            cart,
             create: new Date(),
         });
     }

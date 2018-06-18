@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-management-employee-add light" >
+    <row- class="admin admin-management-employee-create light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
@@ -95,7 +95,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import { date, found, avatar } from '../../modules/index';
+import { date, found, avatar, create } from '../../modules/index';
 
 export default {
     components: {
@@ -138,10 +138,11 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
+
         userResults() {
-            return this.data.users.filter(user => {
+            return this.data.Users.filter(user => {
                 return (
-                    this.data.employees.every(employee => employee.userId != user.id) &&
+                    this.data.Employees.every(employee => employee.userId != user.id) &&
                     found(user.name, this.search)
                 );
             });
@@ -151,21 +152,13 @@ export default {
         date,
         avatar,
         async submit() {
-            const res = await fetch('/api/employee/create', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    userId: this.user.id,
-                    employee: {
-                        name: this.name,
-                        birthdate: this.birthdate,
-                        address: this.address,
-                        phone: this.phone,
-                    },
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await create({
+                _: 'Employee',
+                userId: this.user.id,
+                name: this.name,
+                birthdate: this.birthdate,
+                address: this.address,
+                phone: this.phone,
             });
             if (res.status !== 200) return alert((await res.json()).error);
             this.$router.push('/admin/management/employee');
@@ -174,7 +167,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-management-employee-add {
+.admin-management-employee-create {
     > .col {
         > .row.title > .input.search-box {
             min-width: 400px;

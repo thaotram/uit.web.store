@@ -21,7 +21,7 @@ export async function getUserInfo(access_token) {
 }
 
 /**
- * @param {Object} req
+ * @param {{id: number}} req
  * @param {String} sessionID
  * @returns {User | undefined}
  */
@@ -36,7 +36,6 @@ export function getUserByRequestAndSessionID(req, sessionId) {
 }
 
 /**
- * @param {Object} req
  * @param {String} sessionID
  * @returns {User | undefined}
  */

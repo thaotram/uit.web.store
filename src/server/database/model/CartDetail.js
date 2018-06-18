@@ -8,10 +8,10 @@ class CartDetail extends Model {
         return cartDetail.every(detail => {
             if (typeof detail != 'object')
                 throw 'Chi tiết giao dịch phải là kiểu đối tượng';
-            if (!detail.hasOwnProperty('id') || !detail.hasOwnProperty('count')) {
+            if (!detail.hasOwnProperty('bookId') || !detail.hasOwnProperty('count')) {
                 throw 'Không có trường dữ liệu id hoặc count';
             }
-            if (typeof detail.id != 'number' || typeof detail.count != 'number') {
+            if (typeof detail.bookId != 'number' || typeof detail.count != 'number') {
                 throw 'Cả id và count phải là kiểu số';
             }
             if (detail.count <= 0) throw 'Count phải > 0';

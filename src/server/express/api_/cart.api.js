@@ -15,12 +15,4 @@ export default function(app, io, realm) {
         
         res.send(cart.json);
     });
-
-    app.get('/api/carts', async (req, res) => {
-        Employee.getBySessionId(req.sessionID);
-
-        const carts = await Cart.queryCart(realm, req.query);
-        if (!carts) throw `Không tìm thấy`;
-        res.json(carts.map(cart => cart.json));
-    });
 }

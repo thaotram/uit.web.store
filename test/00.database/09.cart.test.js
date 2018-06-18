@@ -11,6 +11,6 @@ describe(filename(__filename), function() {
 
         const cartDetails = [{ id: 580112, count: 2 }, { id: 750578, count: 1 }];
         const cart = await Cart.create(realm, user, cartDetails);
-        assert.equal(cart.owner.name, 'Lê Thị Thảo Trâm');
+        assert.equal(cart.owner.name, 'Phạm Hồng Phúc');
     });
 });

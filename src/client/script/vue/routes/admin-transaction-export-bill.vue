@@ -104,7 +104,7 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         cartResults() {
-            return this.data.carts.filter(cart => cart.exportBill !== undefined);
+            return this.data.Carts.filter(cart => cart.exportBill !== undefined);
         },
     },
     methods: {

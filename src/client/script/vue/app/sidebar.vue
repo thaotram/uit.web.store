@@ -25,8 +25,8 @@
                      :class="{hide: !is('admin-book-detail')}"
                      icon=""
                      text="Thông tin sách"/>
-            <button- :active="is('admin-book-add')"
-                     :class="{hide: !is('admin-book-add')}"
+            <button- :active="is('admin-book-create')"
+                     :class="{hide: !is('admin-book-create')}"
                      icon=""
                      text="Thêm sách"
                      @click.native="go('/admin/book/add')"/>        
@@ -59,8 +59,8 @@
                      icon=""
                      text="Cập nhật thông tin"
                      @click.native="go('/admin/management/employee/add')"/>
-            <button- :active="is('admin-management-employee-add')"
-                     :class="{hide: !is('admin-management-employee-add')}"
+            <button- :active="is('admin-management-employee-create')"
+                     :class="{hide: !is('admin-management-employee-create')}"
                      icon=""
                      text="Thêm nhân viên"
                      @click.native="go('/admin/management/employee/add')"/>
@@ -79,8 +79,8 @@
                      icon=""
                      text="Cập nhật thông tin"
                      @click.native="go('/admin/management/supplier/add')"/>
-            <button- :active="is('admin-management-supplier-add')"
-                     :class="{hide: !is('admin-management-supplier-add')}"
+            <button- :active="is('admin-management-supplier-create')"
+                     :class="{hide: !is('admin-management-supplier-create')}"
                      icon=""
                      text="Thêm nhà cung cấp"
                      @click.native="go('/admin/management/supplier/add')"/>
@@ -109,8 +109,8 @@
         <col- :class="{show: match(/^admin-transaction-import-coupon/)}"
               size="50"
               class="indent">
-            <button- :active="is('admin-transaction-import-coupon-add')"
-                     :class="{hide: !is('admin-transaction-import-coupon-add')}"
+            <button- :active="is('admin-transaction-import-coupon-create')"
+                     :class="{hide: !is('admin-transaction-import-coupon-create')}"
                      icon=""
                      text="Tạo phiếu nhập"
                      @click.native="go('/admin/transaction/import-coupon/add')"/>
@@ -124,8 +124,8 @@
         <col- :class="{show: match(/^admin-transaction-order-coupon/)}"
               size="50"
               class="indent">
-            <button- :active="is('admin-transaction-order-coupon-add')"
-                     :class="{hide: !is('admin-transaction-order-coupon-add')}"
+            <button- :active="is('admin-transaction-order-coupon-create')"
+                     :class="{hide: !is('admin-transaction-order-coupon-create')}"
                      icon=""
                      text="Tạo phiếu đặt"
                      @click.native="go('/admin/transaction/order-coupon/add')"/>
@@ -139,8 +139,8 @@
         <col- :class="{show: match(/^admin-transaction-payment-coupon/)}"
               size="50"
               class="indent">
-            <button- :active="is('admin-transaction-payment-coupon-add')"
-                     :class="{hide: !is('admin-transaction-payment-coupon-add')}"
+            <button- :active="is('admin-transaction-payment-coupon-create')"
+                     :class="{hide: !is('admin-transaction-payment-coupon-create')}"
                      icon=""
                      text="Tạo phiếu trả"
                      @click.native="go('/admin/transaction/payment-coupon/add')"/>

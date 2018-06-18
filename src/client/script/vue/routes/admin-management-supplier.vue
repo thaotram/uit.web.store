@@ -8,7 +8,7 @@
                          class="shadow round green"
                          @click.native="$router.push('/admin/management/supplier/add')"/>
                 <s-/>
-                <input- v-model="search" 
+                <input- v-model="filterSupplierName" 
                         class="shadow search-box round"  
                         type="text"
                         icon=""
@@ -86,7 +86,7 @@ export default {
     },
     data() {
         return {
-            search: '',
+            filterSupplierName: '',
             size: [
                 ['0 30px', 'center'],
                 ['0.8 220px', 'start'],
@@ -100,8 +100,8 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         supplierResults() {
-            return this.data.suppliers.filter(supplier =>
-                found(supplier.name, this.search),
+            return this.data.Suppliers.filter(supplier =>
+                found(supplier.name, this.filterSupplierName),
             );
         },
     },

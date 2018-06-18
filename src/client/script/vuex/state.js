@@ -1,4 +1,4 @@
-import keys from './keys';
+import keys from './models';
 export default {
     app: {
         name: 'Tiệm sách thông minh',
@@ -9,7 +9,7 @@ export default {
         id: -1,
         name: '...',
         point: 0,
-        employeeId: 1,
+        employeeId: -1,
     },
     gui: {
         fullSideBarSize: true,
@@ -18,19 +18,8 @@ export default {
         object[`${key}s`] = [];
         return object;
     }, {}),
-
-    pos: {
-        sells: [],
-    },
-    import_coupon: {
-        buys: [],
-    },
-    order_coupon: {
-        orders: [],
-    },
-
     markdown: {
-        admin_book_add: require('./markdown/admin-book-add.md'),
+        admin_book_add: require('./markdown/admin-book-create.md'),
         admin_book_detail: require('./markdown/admin-book-detail.md'),
         admin_user: require('./markdown/admin-user.md'),
         authorize_login: require('./markdown/authorize-login.md'),

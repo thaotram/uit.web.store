@@ -1,20 +1,18 @@
 import '@babel/polyfill';
-import { Price } from '../database';
+import { db, Price } from '../database';
 import Model from '../utils/Model';
 
 class Book extends Model {
     /**
-     *
-     * @param {Realm} realm
-     * @param {getRawBook} book
+     * @param {Object} rawbook
      */
-    static async create(realm, rawBook) {
-        const book = await Book.write(realm, true, rawBook.book);
+    static async create(rawBook) {
+        const book = await Book.write(rawBook.book);
         const lastPrice = book.realPrice();
 
         if (!lastPrice || lastPrice !== rawBook.price) {
-            await Price.write(realm, true, {
-                id: Price.getNextId(realm),
+            await Price.write({
+                id: Price.nextId,
                 time: new Date(),
                 price: rawBook.price,
                 book: book,
@@ -43,15 +41,22 @@ class Book extends Model {
         return price == null ? 0 : price.price;
     }
 
-    static getJsonBooks(realm) {
-        return realm.objects('Book').map(book => book.json);
+    static getJsonBooks() {
+        return db.realm.objects('Book').map(book => book.json);
     }
 
     get json() {
-        const o = this.object;
-        o.realPrice = this.realPrice();
-        o.count = this.count;
-        return o;
+        return {
+            ...this.object,
+            ...this.more,
+        };
+    }
+
+    get more() {
+        return {
+            count: this.count,
+            realPrice: this.realPrice(new Date()),
+        };
     }
 
     get count() {
@@ -110,6 +115,11 @@ Book.schema = {
             property: 'book',
         },
     },
+};
+
+Book.permission = {
+    user: ['read'],
+    employee: ['read', 'write', 'update'],
 };
 
 export default Book;

@@ -4,69 +4,51 @@
             <row- size="40" 
                   class="title">
                 <s-/>
-                <input- v-model="search" 
+                <input- v-model="filterBookName" 
                         class="shadow search-box round"  
                         type="text"
                         icon=""
                         placeholder="Tìm kiếm">
                     <dropdown- :size="40">
-                        <book-search-item- v-for="book in searchResults" 
+                        <book-search-item- v-for="book in bookResults" 
                                            :book="book"
                                            :key="book.id"
-                                           @click.native="order_coupon_add_order_book(book)"/>
+                                           @click.native="add_item(book)"/>
                     </dropdown->
                 </input->
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="order_coupon.orders.length !== 0"
+                         :has-content="items.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
-                        <div>
-                            Mã
-                        </div>
-                        <div>
-                            Tên sản phẩm
-                        </div>
-                        <div>
-                            Số lượng
-                        </div>
-                        <div>
-                            Giá bìa
-                        </div>
-                        <div>
-                            Thành tiền
-                        </div>
+                        <div>Mã</div>
+                        <div>Tên sản phẩm</div>
+                        <div>Số lượng</div>
+                        <div>Giá bìa</div>
+                        <div>Thành tiền</div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="order_coupon_remove_order_books"/>
+                                 @click.native="items = []"/>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="order in order_coupon.orders" 
-                                :key="order.book.id"
+                    <table-row- v-for="item in items" 
+                                :key="item.book.id"
                                 size="45">
-                        <div>
-                            {{ order.book.id }}
-                        </div>
-                        <div>
-                            {{ order.book.name }}
-                        </div>
-                        <input v-model.number="order.count"
+                        <div>{{ item.book.id }}</div>
+                        <div>{{ item.book.name }}</div>
+                        <input v-model.number="item.count"
                                type="number"
                                refs="count"
                                min="0">
-                        <div>
-                            {{ money(order.book.coverPrice) }}
-                        </div>
-                        <div>
-                            {{ money(order.count * order.book.realPrice) }}
-                        </div>
+                        <div>{{ money(item.book.coverPrice) }}</div>
+                        <div>{{ money(item.count * item.book.realPrice) }}</div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="order_coupon_remove_order_book(order)"/>
+                                 @click.native="remove_item(item)"/>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -81,7 +63,7 @@
         <col- class="right noOverflow">
             <div class="row user-input"
                  size="40">
-                <input- v-model="search_supplier"
+                <input- v-model="filterSupplierName"
                         icon=""
                         class="shadow search-box round full"
                         type="text"
@@ -158,60 +140,12 @@
                 </row->
             </col->
         </col->
-
-        <div ref="print" 
-             class="shadow round full report">
-            <col- class="bill">
-                <row- class="header"
-                      size="40">
-                    <div class="logo"/>
-                    <s- :s="10"/>
-                    <span class="logo-text d full">{{ app.name }}</span>
-                </row->
-                <s- :s="5"/>
-                <p class="text">- Địa chỉ: {{ app.address }}</p>
-                <p class="text">- Điện thoại: {{ app.phone }}</p>
-                <s- :s="8"/>
-                <div class="line"/>
-                <s- :s="8"/>
-                <p class="text bold big center">HÓA ĐƠN BÁN LẺ</p>
-                <s- :s="8"/>
-                <div class="bill-table">
-                    <p class="text">Thời gian: {{ time }}</p>
-                    <s- :s="8"/>
-                    <div class="row">
-                        <div>Tên sách</div>
-                        <div>SL</div>
-                        <div>Giá mua</div>
-                        <div>Thành tiền</div>
-                    </div>
-                    <div class="line"/>
-                    <div v-for="order in order_coupon.orders" 
-                         :key="order.book.id"
-                         class="row">
-                        <div>{{ order.book.name }}</div>
-                        <div>{{ order.count }}</div>
-                        <div>{{ money(order.book.realPrice) }}</div>
-                        <div>{{ money(order.count * order.book.realPrice) }}</div>
-                    </div>
-                    <div class="line"/>
-                    <div class="row bold">
-                        <div>Tổng cộng</div>
-                        <div>{{ count }}</div>
-                        <div/>
-                        <div>{{ money(total) }}</div>
-                    </div>
-                </div>
-                <s- :s="20"/>
-                <p class="text bold center">Xin cảm ơn quý khách!</p>
-            </col->
-        </div>
     </row->
 </template>
 <script>
 import moment from 'moment';
-import { mapState, mapMutations } from 'vuex';
-import { money, found, avatar } from '../../modules/index';
+import { mapState } from 'vuex';
+import { money, found, avatar, create } from '../../modules/index';
 
 export default {
     components: {
@@ -231,12 +165,14 @@ export default {
     },
     data() {
         return {
+            filterSupplierName: '',
+            filterBookName: '',
+
+            items: [],
             supplier: {
                 id: null,
                 name: '__Tên nhà cung cấp__',
             },
-            search_supplier: '',
-            search: '',
             time: '',
             size: [
                 ['0 80px', 'end'],
@@ -249,27 +185,27 @@ export default {
         };
     },
     computed: {
-        ...mapState(['app', 'data', 'order_coupon']),
-        searchResults() {
-            return this.data.books.filter(
+        ...mapState(['app', 'data']),
+        bookResults() {
+            return this.data.Books.filter(
                 book =>
-                    found(book.name, this.search) &&
-                    !this.order_coupon.orders.some(order => order.book.id === book.id),
+                    found(book.name, this.filterBookName) &&
+                    !this.items.some(item => item.book.id === book.id),
             );
         },
         supplierResults() {
-            return this.data.suppliers.filter(supplier => {
-                return found(supplier.name, this.search_supplier);
+            return this.data.Suppliers.filter(supplier => {
+                return found(supplier.name, this.filterSupplierName);
             });
         },
         total() {
-            return this.order_coupon.orders
-                .map(order => order.price * order.count)
+            return this.items
+                .map(item => item.price * item.count)
                 .reduce((a, b) => a + b, 0);
         },
         count() {
-            return this.order_coupon.orders
-                .map(order => order.count)
+            return this.items
+                .map(item => item.count)
                 .reduce((a, b) => Number(a) + Number(b), 0);
         },
     },
@@ -282,30 +218,28 @@ export default {
         money,
         avatar,
         async submit() {
-            const res = await fetch('/api/orderCoupon/create', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    supplierId: this.supplier.id,
-                    shipper: 'Không rõ',
-                    orderCouponDetails: this.order_coupon.orders.map(order => ({
-                        bookId: order.book.id,
-                        count: order.count,
-                    })),
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await create({
+                _: 'OrderCoupon',
+                supplierId: this.supplier.id,
+                shipper: 'Không rõ',
+                orderCouponDetails: this.items.map(item => ({
+                    bookId: item.book.id,
+                    count: item.count,
+                })),
             });
             if (res.status !== 200) return alert((await res.json()).error);
-            // this.$root.$refs.app.print(this.$refs.print);
-            this.order_coupon_remove_order_books();
+            this.items = [];
         },
-        ...mapMutations([
-            'order_coupon_add_order_book',
-            'order_coupon_remove_order_book',
-            'order_coupon_remove_order_books',
-        ]),
+
+        add_item(book) {
+            this.items.push({ book, count: 1 });
+        },
+
+        remove_item(item) {
+            const index = this.items.indexOf(item);
+            if (index === -1) return;
+            this.items.splice(index, 1);
+        },
     },
 };
 </script>

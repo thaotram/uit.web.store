@@ -37,8 +37,8 @@ const router = new VueRouter({
         },
         {
             path: '/admin/book/add',
-            name: 'admin-book-add',
-            component: () => import('admin-book-add'),
+            name: 'admin-book-create',
+            component: () => import('admin-book-create'),
         },
         {
             path: '/admin/user',
@@ -57,8 +57,8 @@ const router = new VueRouter({
         },
         {
             path: '/admin/transaction/import-coupon/add',
-            name: 'admin-transaction-import-coupon-add',
-            component: () => import('admin-transaction-import-coupon-add'),
+            name: 'admin-transaction-import-coupon-create',
+            component: () => import('admin-transaction-import-coupon-create'),
         },
         {
             path: '/admin/transaction/order-coupon',
@@ -67,8 +67,8 @@ const router = new VueRouter({
         },
         {
             path: '/admin/transaction/order-coupon/add',
-            name: 'admin-transaction-order-coupon-add',
-            component: () => import('admin-transaction-order-coupon-add'),
+            name: 'admin-transaction-order-coupon-create',
+            component: () => import('admin-transaction-order-coupon-create'),
         },
         {
             path: '/admin/transaction/payment-coupon',
@@ -77,8 +77,8 @@ const router = new VueRouter({
         },
         {
             path: '/admin/transaction/payment-coupon/add',
-            name: 'admin-transaction-payment-coupon-add',
-            component: () => import('admin-transaction-payment-coupon-add'),
+            name: 'admin-transaction-payment-coupon-create',
+            component: () => import('admin-transaction-payment-coupon-create'),
         },
         {
             path: '/admin/management/employee',
@@ -87,8 +87,8 @@ const router = new VueRouter({
         },
         {
             path: '/admin/management/employee/add',
-            name: 'admin-management-employee-add',
-            component: () => import('admin-management-employee-add'),
+            name: 'admin-management-employee-create',
+            component: () => import('admin-management-employee-create'),
         },
         {
             path: '/admin/management/employee/edit/:id',
@@ -102,8 +102,8 @@ const router = new VueRouter({
         },
         {
             path: '/admin/management/supplier/add',
-            name: 'admin-management-supplier-add',
-            component: () => import('admin-management-supplier-add'),
+            name: 'admin-management-supplier-create',
+            component: () => import('admin-management-supplier-create'),
         },
         {
             path: '/admin/management/supplier/edit/:id',

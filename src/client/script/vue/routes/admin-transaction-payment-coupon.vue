@@ -7,12 +7,6 @@
                          icon=""
                          class="shadow round green"
                          @click.native="$router.push('/admin/transaction/payment-coupon/add')"/>
-                <s-/>
-                <input- v-model="search" 
-                        class="shadow search-box round"  
-                        type="text"
-                        icon=""
-                        placeholder="Tìm kiếm"/>
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
@@ -71,7 +65,7 @@
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import { avatar, timeAgo, money, user, employee, supplier } from '../../modules/index';
 
 export default {
@@ -105,8 +99,8 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         paymentCouponResults() {
-            return this.data.paymentCoupons;
-            // return this.data.paymentCoupons.map(paymentCoupon => ({
+            return this.data.PaymentCoupons;
+            // return this.data.PaymentCoupons.map(paymentCoupon => ({
             //     ...paymentCoupon,
             //     type: paymentCoupon.paymentCouponDetails.length,
             //     count: paymentCoupon.paymentCouponDetails

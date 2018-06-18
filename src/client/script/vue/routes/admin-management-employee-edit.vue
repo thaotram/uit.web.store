@@ -106,7 +106,7 @@ export default {
         ...mapState(['app', 'data']),
         employee() {
             return (
-                this.data.employees.find(
+                this.data.Employees.find(
                     employee => employee.id == Number(this.$route.params.id),
                 ) || {
                     name: '',
@@ -123,6 +123,7 @@ export default {
     methods: {
         date,
         avatar,
+        // Sửa lại hàm submit này
         async submit() {
             const res = await fetch('/api/employee/edit', {
                 method: 'POST',

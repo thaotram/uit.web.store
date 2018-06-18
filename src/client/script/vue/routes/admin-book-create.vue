@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-book-add light" >
+    <row- class="admin admin-book-create light" >
         <col- class="left full noOverflow">
             <row- size="40">
                 <button- text="Thêm sách mới từ đường dẫn tiki" 
@@ -49,6 +49,7 @@ export default {
     },
     methods: {
         submit() {
+            // Sửa lại hàm submit này
             fetch('/api/books/tiki', {
                 method: 'POST',
                 credentials: 'same-origin',

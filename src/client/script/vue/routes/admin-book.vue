@@ -8,11 +8,11 @@
                          class="shadow round green"
                          @click.native="$router.push('/admin/book/add')"/>
                 <s-/>
-                <three-selector- v-model="residual" 
+                <three-selector- v-model="filterResidual" 
                                  right="Hết hàng"
                                  left="Còn hàng"/>
                 <s- :s="20"/>
-                <input- v-model="search" 
+                <input- v-model="filterName" 
                         class="shadow search-box round"  
                         type="text"
                         icon=""
@@ -96,8 +96,10 @@ export default {
     },
     data() {
         return {
-            search: '',
-            residual: 0,
+            filterName: '',
+            filterResidual: 0,
+
+            items: [],
             size: [
                 ['0 80px', 'end'],
                 [1, 'start'],
@@ -110,12 +112,12 @@ export default {
     computed: {
         ...mapState(['data']),
         bookResults() {
-            return this.data.books.filter(
+            return this.data.Books.filter(
                 book =>
-                    found(book.name, this.search) &&
-                    ((this.residual === -1 && book.count > 0) ||
-                        (this.residual === 1 && book.count === 0) ||
-                        (this.residual === 0 && true)),
+                    found(book.name, this.filterName) &&
+                    ((this.filterResidual === -1 && book.count > 0) ||
+                        (this.filterResidual === 1 && book.count === 0) ||
+                        (this.filterResidual === 0 && true)),
             );
         },
     },

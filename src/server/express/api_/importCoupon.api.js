@@ -24,15 +24,4 @@ export default function(app, io, realm) {
         io.emit('update', 'book');
         res.send(importCoupon.json);
     });
-
-    app.get('/api/importCoupons', async (req, res) => {
-        Employee.getBySessionId(req.sessionID);
-
-        const importCoupons = await ImportCoupon.queryImportCoupon(realm, req.query);
-        if (!importCoupons) {
-            res.json({ error: 'Không tìm thấy' });
-            return;
-        }
-        res.json(importCoupons.map(importCoupon => importCoupon.json));
-    });
 }

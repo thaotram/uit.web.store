@@ -1,5 +1,6 @@
-import { isNameValid, isAddressValid, isPhoneValid } from '../utils/Validation';
+import { db } from '../database';
 import Model from '../utils/Model';
+import { isAddressValid, isNameValid, isPhoneValid } from '../utils/Validation';
 
 class Supplier extends Model {
     static isRawValid(supplier) {
@@ -8,26 +9,23 @@ class Supplier extends Model {
         isPhoneValid(supplier.phone);
     }
     /**
-     * @param {Realm} realm
      * @param {String} name
      */
-    static getByName(realm, name) {
-        return realm.objects('Supplier').filtered(`name LIKE $0`, name)[0];
+    static getByName(name) {
+        return db.realm.objects('Supplier').filtered(`name LIKE $0`, name)[0];
     }
 
     /**
-     *
-     * @param {Realm} realm
      * @param {Supplier} rawSupplier
      * @returns {Promise<Supplier>}
      */
-    static async create(realm, rawSupplier) {
+    static async create(rawSupplier) {
         Supplier.isRawValid(rawSupplier);
-        if (Supplier.getByName(realm, rawSupplier.name) !== undefined) {
+        if (Supplier.getByName(rawSupplier.name) !== undefined) {
             throw 'Supplier is exist';
         }
-        return await Supplier.write(realm, true, {
-            id: Supplier.getNextId(realm),
+        return await Supplier.write({
+            id: Supplier.nextId,
             name: rawSupplier.name,
             address: rawSupplier.address,
             phone: rawSupplier.phone,
@@ -35,12 +33,10 @@ class Supplier extends Model {
     }
 
     /**
-     *
-     * @param {Realm} realm
      * @param {Object} data
      */
-    async update(realm, data) {
-        await realm.write(() => {
+    async update(data) {
+        await db.realm.write(() => {
             if (data.hasOwnProperty('name')) {
                 isNameValid(data.name);
                 this.name = data.name;
@@ -57,8 +53,6 @@ class Supplier extends Model {
     }
 
     /**
-     *
-     * @param {Realm} realm
      * @param {{begin: Date, end: Date}} query
      */
     queryLoan(query) {
@@ -92,8 +86,10 @@ class Supplier extends Model {
     }
 
     get json() {
-        const o = this.object;
-        return o;
+        return {
+            ...this.object,
+            ...this.detail,
+        };
     }
 
     get detail() {

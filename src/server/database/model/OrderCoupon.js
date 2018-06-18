@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
-import { Book, Employee, OrderCouponDetail, Supplier } from '../database';
-import Model from '../utils/Model';
+import { db, Book, Employee, OrderCouponDetail, Supplier } from '../database';
 import moment from 'moment';
+import Model from '../utils/Model';
 
 class OrderCoupon extends Model {
     /**
@@ -9,27 +9,26 @@ class OrderCoupon extends Model {
      *     { bookId: 1517213, count: 1 },
      *     { bookId: 1517213, count: 1 },
      * ];
-     * @param {Realm} realm
      * @param {Employee} employee
      * @param {Supplier} supplier
      * @param {Object[]} orderCouponDetails
      */
-    static async create(realm, supplier, employee, orderCouponDetails) {
-        OrderCouponDetail.isRawValid(realm, orderCouponDetails);
-        if (!Supplier.has(realm, supplier) || !Employee.has(realm, employee)) {
+    static async create(supplier, employee, orderCouponDetails) {
+        OrderCouponDetail.isRawValid(orderCouponDetails);
+        if (!Supplier.has(supplier) || !Employee.has(employee)) {
             throw `Supplier, Employee doesn't exist`;
         }
-        const orderCoupon = await OrderCoupon.write(realm, true, {
-            id: OrderCoupon.getNextId(realm),
+        const orderCoupon = await OrderCoupon.write({
+            id: OrderCoupon.nextId,
             supplier: supplier,
             employee: employee,
             create: new Date(),
         });
         await Promise.map(orderCouponDetails, orderCouponDetail => {
-            OrderCouponDetail.write(realm, false, {
-                id: OrderCouponDetail.getNextId(realm),
+            OrderCouponDetail.write({
+                id: OrderCouponDetail.nextId,
                 orderCoupon: orderCoupon,
-                book: Book.getById(realm, orderCouponDetail.bookId),
+                book: Book.getById(orderCouponDetail.bookId),
                 count: orderCouponDetail.count,
             });
         });
@@ -37,13 +36,11 @@ class OrderCoupon extends Model {
     }
 
     /**
-     *
-     * @param {Realm} realm
      * @param {import('../interface').QueryOrderCoupon} query
      * @return {Promise<Realm.Results<OrderCoupon>>}
      */
-    static async queryOrderCoupon(realm, query) {
-        let orderCoupons = realm.objects('OrderCoupon');
+    static async queryOrderCoupon(query) {
+        let orderCoupons = db.realm.objects('OrderCoupon');
         if (query.hasOwnProperty('employeeId')) {
             orderCoupons = orderCoupons.filtered('employee.id == $0', query.employeeId);
         }

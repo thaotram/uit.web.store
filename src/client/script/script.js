@@ -1,13 +1,14 @@
+import money from 'v-money';
 import Vue from 'vue';
-import { mapActions } from 'vuex';
 import { Facebook } from './modules';
 import router from './router';
-import { socket } from './socket/socket';
+import { initialize, socket } from './socket/socket';
 import app from './vue/app/app.vue';
-import keys from './vuex/keys';
+import models from './vuex/models';
 import store from './vuex/store';
 import('../style/index.scss');
 
+Vue.use(money);
 new Vue({
     el: '#app',
     router,
@@ -17,15 +18,9 @@ new Vue({
         await this.checkLogin();
     },
     mounted() {
-        socket.on('connect', () => {
-            socket.on('update', key => {
-                this[`load_${key}s`]();
-                console.log(`load_${key}s`);
-            });
-        });
+        initialize(this);
     },
     methods: {
-        ...mapActions(keys.map(key => `load_${key}s`)),
         async checkLogin() {
             const status = await Facebook.status(socket);
             if (!status.isLogin) {
@@ -35,9 +30,9 @@ new Vue({
                 store.commit('authorize', status.res);
                 if (typeof status.res.employeeId === 'number') {
                     router.push('/admin/pos');
-                    keys.forEach(key => {
-                        this[`load_${key}s`]();
-                    });
+                    models.forEach(_ =>
+                        this.$store.dispatch('read', { return: 'json', _ }),
+                    );
                 } else {
                     router.push('/authorize/error');
                 }

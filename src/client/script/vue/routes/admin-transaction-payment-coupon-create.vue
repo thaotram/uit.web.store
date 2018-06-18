@@ -28,9 +28,9 @@
                             <s- :s="10"/>
                             <col- size="40" 
                                   class="full">
-                                <input- v-model="payment.money"
+                                <input- v-model.lazy="payment.money"
                                         class="shadow search-box round"
-                                        type="number"
+                                        type="money"
                                         placeholder="Số tiền"/>
                                 <textarea 
                                     v-model="payment.content"
@@ -107,60 +107,12 @@
                 </div>
             </div>
         </col->
-
-        <!-- <div ref="print" 
-             class="shadow round full report">
-            <col- class="bill">
-                <row- class="header"
-                      size="40">
-                    <div class="logo"/>
-                    <s- :s="10"/>
-                    <span class="logo-text d full">{{ app.name }}</span>
-                </row->
-                <s- :s="5"/>
-                <p class="text">- Địa chỉ: {{ app.address }}</p>
-                <p class="text">- Điện thoại: {{ app.phone }}</p>
-                <s- :s="8"/>
-                <div class="line"/>
-                <s- :s="8"/>
-                <p class="text bold big center">HÓA ĐƠN BÁN LẺ</p>
-                <s- :s="8"/>
-                <div class="bill-table">
-                    <p class="text">Thời gian: {{ time }}</p>
-                    <s- :s="8"/>
-                    <div class="row">
-                        <div>Tên sách</div>
-                        <div>SL</div>
-                        <div>Giá mua</div>
-                        <div>Thành tiền</div>
-                    </div>
-                    <div class="line"/>
-                    <div v-for="payment in payment_coupon.payments" 
-                         :key="payment.book.id"
-                         class="row">
-                        <div>{{ payment.book.name }}</div>
-                        <div>{{ payment.count }}</div>
-                        <div>{{ money(payment.book.realPrice) }}</div>
-                        <div>{{ money(payment.count * payment.book.realPrice) }}</div>
-                    </div>
-                    <div class="line"/>
-                    <div class="row bold">
-                        <div>Tổng cộng</div>
-                        <div>{{ count }}</div>
-                        <div/>
-                        <div>{{ money(total) }}</div>
-                    </div>
-                </div>
-                <s- :s="20"/>
-                <p class="text bold center">Xin cảm ơn quý khách!</p>
-            </col->
-        </div> -->
     </row->
 </template>
 <script>
 import moment from 'moment';
 import { mapState, mapMutations } from 'vuex';
-import { money, found, avatar } from '../../modules/index';
+import { money, found, avatar, create } from '../../modules/index';
 
 export default {
     components: {
@@ -204,7 +156,7 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         supplierResults() {
-            return this.data.suppliers.filter(supplier => {
+            return this.data.Suppliers.filter(supplier => {
                 return found(supplier.name, this.search_supplier);
             });
         },
@@ -218,25 +170,15 @@ export default {
         money,
         avatar,
         async submit() {
-            const res = await fetch('/api/paymentCoupon/create', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    supplierId: this.supplier.id,
-                    data: {
-                        content: this.payment.content,
-                        money: Number(this.payment.money),
-                    },
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
+            const res = await create({
+                supplierId: this.supplier.id,
+                data: {
+                    content: this.payment.content,
+                    money: Number(this.payment.money),
                 },
             });
             if (res.status !== 200) return alert((await res.json()).error);
-            // this.$root.$refs.app.print(this.$refs.print);
-
             this.$router.push('/admin/transaction/payment-coupon');
-            // this.payment_coupon_remove_payment_books();
         },
         ...mapMutations([
             'payment_coupon_add_payment_book',

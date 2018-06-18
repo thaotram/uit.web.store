@@ -5,26 +5,24 @@ import moment from 'moment';
 
 class Cart extends Model {
     /**
-     * @param {Realm} realm
-     * @param {User} user
-     * @param {CartDetail} cartDetails
+     * @param {import('../../express/api/utils/interface').Create} create
      * @returns {Promise<Cart>}
      */
-    static async create(realm, user, cartDetails) {
-        CartDetail.isRawValid(cartDetails);
-        if (!(user === undefined || User.has(realm, user))) {
+    static async create(create) {
+        CartDetail.isRawValid(create.details);
+        if (!(create.user === undefined || User.has(create.user))) {
             throw `User doesn't exist`;
         }
-        const cart = await Cart.write(realm, true, {
-            id: Cart.getNextId(realm),
-            owner: user,
+        const cart = await Cart.write({
+            id: Cart.nextId,
+            owner: create.user,
             create: new Date(),
         });
-        await Promise.map(cartDetails, async cartDetail => {
-            await CartDetail.write(realm, false, {
-                id: CartDetail.getNextId(realm),
+        await Promise.map(create.details, async cartDetail => {
+            await CartDetail.write({
+                id: CartDetail.nextId,
                 cart: cart,
-                book: Book.getById(realm, cartDetail.id),
+                book: Book.getById(cartDetail.bookId),
                 count: cartDetail.count,
             });
         });
@@ -32,12 +30,11 @@ class Cart extends Model {
     }
 
     /**
-     * @param {Realm} realm
      * @param {import('../interface').QueryCart} query
      * @return {Promise<Realm.Results<Cart>>}
      */
-    static async queryCart(realm, query) {
-        let carts = realm.objects('Cart');
+    static async queryCart(query) {
+        let carts = Cart.list;
         if (query.hasOwnProperty('userId')) {
             carts = carts.filtered('owner != null && owner.id == $0', query.userId);
         }
@@ -72,21 +69,27 @@ class Cart extends Model {
     }
 
     get json() {
-        const o = this.object;
-        o.userId = !this.owner ? undefined : this.owner.id;
-        const exportBill = this.exportBill[0];
+        const o = {
+            ...this.object,
+            userId: !this.owner ? undefined : this.owner.id,
+            cartDetails: this.cartDetails.map(cartDetail => cartDetail.json),
+        };
+        const exportBill = this.exportBill_;
         if (exportBill !== undefined) {
             o.exportBill = {
                 ...exportBill.json,
                 ...exportBill.detail,
             };
         }
-        o.cartDetails = this.cartDetails.map(cartDetail => cartDetail.json);
         return o;
     }
 
     get isSold() {
         return this.exportBill[0] != null;
+    }
+
+    get exportBill_() {
+        return this.exportBill[0];
     }
 }
 

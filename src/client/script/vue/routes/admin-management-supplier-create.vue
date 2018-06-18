@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-management-supplier-add light" >
+    <row- class="admin admin-management-supplier-create light" >
         <col- class="full noOverflow">
             <row- size="40" 
                   class="title">
@@ -51,7 +51,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import { date, avatar } from '../../modules/index';
+import { date, avatar, create } from '../../modules/index';
 
 export default {
     components: {
@@ -71,11 +71,6 @@ export default {
     },
     data() {
         return {
-            user: {
-                id: null,
-                name: 'Không xác định',
-            },
-            search: '',
             supplier: {
                 name: '',
                 address: '',
@@ -98,17 +93,11 @@ export default {
         date,
         avatar,
         async submit() {
-            const res = await fetch('/api/supplier/create', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    name: this.supplier.name,
-                    address: this.supplier.address,
-                    phone: this.supplier.phone,
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await create({
+                _: 'Supplier',
+                name: this.supplier.name,
+                address: this.supplier.address,
+                phone: this.supplier.phone,
             });
             if (res.status !== 200) return alert((await res.json()).error);
             this.$router.push('/admin/management/supplier');
@@ -117,7 +106,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-management-supplier-add {
+.admin-management-supplier-create {
     .input-color {
         .col {
             > .user-input,

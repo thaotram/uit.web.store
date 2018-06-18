@@ -20,15 +20,4 @@ export default function(app, io, realm) {
         io.emit('update', 'orderCoupon');
         res.send(orderCoupon.json);
     });
-
-    app.get('/api/orderCoupons', async (req, res) => {
-        Employee.getBySessionId(req.sessionID);
-
-        const orderCoupons = await OrderCoupon.queryOrderCoupon(realm, req.query);
-        if (!orderCoupons) {
-            res.json({ error: 'Không tìm thấy' });
-            return;
-        }
-        res.json(orderCoupons.map(orderCoupon => orderCoupon.json));
-    });
 }

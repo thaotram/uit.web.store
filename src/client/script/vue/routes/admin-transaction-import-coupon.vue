@@ -7,12 +7,6 @@
                          icon=""
                          class="shadow round green"
                          @click.native="$router.push('/admin/transaction/import-coupon/add')"/>
-                <s-/>
-                <input- v-model="search" 
-                        class="shadow search-box round"  
-                        type="text"
-                        icon=""
-                        placeholder="Tìm kiếm"/>
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
@@ -71,7 +65,7 @@
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import { avatar, timeAgo, money, user, employee, supplier } from '../../modules/index';
 
 export default {
@@ -105,15 +99,17 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         importCouponResults() {
-            return this.data.importCoupons.map(importCoupon => ({
-                ...importCoupon,
-                total: importCoupon.importCouponDetails
-                    .map(detail => detail.count * detail.price)
-                    .reduce((a, b) => a + b, 0),
-                count: importCoupon.importCouponDetails
-                    .map(detail => detail.count)
-                    .reduce((a, b) => a + b, 0),
-            }));
+            console.log(this.data);
+            return [];
+            // return this.data.ImportCoupons.map(importCoupon => ({
+            //     ...importCoupon,
+            //     total: importCoupon.importCouponDetails
+            //         .map(detail => detail.count * detail.price)
+            //         .reduce((a, b) => a + b, 0),
+            //     count: importCoupon.importCouponDetails
+            //         .map(detail => detail.count)
+            //         .reduce((a, b) => a + b, 0),
+            // }));
         },
     },
     methods: {

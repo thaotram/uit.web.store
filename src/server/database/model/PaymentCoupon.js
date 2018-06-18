@@ -1,7 +1,7 @@
-import { isContentValid, isMoney } from '../utils/Validation';
-import { Supplier, Employee } from '../database';
-import Model from '../utils/Model';
 import moment from 'moment';
+import { db, Employee, Supplier } from '../database';
+import Model from '../utils/Model';
+import { isContentValid, isMoney } from '../utils/Validation';
 
 class PaymentCoupon extends Model {
     static isRawValid(paymentCoupon) {
@@ -10,19 +10,18 @@ class PaymentCoupon extends Model {
     }
 
     /**
-     * @param {Realm} realm
      * @param {Employee} employee
      * @param {Supplier} supplier
      * @param {PaymentCoupon} paymentCoupon
      *
      */
-    static async create(realm, supplier, employee, paymentCoupon) {
+    static async create(supplier, employee, paymentCoupon) {
         PaymentCoupon.isRawValid(paymentCoupon);
-        if (!Supplier.has(realm, supplier) || !Employee.has(realm, employee)) {
+        if (!Supplier.has(supplier) || !Employee.has(employee)) {
             throw `Supplier, Employee doesn't exist`;
         }
-        return await PaymentCoupon.write(realm, true, {
-            id: PaymentCoupon.getNextId(realm),
+        return await PaymentCoupon.write({
+            id: PaymentCoupon.nextId,
             supplier: supplier,
             employee: employee,
             content: paymentCoupon.content,
@@ -32,13 +31,11 @@ class PaymentCoupon extends Model {
     }
 
     /**
-     *
-     * @param {Realm} realm
      * @param {import('../interface').QueryPaymentCoupon} query
      * @return {Promise<Realm.Results<PaymentCoupon>>}
      */
-    static async queryPaymentCoupon(realm, query) {
-        let paymentCoupons = realm.objects('PaymentCoupon');
+    static async queryPaymentCoupon(query) {
+        let paymentCoupons = db.realm.objects('PaymentCoupon');
         if (query.hasOwnProperty('employeeId')) {
             paymentCoupons = paymentCoupons.filtered(
                 'employee.id == $0',

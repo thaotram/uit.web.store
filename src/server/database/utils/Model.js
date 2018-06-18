@@ -1,49 +1,44 @@
 import moment from 'moment';
+import { db } from '../database';
 
 export default class Model {
     /**
-     * @param {*} realm
      * @param {Model} instance
      */
-    static has(realm, instance) {
+    static has(instance) {
         if (!instance) return false;
         if (instance instanceof this === false) return false;
 
         return (
-            realm.objects(this.schema.name).filtered(`id == ${instance.id}`)[0] !==
+            db.realm.objects(this.schema.name).filtered(`id == ${instance.id}`)[0] !==
             undefined
         );
     }
 
-    /**
-     * @param {Realm} realm
-     */
-    static getNextId(realm) {
-        const items = realm.objects(this.schema.name);
+    static get nextId() {
+        const items = db.realm.objects(this.schema.name);
         return items.length == 0 ? 1 : items.max('id') + 1;
     }
 
     /**
      *
-     * @param {Realm} realm
      * @param {Number} id
      * @returns {Realm.Object}
      */
-    static getById(realm, id) {
-        return realm.objects(this.schema.name).filtered('id == $0', id)[0];
+    static getById(id) {
+        return this.list.filtered('id == $0', id)[0];
     }
 
     /**
      *
-     * @param {Realm} realm
      * @param {Object} data
      * @param {Boolean} overwrite
      */
-    static write(realm, overwrite = false, data) {
+    static write(data, overwrite = false) {
         return new Promise(async (resolve, reject) => {
             try {
-                realm.write(() =>
-                    resolve(realm.create(this.schema.name, data, overwrite)),
+                db.realm.write(() =>
+                    resolve(db.realm.create(this.schema.name, data, overwrite)),
                 );
             } catch (e) {
                 reject(e);
@@ -51,6 +46,9 @@ export default class Model {
         });
     }
 
+    /**
+     * @return {Object}
+     */
     get object() {
         const properties = this.constructor.schema.properties;
         const object = {};
@@ -67,5 +65,12 @@ export default class Model {
             }
         }
         return object;
+    }
+
+    /**
+     * @returns {Realm.Results<Model>}
+     */
+    static get list() {
+        return db.realm.objects(this.schema.name);
     }
 }

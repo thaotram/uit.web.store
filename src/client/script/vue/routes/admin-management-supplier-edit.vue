@@ -51,7 +51,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-import { date, avatar } from '../../modules/index';
+import { date, avatar, create } from '../../modules/index';
 
 export default {
     components: {
@@ -85,7 +85,7 @@ export default {
         ...mapState(['app', 'data']),
         supplier() {
             return (
-                this.data.suppliers.find(
+                this.data.Suppliers.find(
                     supplier => supplier.id == Number(this.$route.params.id),
                 ) || {
                     name: '',
@@ -99,16 +99,11 @@ export default {
         date,
         avatar,
         async submit() {
-            const res = await fetch('/api/supplier/edit', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    supplierId: this.supplier.id,
-                    data: this.supplier,
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await create({
+                _: 'Supplier',
+                name: this.supplier.name,
+                address: this.supplier.address,
+                phone: this.supplier.phone,
             });
             if (res.status !== 200) return alert((await res.json()).error);
             this.$router.push('/admin/management/supplier');

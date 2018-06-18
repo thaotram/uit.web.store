@@ -4,7 +4,7 @@ import {
     isNameValid,
     isPhoneValid,
 } from '../utils/Validation';
-import { User } from '../database';
+import { db, User } from '../database';
 import Model from '../utils/Model';
 import moment from 'moment';
 
@@ -33,38 +33,33 @@ class Employee extends Model {
     }
 
     /**
-     * @param {Realm} realm
-     * @param {Employee} rawEmployee
+     * @param {import('../../express/api/utils/interface').Create} create
      */
-    static async create(realm, user, rawEmployee) {
-        if (!User.has(realm, user)) {
+    static async create(create) {
+        if (!User.has(create.user)) {
             throw `User doesn't exist`;
         }
-        if (
-            realm.objects('Employee').filtered(`user.id == ${user.id}`)[0] !== undefined
-        ) {
+        if (Employee.list.filtered(`user.id == ${create.user.id}`)[0] !== undefined) {
             throw `Employee is exist`;
         }
-        Employee.isRawValid(rawEmployee);
+        Employee.isRawValid(create);
 
-        return await Employee.write(realm, true, {
-            id: Employee.getNextId(realm),
-            user: user,
-            name: rawEmployee.name,
-            birthdate: moment(rawEmployee.birthdate, 'DD-MM-YYYY').toDate(),
-            address: rawEmployee.address,
-            phone: rawEmployee.phone,
+        return await Employee.write({
+            id: Employee.nextId,
+            user: create.user,
+            name: create.name,
+            birthdate: moment(create.birthdate, 'DD-MM-YYYY').toDate(),
+            address: create.address,
+            phone: create.phone,
             startDate: new Date(),
         });
     }
 
     /**
-     *
-     * @param {Realm} realm
      * @param {Object} data
      */
-    async update(realm, data) {
-        await realm.write(() => {
+    async update(data) {
+        await db.realm.write(() => {
             if (data.hasOwnProperty('name')) {
                 isNameValid(data.name);
                 this.name = data.name;

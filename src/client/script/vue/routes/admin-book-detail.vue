@@ -21,7 +21,7 @@
                     <line-/>
                     <button- icon="" 
                              class="green"
-                             @click.native="submitPrice"/>
+                             @click.native="submit"/>
                 </row->
                 <s-/>
             </row->
@@ -99,13 +99,13 @@ export default {
     data() {
         return {
             price: '',
-            updatePrice: false,
+            updatePrice: true,
         };
     },
     computed: {
         book() {
             return (
-                this.data.books.find(book => book.id === Number(this.$route.params.id)) ||
+                this.data.Books.find(book => book.id === Number(this.$route.params.id)) ||
                 {}
             );
         },
@@ -113,7 +113,8 @@ export default {
     },
     methods: {
         money,
-        async submitPrice() {
+        // Sửa lại hàm submit này
+        async submit() {
             const res = await fetch('/api/books/price/create', {
                 method: 'POST',
                 credentials: 'same-origin',

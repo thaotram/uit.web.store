@@ -1,29 +1,37 @@
-import { User } from '../database/database';
+import login from './api/login.api';
+import read from './api/read.api';
 /**
  * Init SocketIO in Server
  * @param {SocketIO.Server} io
- * @param {Realm} realm
  */
-export default function(io, realm) {
+export default function(io) {
     io.on('connection', client => {
         const sessionID = client.request.sessionID;
         console.log(`${sessionID} in`);
 
-        client.on('login', async (req, res) => {
-            const user = await User.get(realm, req, sessionID);
-
-            if (!(user instanceof User)) return res({ error: 'Login fail' });
-
-            const o = user.json;
-            const employee = user.employee[0];
-            if (employee !== undefined) o.employeeId = employee.id;
-
-            io.emit('update', 'user');
-            res(o);
-        });
+        const fake = wrap(client);
+        
+        login(io, fake);
+        read(io, fake);
 
         client.on('disconnect', () => {
             console.log(`${sessionID} out`);
         });
     });
 }
+
+/**
+ * @param {SocketIO.Socket} client
+ * @returns {SocketIO.Socket}
+ */
+const wrap = client => ({
+    on: (name, handler) =>
+        client.on(name, async (req, res) => {
+            try {
+                await handler(req, res);
+            } catch (e) {
+                console.log(e);
+                res({ error: String(e) });
+            }
+        }),
+});

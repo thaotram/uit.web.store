@@ -2,7 +2,7 @@ import Model from '../utils/Model';
 import { Book } from '../database';
 
 class ImportCouponDetail extends Model {
-    static isRawValid(realm, importCouponDetails) {
+    static isRawValid(importCouponDetails) {
         if (!Array.isArray(importCouponDetails))
             throw 'Danh sách chi tiết phiếu nhập phải là một mảng';
 
@@ -23,7 +23,7 @@ class ImportCouponDetail extends Model {
             ) {
                 throw 'Cả bookId, count, price phải là kiểu số';
             }
-            if (Book.getById(realm, detail.bookId) == undefined) {
+            if (Book.getById(detail.bookId) == undefined) {
                 throw 'BookId không tồn tại';
             }
             if (detail.count <= 0) throw 'Count phải > 0';

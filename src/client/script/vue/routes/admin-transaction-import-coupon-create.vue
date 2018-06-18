@@ -4,7 +4,7 @@
             <row- size="40" 
                   class="title">
                 <s-/>
-                <input- v-model="search" 
+                <input- v-model="filterUserName" 
                         class="shadow search-box round"  
                         type="text"
                         icon=""
@@ -13,67 +13,55 @@
                         <book-search-item- v-for="book in searchResults" 
                                            :book="book"
                                            :key="book.id"
-                                           @click.native="import_coupon_add_buy_book(book)"/>
+                                           @click.native="add_item(book)"/>
                     </dropdown->
                 </input->
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="import_coupon.buys.length !== 0"
+                         :has-content="items.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
-                        <div>
-                            Mã
-                        </div>
-                        <div>
-                            Tên sản phẩm
-                        </div>
-                        <div>
-                            Số lượng
-                        </div>
-                        <div>
-                            Giá bìa
-                        </div>
-                        <div>
-                            Giá mua
-                        </div>
-                        <div>
-                            Thành tiền
-                        </div>
+                        <div>Mã</div>
+                        <div>Tên sản phẩm</div>
+                        <div>Số lượng</div>
+                        <div>Giá bìa</div>
+                        <div>Giá mua</div>
+                        <div>Thành tiền</div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="import_coupon_remove_buy_books"/>
+                                 @click.native="items = []"/>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="buy in import_coupon.buys" 
-                                :key="buy.book.id"
+                    <table-row- v-for="item in items" 
+                                :key="item.book.id"
                                 size="45">
                         <div>
-                            {{ buy.book.id }}
+                            {{ item.book.id }}
                         </div>
                         <div>
-                            {{ buy.book.name }}
+                            {{ item.book.name }}
                         </div>
-                        <input v-model.number="buy.count"
+                        <input v-model.number="item.count"
                                type="number"
                                refs="count"
                                min="0">
                         <div>
-                            {{ money(buy.book.coverPrice) }}
+                            {{ money(item.book.coverPrice) }}
                         </div>
-                        <input v-model.number="buy.price"
+                        <input v-model.number="item.price"
                                type="number"
                                refs="count"
                                min="0">
                         <div>
-                            {{ money(buy.count * buy.price) }}
+                            {{ money(item.count * item.price) }}
                         </div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="import_coupon_remove_buy_book(buy)"/>
+                                 @click.native="remove_item(item)"/>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -88,7 +76,7 @@
         <col- class="right noOverflow">
             <div class="row user-input"
                  size="40">
-                <input- v-model="search_supplier"
+                <input- v-model="filterSupplierName"
                         icon=""
                         class="shadow search-box round full"
                         type="text"
@@ -193,13 +181,13 @@
                         <div>Thành tiền</div>
                     </div>
                     <div class="line"/>
-                    <div v-for="buy in import_coupon.buys" 
-                         :key="buy.book.id"
+                    <div v-for="item in items" 
+                         :key="item.book.id"
                          class="row">
-                        <div>{{ buy.book.name }}</div>
-                        <div>{{ buy.count }}</div>
-                        <div>{{ money(buy.book.realPrice) }}</div>
-                        <div>{{ money(buy.count * buy.book.realPrice) }}</div>
+                        <div>{{ item.book.name }}</div>
+                        <div>{{ item.count }}</div>
+                        <div>{{ money(item.book.realPrice) }}</div>
+                        <div>{{ money(item.count * item.book.realPrice) }}</div>
                     </div>
                     <div class="line"/>
                     <div class="row bold">
@@ -217,8 +205,8 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState, mapMutations, mapActions } from 'vuex';
-import { money, found, avatar } from '../../modules/index';
+import { mapState } from 'vuex';
+import { money, found, avatar, create } from '../../modules/index';
 
 export default {
     components: {
@@ -238,12 +226,15 @@ export default {
     },
     data() {
         return {
+            filterSupplierName: '',
+            filterUserName: '',
+
+            items: [],
+
             supplier: {
                 id: null,
                 name: '< Tên nhà cung cấp >',
             },
-            search_supplier: '',
-            search: '',
             time: '',
             size: [
                 ['0 80px', 'end'],
@@ -259,25 +250,25 @@ export default {
     computed: {
         ...mapState(['app', 'data', 'import_coupon']),
         searchResults() {
-            return this.data.books.filter(
+            return this.data.Books.filter(
                 book =>
-                    found(book.name, this.search) &&
-                    !this.import_coupon.buys.some(buy => buy.book.id === book.id),
+                    found(book.name, this.filterUserName) &&
+                    !this.items.some(item => item.book.id === book.id),
             );
         },
         supplierResults() {
-            return this.data.suppliers.filter(supplier => {
-                return found(supplier.name, this.search_supplier);
+            return this.data.Suppliers.filter(supplier => {
+                return found(supplier.name, this.filterSupplierName);
             });
         },
         total() {
-            return this.import_coupon.buys
-                .map(buy => buy.price * buy.count)
+            return this.items
+                .map(item => item.price * item.count)
                 .reduce((a, b) => a + b, 0);
         },
         count() {
-            return this.import_coupon.buys
-                .map(buy => buy.count)
+            return this.items
+                .map(item => item.count)
                 .reduce((a, b) => Number(a) + Number(b), 0);
         },
     },
@@ -290,31 +281,29 @@ export default {
         money,
         avatar,
         async submit() {
-            const res = await fetch('/api/importCoupons/create', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    supplierId: this.supplier.id,
-                    shipper: 'Không rõ',
-                    importCouponDetails: this.import_coupon.buys.map(buy => ({
-                        bookId: buy.book.id,
-                        count: buy.count,
-                        price: buy.price,
-                    })),
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await create({
+                _: 'ImportCoupon',
+                supplierId: this.supplier.id,
+                shipper: 'Không rõ',
+                details: this.items.map(item => ({
+                    bookId: item.book.id,
+                    count: item.count,
+                    price: item.price,
+                })),
             });
             if (res.status !== 200) return alert((await res.json()).error);
-            // this.$root.$refs.app.print(this.$refs.print);
-            this.import_coupon_remove_buy_books();
+            this.items = [];
         },
-        ...mapMutations([
-            'import_coupon_add_buy_book',
-            'import_coupon_remove_buy_book',
-            'import_coupon_remove_buy_books',
-        ]),
+
+        add_item(book) {
+            this.items.push({ book, count: 1 });
+        },
+
+        remove_item(item) {
+            const index = this.items.indexOf(item);
+            if (index === -1) return;
+            this.items.splice(index, 1);
+        },
     },
 };
 </script>

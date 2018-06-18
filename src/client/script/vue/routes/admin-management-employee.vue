@@ -8,7 +8,7 @@
                          class="shadow round green"
                          @click.native="$router.push('/admin/management/employee/add')"/>
                 <s-/>
-                <input- v-model="search" 
+                <input- v-model="filterUserName" 
                         class="shadow search-box round"  
                         type="text"
                         icon=""
@@ -98,7 +98,7 @@ export default {
     },
     data() {
         return {
-            search: '',
+            filterUserName: '',
             size: [
                 ['0 30px', 'center'],
                 ['0 220px', 'start'],
@@ -112,8 +112,8 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         employeeResults() {
-            return this.data.employees.filter(employee =>
-                found(employee.name, this.search),
+            return this.data.Employees.filter(employee =>
+                found(employee.name, this.filterUserName),
             );
         },
     },

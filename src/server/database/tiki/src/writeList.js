@@ -10,7 +10,7 @@ import readline from 'readline';
  * @param {String} url
  * @param {SocketIO.Server} io
  */
-export default async function(realm, url, io) {
+export default async function(url, io) {
     const bookIds = await getList(url);
 
     let count = 0;
@@ -19,7 +19,7 @@ export default async function(realm, url, io) {
         bookIds,
         async bookId => {
             const rawBook = await getRawBook(bookId);
-            await Book.create(realm, rawBook);
+            await Book.create(rawBook);
             log(++count, bookIds.length, io);
         },
         {

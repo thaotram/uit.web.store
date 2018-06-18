@@ -105,7 +105,7 @@ export default {
     computed: {
         ...mapState(['app', 'data']),
         orderCouponResults() {
-            return this.data.orderCoupons.map(orderCoupon => ({
+            return this.data.OrderCoupons.map(orderCoupon => ({
                 ...orderCoupon,
                 type: orderCoupon.orderCouponDetails.length,
                 count: orderCoupon.orderCouponDetails

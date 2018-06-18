@@ -7,7 +7,7 @@ import log from 'log';
 import moment from 'moment';
 import SocketIO from 'socket.io';
 import config from './config/config';
-import database from './database/database';
+import Database from './database/database';
 import express from './express/express';
 import socket from './socket/socket';
 
@@ -17,11 +17,11 @@ const server = http.createServer(app);
 const io = SocketIO(server);
 
 (async function() {
-    const realm = await database();
+    const realm = await Database.initialize();
 
     config(app, io);
     express(wrap(app), io, realm);
-    socket(io, realm);
+    socket(io);
 
     server.listen(port, () => {
         log(
@@ -48,6 +48,7 @@ function wrap(app) {
         try {
             await handler(req, res);
         } catch (e) {
+            console.log(e);
             res.status(400).json({ error: String(e) });
         }
     };

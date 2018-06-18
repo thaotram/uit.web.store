@@ -21,6 +21,17 @@
                @focus="focus = true"
                @blur="focus = false"
                @input="updateNumber()">
+        <input v-money="money"
+               v-else-if="type === 'money'"
+               ref="money"
+               :value="value"
+               :min="min"
+               :max="max"
+               :placeholder="placeholder"
+               type="text"
+               @focus="focus = true"
+               @blur="focus = false"
+               @input="updateMoney()">
         <textarea v-else-if="type === 'textarea'"
                   ref="textarea"
                   :value="value"
@@ -66,17 +77,25 @@ export default {
             type: String,
             default: 'text',
             validator(value) {
-                return ['text', 'number', 'textarea'].indexOf(value) !== -1;
+                return ['text', 'number', 'money', 'textarea'].indexOf(value) !== -1;
             },
         },
     },
     data() {
         return {
             focus: false,
+            money: {
+                decimal: ',',
+                thousands: '.',
+                prefix: '',
+                suffix: ' ₫',
+                precision: 0,
+                masked: false /* doesn't work with directive */,
+            },
         };
     },
     updated() {
-        // TODO fix textarea
+        // TODO fix textarea ??? what
         if (this.type === 'textarea') {
             const el = this.$el.querySelector('textarea');
             el.style.height = 'auto';
@@ -113,6 +132,9 @@ export default {
     methods: {
         updateNumber() {
             this.$emit('input', Number(this.$refs.number.value));
+        },
+        updateMoney() {
+            this.$emit('input', Number(this.$refs.money.value));
         },
     },
 };

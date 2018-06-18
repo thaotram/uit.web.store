@@ -1,14 +1,12 @@
+import { Book } from '../database';
 import Model from '../utils/Model';
-import Book from './Book';
 
 class Price extends Model {
     /**
-     *
-     * @param {Realm} realm
      * @param {{bookId: Number, price: Number}} data
      */
-    static async create(realm, data) {
-        const book = await Book.getById(realm, data.bookId);
+    static async create(data) {
+        const book = await Book.getById(data.bookId);
         if (!book) throw 'Không tìm thấy sách';
 
         /**
@@ -17,8 +15,8 @@ class Price extends Model {
         const lastPrice = book.realPriceObject();
 
         if (!lastPrice || lastPrice !== data.price) {
-            return await Price.write(realm, true, {
-                id: Price.getNextId(realm),
+            return await Price.write({
+                id: Price.nextId,
                 time: new Date(),
                 price: data.price,
                 book: book,

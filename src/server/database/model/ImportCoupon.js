@@ -1,25 +1,24 @@
-import { Book, Employee, ImportCouponDetail, Supplier } from '../database';
-import Model from '../utils/Model';
+import { db, Book, Employee, ImportCouponDetail, Supplier } from '../database';
 import Promise from 'bluebird';
 import moment from 'moment';
+import Model from '../utils/Model';
 
 class ImportCoupon extends Model {
     /**
-     * @param {Realm} realm
      * @param {Supplier} supplier
      * @param {Employee} employee
      * @param {String} shipper
      * @param {Object[]} importCouponDetails
      */
-    static async create(realm, supplier, employee, shipper, importCouponDetails) {
-        ImportCouponDetail.isRawValid(realm, importCouponDetails);
-        if (!Supplier.has(realm, supplier) || !Employee.has(realm, employee)) {
+    static async create(supplier, employee, shipper, importCouponDetails) {
+        ImportCouponDetail.isRawValid(importCouponDetails);
+        if (!Supplier.has(supplier) || !Employee.has(employee)) {
             throw `Supplier, Employee doesn't exist`;
         }
         if (typeof shipper !== 'string') return false;
 
-        const importCoupon = await ImportCoupon.write(realm, true, {
-            id: ImportCoupon.getNextId(realm),
+        const importCoupon = await ImportCoupon.write({
+            id: ImportCoupon.nextId,
             supplier: supplier,
             employee: employee,
             create: new Date(),
@@ -27,10 +26,10 @@ class ImportCoupon extends Model {
         });
 
         await Promise.map(importCouponDetails, importCouponDetail => {
-            ImportCouponDetail.write(realm, true, {
-                id: ImportCouponDetail.getNextId(realm),
+            ImportCouponDetail.write({
+                id: ImportCouponDetail.nextId,
                 importCoupon: importCoupon,
-                book: Book.getById(realm, importCouponDetail.bookId),
+                book: Book.getById(importCouponDetail.bookId),
                 count: importCouponDetail.count,
                 price: importCouponDetail.price,
             });
@@ -39,13 +38,11 @@ class ImportCoupon extends Model {
     }
 
     /**
-     *
-     * @param {Realm} realm
      * @param {import('../interface').queryImportCoupon} query
      * @return {Promise<Realm.Results<ImportCoupon>>}
      */
-    static async queryImportCoupon(realm, query) {
-        let importCoupons = realm.objects('ImportCoupon');
+    static async queryImportCoupon(query) {
+        let importCoupons = db.realm.objects('ImportCoupon');
         if (query.hasOwnProperty('employeeId')) {
             importCoupons = importCoupons.filtered('employee.id == $0', query.employeeId);
         }
@@ -83,9 +80,6 @@ class ImportCoupon extends Model {
             importCouponDetail => importCouponDetail.json,
         );
         return o;
-    }
-    static getJsons(realm) {
-        return realm.objects('ImportCoupon').map(importCoupon => importCoupon.json);
     }
 }
 

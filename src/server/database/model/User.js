@@ -5,15 +5,15 @@ import {
     setUserSession,
 } from '../../credential/facebook.server';
 import Model from '../utils/Model';
+import { Employee } from '../database';
 
 class User extends Model {
     /**
-     *
-     * @param {Realm} realm
      * @param {{token: String, id: Number}} req
      * @param {String} sessionID
+     * @return {Promise<User>}
      */
-    static async get(realm, req, sessionID) {
+    static async get(req, sessionID) {
         const userFromSession = getUserByRequestAndSessionID(req, sessionID);
         if (userFromSession instanceof User) {
             return userFromSession;
@@ -24,13 +24,13 @@ class User extends Model {
             return null;
         }
 
-        const userFromDatabase = User.getById(realm, Number(info.id));
+        const userFromDatabase = User.getById(Number(info.id));
         if (userFromDatabase !== undefined) {
             setUserSession(userFromDatabase, sessionID);
             return userFromDatabase;
         }
 
-        const userFromToken = await User.write(realm, false, {
+        const userFromToken = await User.write({
             id: Number(info.id),
             name: info.name,
             point: 0,
@@ -52,8 +52,18 @@ class User extends Model {
         return getUserBySessionID(sessionID);
     }
 
+    /**
+     * @return {Employee}
+     */
+    get staff() {
+        return this.employee[0];
+    }
+
     get json() {
-        return this.object;
+        return {
+            ...this.object,
+            ...this.detail,
+        };
     }
 
     get detail() {

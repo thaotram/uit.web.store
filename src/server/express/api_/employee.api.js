@@ -23,20 +23,6 @@ export default function(app, io, realm) {
         res.send(employee.json);
     });
 
-    app.get('/api/employee/:id', (req, res) => {
-        Employee.getBySessionId(req.sessionID);
-
-        const id = Number(req.params.id);
-        const employee = Employee.getById(realm, id);
-        if (!employee) {
-            res.json({
-                error: `Không tìm thấy nhân viên có Id: ${id}`,
-            });
-            return;
-        }
-        res.json(employee.json);
-    });
-
     app.get('/api/employees', (req, res) => {
         Employee.getBySessionId(req.sessionID);
 

@@ -4,22 +4,22 @@
             <row- size="40" 
                   class="title">
                 <s-/>
-                <input- v-model="search" 
+                <input- v-model="filterBookName" 
                         class="shadow search-box round"  
                         type="text"
                         icon=""
                         placeholder="Tìm kiếm">
                     <dropdown- :size="40">
-                        <book-search-item- v-for="book in searchResults" 
+                        <book-search-item- v-for="book in bookResults" 
                                            :book="book"
                                            :key="book.id"
-                                           @click.native="pos_add_sell_book(book)"/>
+                                           @click.native="add_item(book)"/>
                     </dropdown->
                 </input->
             </row->
             <s- :s="20"/>
             <table-view- :col-size="size"
-                         :has-content="pos.sells.length !== 0"
+                         :has-content="items.length !== 0"
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
@@ -40,33 +40,33 @@
                         </div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="pos_remove_sell_books"/>
+                                 @click.native="items = []"/>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="sell in pos.sells" 
-                                :key="sell.book.id"
+                    <table-row- v-for="item in items" 
+                                :key="item.book.id"
                                 size="45">
                         <div>
-                            {{ sell.book.id }}
+                            {{ item.book.id }}
                         </div>
                         <div>
-                            {{ sell.book.name }}
+                            {{ item.book.name }}
                         </div>
-                        <input v-model.number="sell.count"
+                        <input v-model.number="item.count"
                                type="number"
                                refs="count"
                                min="0">
                         <div>
-                            {{ money(sell.book.realPrice) }}
+                            {{ money(item.book.realPrice) }}
                         </div>
                         <div>
-                            {{ money(sell.count * sell.book.realPrice) }}
+                            {{ money(item.count * item.book.realPrice) }}
                         </div>
                         <button- class="noPadding"
                                  icon=""
-                                 @click.native="pos_remove_sell_book(sell)"/>
+                                 @click.native="remove_item(item)"/>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -81,24 +81,24 @@
         <col- class="right noOverflow">
             <div class="row user-input"
                  size="40">
-                <input- v-model="search_user"
+                <input- v-model="filterUserName"
                         icon=""
                         class="shadow search-box round full"
                         type="text"
                         placeholder="Tên tài khoản người dùng">
                     <dropdown- :size="50" 
                                class="user-dropdown">
-                        <div v-for="_user in userResults" 
-                             :key="_user.id"
+                        <div v-for="eachUser in userResults" 
+                             :key="eachUser.id"
                              class="user"
-                             @click="user = _user">
+                             @click="user = eachUser">
                             <row- size="40">
-                                <image- :src="avatar(_user.id)"
+                                <image- :src="avatar(eachUser.id)"
                                         class="round square border"
                                         size="30"/>
                                 <s- :s="10"/>
                                 <span class="full">
-                                    {{ _user.name }}
+                                    {{ eachUser.name }}
                                 </span>
                             </row->
                         </div>
@@ -182,13 +182,13 @@
                         <div>Thành tiền</div>
                     </div>
                     <div class="line"/>
-                    <div v-for="sell in pos.sells" 
-                         :key="sell.book.id"
+                    <div v-for="item in items" 
+                         :key="item.book.id"
                          class="row">
-                        <div>{{ sell.book.name }}</div>
-                        <div>{{ sell.count }}</div>
-                        <div>{{ money(sell.book.realPrice) }}</div>
-                        <div>{{ money(sell.count * sell.book.realPrice) }}</div>
+                        <div>{{ item.book.name }}</div>
+                        <div>{{ item.count }}</div>
+                        <div>{{ money(item.book.realPrice) }}</div>
+                        <div>{{ money(item.count * item.book.realPrice) }}</div>
                     </div>
                     <div class="line"/>
                     <div class="row bold">
@@ -206,8 +206,8 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState, mapMutations, mapActions } from 'vuex';
-import { money, found, avatar } from '../../modules/index';
+import { mapState } from 'vuex';
+import { money, found, avatar, create } from '../../modules/index';
 
 export default {
     components: {
@@ -227,12 +227,15 @@ export default {
     },
     data() {
         return {
+            filterBookName: '',
+            filterUserName: '',
+
+            items: [],
             user: {
                 id: null,
                 name: 'Khách vãng lai',
             },
-            search_user: '',
-            search: '',
+
             time: '',
             size: [
                 ['0 80px', 'end'],
@@ -245,32 +248,33 @@ export default {
         };
     },
     computed: {
-        ...mapState(['app', 'data', 'pos']),
-        searchResults() {
-            return this.data.books.filter(
+        ...mapState(['app', 'data']),
+
+        bookResults() {
+            return this.data.Books.filter(
                 book =>
-                    found(book.name, this.search) &&
-                    !this.pos.sells.some(saleBook => saleBook.book.id === book.id),
+                    found(book.name, this.filterBookName) &&
+                    !this.items.some(item => item.book.id === book.id),
             );
         },
+
         userResults() {
             return [
-                {
-                    id: '',
-                    name: 'Khách vãng lai',
-                },
-                ...this.data.users.filter(user => {
-                    return found(user.name, this.search_user) && user.id !== this.user.id;
+                { id: '', name: 'Khách vãng lai' },
+                ...this.data.Users.filter(user => {
+                    return (
+                        found(user.name, this.filterUserName) && user.id !== this.user.id
+                    );
                 }),
             ];
         },
         total() {
-            return this.pos.sells
+            return this.items
                 .map(book => book.book.realPrice * book.count)
                 .reduce((a, b) => a + b, 0);
         },
         count() {
-            return this.pos.sells
+            return this.items
                 .map(book => book.count)
                 .reduce((a, b) => Number(a) + Number(b), 0);
         },
@@ -284,32 +288,30 @@ export default {
         money,
         avatar,
         async submit() {
-            const res = await fetch('/api/exportBill/createWithContent', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    employeeId: 1,
-                    userId: this.user.id,
-                    cartDetails: this.pos.sells.map(sell => ({
-                        id: sell.book.id,
-                        count: sell.count,
-                    })),
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await create({
+                _: 'ExportBill',
+                userId: this.user.id,
+                details: this.items.map(item => ({
+                    bookId: item.book.id,
+                    count: item.count,
+                })),
             });
-
             if (res.status !== 200) return alert((await res.json()).error);
-
             this.$root.$refs.app.print(this.$refs.print);
-            this.pos_remove_sell_books();
+            this.items = [];
         },
-        ...mapMutations([
-            'pos_add_sell_book',
-            'pos_remove_sell_books',
-            'pos_remove_sell_book',
-        ]),
+
+        add_item(book) {
+            const index = this.items.findIndex(item => item.book === book);
+            if (index !== -1) return;
+            this.items.push({ book, count: 1 });
+        },
+
+        remove_item(item) {
+            const index = this.items.indexOf(item);
+            if (index === -1) return;
+            this.items.splice(index, 1);
+        },
     },
 };
 </script>

@@ -1,5 +1,6 @@
 import Realm from 'realm';
 
+import Model from './utils/Model';
 import Book from './model/Book';
 import User from './model/User';
 import Cart from './model/Cart';
@@ -17,6 +18,7 @@ import Price from './model/Price';
 import Supplier from './model/Supplier';
 
 export {
+    Model,
     Book,
     User,
     Cart,
@@ -34,26 +36,47 @@ export {
     Supplier,
 };
 
-export default function() {
-    return Realm.open({
-        path: 'database/realm.realm',
-        schema: [
-            Book,
-            Cart,
-            Category,
-            CartDetail,
-            ImportCouponDetail,
-            OrderCouponDetail,
-            Employee,
-            ExportBill,
-            ImportCoupon,
-            MembershipCard,
-            OrderCoupon,
-            PaymentCoupon,
-            Price,
-            Supplier,
-            User,
-        ],
-        deleteRealmIfMigrationNeeded: true,
-    });
+/**
+ * @type {Realm}
+ */
+let instance = null;
+
+export default class Database {
+    /**
+     * @return {Realm}
+     */
+    static async initialize() {
+        return (
+            (instance = await Realm.open({
+                path: 'database/realm.realm',
+                schema: [
+                    Book,
+                    Cart,
+                    Category,
+                    CartDetail,
+                    ImportCouponDetail,
+                    OrderCouponDetail,
+                    Employee,
+                    ExportBill,
+                    ImportCoupon,
+                    MembershipCard,
+                    OrderCoupon,
+                    PaymentCoupon,
+                    Price,
+                    Supplier,
+                    User,
+                ],
+                deleteRealmIfMigrationNeeded: true,
+            })) || instance
+        );
+    }
 }
+
+export const db = {
+    get realm() {
+        if (!(instance instanceof Realm)) {
+            throw 'Đối tượng realm được gọi khi chưa được khởi tạo';
+        }
+        return instance;
+    },
+};

@@ -21,15 +21,4 @@ export default function(app, io, realm) {
         io.emit('update', 'supplier');
         res.send(paymentCoupon.json);
     });
-
-    app.get('/api/paymentCoupons', async (req, res) => {
-        Employee.getBySessionId(req.sessionID);
-
-        const paymentCoupons = await PaymentCoupon.queryPaymentCoupon(realm, req.query);
-        if (!paymentCoupons) {
-            res.json({ error: 'Không tìm thấy' });
-            return;
-        }
-        res.json(paymentCoupons.map(paymentCoupon => paymentCoupon.json));
-    });
 }
