@@ -53,4 +53,9 @@ ExportBill.schema = {
     },
 };
 
+ExportBill.permission = {
+    user: [],
+    employee: ['read', 'create'],
+};
+
 export default ExportBill;

@@ -115,4 +115,9 @@ Cart.schema = {
     },
 };
 
+Cart.permission = {
+    user: ['read', 'create'],
+    employee: ['read', 'create', 'update'],
+};
+
 export default Cart;

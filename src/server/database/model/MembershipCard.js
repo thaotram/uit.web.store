@@ -37,4 +37,9 @@ MembershipCard.schema = {
     },
 };
 
+MembershipCard.permission = {
+    user: [],
+    employee: ['read', 'create', 'update'],
+};
+
 export default MembershipCard;

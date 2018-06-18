@@ -119,7 +119,7 @@ Book.schema = {
 
 Book.permission = {
     user: ['read'],
-    employee: ['read', 'write', 'update'],
+    employee: ['read', 'create', 'update'],
 };
 
 export default Book;

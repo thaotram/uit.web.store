@@ -39,4 +39,9 @@ Price.schema = {
     },
 };
 
+Price.permission = {
+    user: [],
+    employee: ['read', 'create', 'update'],
+};
+
 export default Price;

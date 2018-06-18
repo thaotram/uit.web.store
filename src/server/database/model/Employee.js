@@ -130,4 +130,9 @@ Employee.schema = {
     },
 };
 
+Employee.permission = {
+    user: [],
+    employee: ['read', 'create', 'update'],
+};
+
 export default Employee;

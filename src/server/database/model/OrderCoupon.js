@@ -87,4 +87,9 @@ OrderCoupon.schema = {
     },
 };
 
+OrderCoupon.permission = {
+    user: [],
+    employee: ['read', 'create'],
+};
+
 export default OrderCoupon;
