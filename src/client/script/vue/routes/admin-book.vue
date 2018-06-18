@@ -6,7 +6,7 @@
                 <button- text="Thêm sách mới"  
                          icon="" 
                          class="shadow round green"
-                         @click.native="$router.push('/admin/book/add')"/>
+                         @click.native="$router.push('/admin/book/create')"/>
                 <s-/>
                 <three-selector- v-model="filterResidual" 
                                  right="Hết hàng"

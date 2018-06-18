@@ -3,15 +3,14 @@ import Model from '../utils/Model';
 //
 class MembershipCard extends Model {
     /**
-     * @param {User} user
-     * @param {Employee} employee
+     * @param {import('../../socket/utils/interface').Create} create
      */
-    static async create(user, employee) {
+    static async create(create) {
+        const employee = create.authorize.staff;
+        const user = create.user;
+
         if (!User.has(user) || !Employee.has(employee)) {
             throw `Người dùng hoặc nhân viên không tồn tại`;
-        }
-        if (user.billOwns.length === 0) {
-            throw 'Không thể tạo';
         }
         return await MembershipCard.write({
             id: MembershipCard.nextId,

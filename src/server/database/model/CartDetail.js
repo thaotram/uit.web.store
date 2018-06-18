@@ -24,8 +24,11 @@ class CartDetail extends Model {
     }
 
     get json() {
-        const o = this.object;
-        return o;
+        return {
+            ...this.object,
+            bookId: this.book.id,
+            price: this.book.realPrice(this.cart.create),
+        };
     }
 }
 

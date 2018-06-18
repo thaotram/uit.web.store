@@ -26,7 +26,8 @@
                 <template slot="content">
                     <table-row- v-for="(cart, index) in cartResults"
                                 :key="cart.id"
-                                size="60">
+                                size="60"
+                                @click.native="$router.push(`/admin/transaction/export-bill/${cart.id}`)">
                         <div>
                             {{ index + 1 }}
                         </div>

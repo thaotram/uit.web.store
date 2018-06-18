@@ -6,7 +6,7 @@
                 <button- text="Tạo phiếu đặt" 
                          icon=""
                          class="shadow round green"
-                         @click.native="$router.push('/admin/transaction/order-coupon/add')"/>
+                         @click.native="$router.push('/admin/transaction/order-coupon/create')"/>
                 <s-/>
                 <input- v-model="search" 
                         class="shadow search-box round"  
