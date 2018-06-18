@@ -38,10 +38,10 @@ class Employee extends Model {
      */
     static async create(create) {
         if (!User.has(create.user)) {
-            throw `User doesn't exist`;
+            throw `Người dùng không tồn tại`;
         }
         if (Employee.list.filtered(`user.id == ${create.user.id}`)[0] !== undefined) {
-            throw `Employee is exist`;
+            throw `Nhân viên đã tồn tại`;
         }
         Employee.isRawValid(create);
 

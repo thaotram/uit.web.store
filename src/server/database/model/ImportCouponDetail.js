@@ -50,4 +50,9 @@ ImportCouponDetail.schema = {
     },
 };
 
+ImportCouponDetail.permission = {
+    user: [],
+    employee: [],
+};
+
 export default ImportCouponDetail;
