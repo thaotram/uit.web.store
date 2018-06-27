@@ -17,28 +17,29 @@ class ImportCoupon extends Model {
         const employee = create.authorize.staff;
         ImportCouponDetail.isRawValid(create.details);
 
-        if (!Supplier.has(create.supplier) || !Employee.has(create.employee)) {
+        if (!Supplier.has(create.supplier) || !Employee.has(employee)) {
             throw `Nhân viên hoặc nhà cung cấp không tồn tại`;
         }
-        if (typeof shipper !== 'string') return false;
+        if (typeof create.shipper !== 'string') throw 'Shipper phải là chuỗi';
 
         const importCoupon = await ImportCoupon.write({
             id: ImportCoupon.nextId,
             supplier: create.supplier,
-            employee: employee,
+            employee,
             create: new Date(),
             shipper: create.shipper,
         });
 
-        await Promise.map(create.details, importCouponDetail => {
-            ImportCouponDetail.write({
+        await Promise.map(create.details, async importCouponDetail => {
+            await ImportCouponDetail.write({
                 id: ImportCouponDetail.nextId,
-                importCoupon: importCoupon,
+                importCoupon,
                 book: Book.getById(importCouponDetail.bookId),
                 count: importCouponDetail.count,
                 price: importCouponDetail.price,
             });
         });
+
         return importCoupon;
     }
 

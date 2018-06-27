@@ -86,38 +86,19 @@
                         class="shadow search-box round full"
                         type="text"
                         placeholder="Tên tài khoản người dùng">
-                    <dropdown- :size="50" 
+                    <dropdown- :size="50"
                                class="user-dropdown">
-                        <div v-for="eachUser in userResults" 
-                             :key="eachUser.id"
-                             class="user"
-                             @click="user = eachUser">
-                            <row- size="40">
-                                <image- :src="avatar(eachUser.id)"
-                                        class="round square border"
-                                        size="30"/>
-                                <s- :s="10"/>
-                                <span class="full">
-                                    {{ eachUser.name }}
-                                </span>
-                            </row->
-                        </div>
+                        <user- v-for="(u, index) in userResults" 
+                               :user="u" 
+                               :key="index"
+                               class="user"
+                               @click.native="user = u"/>
                     </dropdown->
                 </input->
             </div>
             <s- :s="20"/>
             <div class="col full shadow round padding">
-                <div class="row user" 
-                     size="40">
-                    <image- :src="avatar(user.id)"
-                            class="round square border"
-                            size="30"/>
-                    <s- :s="10"/>
-                    <span class="full semibold" 
-                          style="line-height: 40px">
-                        {{ user.name }}
-                    </span>
-                </div>
+                <user- :user="user"/>
                 <s- :s="15"/>
                 <line-/>
                 <s- :s="15"/>
@@ -206,7 +187,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { money, found, avatar, create } from '../../modules/index';
 
 export default {
@@ -224,6 +205,7 @@ export default {
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'user',
     },
     data() {
         return {
@@ -232,7 +214,7 @@ export default {
 
             items: [],
             user: {
-                id: null,
+                id: -1,
                 name: 'Khách vãng lai',
             },
 
@@ -260,7 +242,7 @@ export default {
 
         userResults() {
             return [
-                { id: '', name: 'Khách vãng lai' },
+                { id: -1, name: 'Khách vãng lai' },
                 ...this.data.Users.filter(user => {
                     return (
                         found(user.name, this.filterUserName) && user.id !== this.user.id
@@ -283,8 +265,11 @@ export default {
         setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
+        this.load_all('Book');
+        this.load_all('User');
     },
     methods: {
+        ...mapActions(['load_all']),
         money,
         avatar,
         async submit() {

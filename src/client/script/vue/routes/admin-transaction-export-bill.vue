@@ -28,36 +28,12 @@
                                 :key="cart.id"
                                 size="60"
                                 @click.native="$router.push(`/admin/transaction/export-bill/${cart.id}`)">
-                        <div>
-                            {{ index + 1 }}
-                        </div>
-                        <div class="row">
-                            <image- :src="avatar(cart.userId)"
-                                    class="round square border"
-                                    size="30"/>
-                            <s- :s="10"/>
-                            <span class="full">
-                                {{ user(cart.userId).name }}
-                            </span>
-                        </div>
-                        <div class="row">
-                            <image- :src="avatar(employee(cart.exportBill.employeeId).id)"
-                                    class="round square border"
-                                    size="30"/>
-                            <s- :s="10"/>
-                            <span class="full">
-                                {{ employee(cart.exportBill.employeeId).name }}
-                            </span>
-                        </div>
-                        <div>
-                            {{ timeAgo(cart.exportBill.create) }}
-                        </div>
-                        <div>
-                            {{ cart.exportBill.count }}
-                        </div>
-                        <div>
-                            {{ money(cart.exportBill.total) }}
-                        </div>
+                        <div>{{ index + 1 }}</div>
+                        <user- :facebook-id="cart.userId"/>
+                        <user- :employee-id="cart.employeeId"/>
+                        <div>{{ cart.timeAgo }}</div>
+                        <div>{{ cart.count }}</div>
+                        <div>{{ cart.total }}</div>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -69,26 +45,36 @@
                 </template>
             </table-view->
         </col->
+        <row- class="right">
+            <div class="full shadow scroll round">
+                <col- class="padding">
+                    <div class="semibold">Tổng số hóa đơn: <span class="green">{{ cartResults.length }}</span></div>
+                    <s- :s="15"/>
+                    <div class="semibold">Tổng thu: <span class="green">{{ total }}</span></div>
+                </col->
+            </div>
+        </row->
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
-import { avatar, timeAgo, money, user, employee } from '../../modules/index';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import { avatar, timeAgo, money } from '../../modules/index';
 
 export default {
     components: {
         ...'button',
         ...'col',
-        ...'markdown',
+        ...'image',
         ...'input',
         ...'label',
-        ...'image',
         ...'line',
         ...'list',
+        ...'markdown',
         ...'row',
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'user',
     },
     data() {
         return {
@@ -104,25 +90,39 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
+        ...mapGetters(['get']),
         cartResults() {
-            return this.data.Carts.filter(cart => cart.exportBill !== undefined);
+            return this.data.Carts.filter(cart => cart.exportBill !== undefined).map(
+                cart => ({
+                    id: cart.id,
+                    userId: cart.userId,
+                    employeeId: cart.exportBill.employeeId,
+                    timeAgo: timeAgo(cart.exportBill.create),
+                    count: cart.exportBill.count,
+                    total: cart.exportBill.total,
+                }),
+            );
+        },
+        total() {
+            return money(this.cartResults.map(c => c.total).reduce((a, b) => a + b, 0));
         },
     },
+    mounted() {
+        this.load_all('Cart');
+    },
     methods: {
+        ...mapActions(['load_all']),
         avatar,
-        timeAgo,
         money,
-        user,
-        employee,
     },
 };
 </script>
 <style lang="scss">
 .admin-transaction-export-bill {
-    > .col {
-        > .row.title > .input.search-box {
-            min-width: 400px;
-        }
+    > .right {
+        flex: 0 280px;
+        max-width: 280px;
+        min-width: 280px;
     }
 }
 </style>

@@ -11,14 +11,13 @@ export default new Vuex.Store({
     state,
     getters: {
         get: state => (model, id) => {
-            
             return state.data[`${model}s`].find(e => e.id === Number(id));
         },
     },
     mutations: {
         set(state, payload) {
-            console.log('Đã tải', payload.name);
-            state.data[payload.name] = payload.data;
+            console.log('Đã tải', payload.name, `${payload.name}s`);
+            state.data[`${payload.name}s`] = payload.data;
         },
         add(state, payload) {
             if (payload.item) {
@@ -35,16 +34,12 @@ export default new Vuex.Store({
         // Là hàm đọc bất đồng bộ được gọi ra từ socket
         async read({ commit }, body) {
             commit('set', {
-                name: `${body._}s`,
+                name: body._,
                 data: await read(body),
             });
         },
 
-        // Là hàm lấy các đối tượng trong cơ sở dữ liệu ở client
-        // hoặc gửi lệnh lấy từ phía server về rồi lưu và trả về
-        // dữ liệu từ client
-
-        async load({ getters, commit }, payload) {
+        async load_by_id({ getters, commit }, payload) {
             const object = getters.get(payload.name, payload.id);
             if (!object) {
                 const array = await read({
@@ -58,7 +53,24 @@ export default new Vuex.Store({
                     name: payload.name,
                     item: array[0],
                 });
+                return array[0];
             }
+            return object;
+        },
+
+        async load_all({ commit }, name) {
+            const data = await read({
+                _: name,
+                return: 'json',
+            });
+            if (data.error === 'Không tìm thấy phiên đăng nhập') {
+                location.reload(true);
+            }
+            commit('set', {
+                name: name,
+                data: data,
+            });
+            return data;
         },
     },
 });

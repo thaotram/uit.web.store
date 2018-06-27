@@ -50,8 +50,8 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
-import { date, avatar, create } from '../../modules/index';
+import { mapState, mapActions } from 'vuex';
+import { date, avatar, create, update } from '../../modules/index';
 
 export default {
     components: {
@@ -71,6 +71,12 @@ export default {
     },
     data() {
         return {
+            supplier: {
+                id: -1,
+                name: '',
+                phone: '',
+                address: '',
+            },
             size: [
                 ['0 30px', 'center'],
                 ['0 220px', 'start'],
@@ -83,24 +89,21 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
-        supplier() {
-            return (
-                this.data.Suppliers.find(
-                    supplier => supplier.id == Number(this.$route.params.id),
-                ) || {
-                    name: '',
-                    address: '',
-                    phone: '',
-                }
-            );
-        },
+    },
+    async mounted() {
+        this.supplier = await this.load_by_id({
+            name: 'Supplier',
+            id: this.$route.params.id,
+        });
     },
     methods: {
+        ...mapActions(['load_by_id']),
         date,
         avatar,
         async submit() {
-            const res = await create({
+            const res = await update({
                 _: 'Supplier',
+                _id: this.supplier.id,
                 name: this.supplier.name,
                 address: this.supplier.address,
                 phone: this.supplier.phone,

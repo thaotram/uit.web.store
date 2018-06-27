@@ -5,7 +5,9 @@ class ImportCouponDetail extends Model {
     static isRawValid(importCouponDetails) {
         if (!Array.isArray(importCouponDetails))
             throw 'Danh sách chi tiết phiếu nhập phải là một mảng';
-
+        if (importCouponDetails.length === 0) {
+            throw 'Phiếu nhận hàng phải có ít nhất một mặt hàng';
+        }
         return importCouponDetails.every(detail => {
             if (typeof detail != 'object')
                 throw 'Chi tiết phiếu nhập phải là kiểu đối tượng';

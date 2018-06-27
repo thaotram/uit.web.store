@@ -66,7 +66,7 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { money, found, avatar } from '../../modules/index';
 
 export default {
@@ -105,7 +105,11 @@ export default {
             );
         },
     },
+    mounted() {
+        this.load_all('Supplier');
+    },
     methods: {
+        ...mapActions(['load_all']),
         money,
         avatar,
     },

@@ -12,6 +12,15 @@ export async function create(req) {
 /**
  * @param {{_: Model, return: string, details: Object[]}} req
  */
+export async function update(req) {
+    return await new Promise(resolve => {
+        socket.emit('api/update', req, async res => resolve(res));
+    });
+}
+
+/**
+ * @param {{_: Model, return: string, details: Object[]}} req
+ */
 export async function read(req) {
     return await new Promise(resolve => {
         socket.emit('api/read', req, async res => resolve(res));

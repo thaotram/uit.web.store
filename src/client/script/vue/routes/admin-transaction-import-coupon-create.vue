@@ -39,26 +39,18 @@
                     <table-row- v-for="item in items" 
                                 :key="item.book.id"
                                 size="45">
-                        <div>
-                            {{ item.book.id }}
-                        </div>
-                        <div>
-                            {{ item.book.name }}
-                        </div>
+                        <div>{{ item.book.id }}</div>
+                        <div>{{ item.book.name }}</div>
                         <input v-model.number="item.count"
                                type="number"
                                refs="count"
                                min="0">
-                        <div>
-                            {{ money(item.book.coverPrice) }}
-                        </div>
+                        <div>{{ money(item.book.coverPrice) }}</div>
                         <input v-model.number="item.price"
                                type="number"
                                refs="count"
                                min="0">
-                        <div>
-                            {{ money(item.count * item.price) }}
-                        </div>
+                        <div>{{ money(item.count * item.price) }}</div>
                         <button- class="noPadding"
                                  icon=""
                                  @click.native="remove_item(item)"/>
@@ -82,19 +74,12 @@
                         type="text"
                         placeholder="Tên nhà cung cấp">
                     <dropdown- :size="50" 
-                               class="user-dropdown">
-                        <div v-for="supplier_ in supplierResults" 
-                             :key="supplier_.id"
-                             class="user"
-                             @click="supplier = supplier_">
-                            <row- size="40">
-                                <s- :s="10"/>
-                                <span class="full">
-                                    {{ supplier_.name }}
-                                </span>
-                                <s- :s="10"/>
-                            </row->
-                        </div>
+                               class="supplier-dropdown">
+                        <row- v-for="s in supplierResults" 
+                              :key="s.id"
+                              size="50"
+                              class="supplier"
+                              @click.native="supplier = s">{{ s.name }}</row->
                     </dropdown->
                 </input->
             </div>
@@ -205,7 +190,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { money, found, avatar, create } from '../../modules/index';
 
 export default {
@@ -232,7 +217,7 @@ export default {
             items: [],
 
             supplier: {
-                id: null,
+                id: -1,
                 name: '< Tên nhà cung cấp >',
             },
             time: '',
@@ -276,8 +261,11 @@ export default {
         setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
+        this.load_all('Book');
+        this.load_all('Supplier');
     },
     methods: {
+        ...mapActions(['load_all']),
         money,
         avatar,
         async submit() {
@@ -296,7 +284,9 @@ export default {
         },
 
         add_item(book) {
-            this.items.push({ book, count: 1, price: book.coverPrice });
+            const index = this.items.findIndex(item => item.book === book);
+            if (index !== -1) return;
+            this.items.push({ book, count: 10, price: book.coverPrice * 0.8 });
         },
 
         remove_item(item) {

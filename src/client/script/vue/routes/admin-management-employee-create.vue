@@ -33,19 +33,19 @@
                             <s- :s="10"/>
                             <col- size="40" 
                                   class="full">
-                                <input- v-model="employee.name"
+                                <input- v-model="name"
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Họ và tên nhân viên"/>
-                                <input- v-model="employee.address"
+                                <input- v-model="address"
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Địa chỉ chi tiết hiện tại"/>
-                                <input- v-model="employee.phone"
+                                <input- v-model="phone"
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Số di động hoặc nhà riêng"/>
-                                <input- v-model="employee.birthdate"
+                                <input- v-model="birthdate"
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Ngày sinh"/>
@@ -57,20 +57,11 @@
                                             placeholder="Tên tài khoản người dùng">
                                         <dropdown- :size="50" 
                                                    class="user-dropdown">
-                                            <div v-for="u in userResults" 
-                                                 :key="u.id"
-                                                 class="user"
-                                                 @click="user = u">
-                                                <row- size="40">
-                                                    <image- :src="avatar(u.id)"
-                                                            class="round square border"
-                                                            size="30"/>
-                                                    <s- :s="10"/>
-                                                    <span class="full">
-                                                        {{ u.name }}
-                                                    </span>
-                                                </row->
-                                            </div>
+                                            <user- v-for="(u, index) in userResults" 
+                                                   :user="u" 
+                                                   :key="index"
+                                                   class="user"
+                                                   @click.native="user = u"/>
                                         </dropdown->
                                     </input->
                                     <s- :s="10"/>
@@ -112,6 +103,7 @@ export default {
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'user',
     },
     data() {
         return {
@@ -120,12 +112,10 @@ export default {
                 name: 'Không xác định',
             },
             search: '',
-            employee: {
-                name: '',
-                address: '',
-                phone: '',
-                birthdate: '',
-            },
+            name: '',
+            address: '',
+            phone: '',
+            birthdate: '',
             size: [
                 ['0 30px', 'center'],
                 ['0 220px', 'start'],

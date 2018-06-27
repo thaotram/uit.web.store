@@ -17,11 +17,10 @@ export default function(io, client) {
             if (permission.user.indexOf('update') === -1) throw 'Không có đủ quyền';
         }
 
-        await update.model.create(update);
+        const object = update.model.getById(update._id);
+        await object.update(update);
+        object.notification(io);
 
-        io.emit('update', update._);
-        update.model.notification.forEach(name => io.emit('update', name));
-
-        res.json({ message: 'Thành công' });
+        res({ message: 'Thành công' });
     });
 }

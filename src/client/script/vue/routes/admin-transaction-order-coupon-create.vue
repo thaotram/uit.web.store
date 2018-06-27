@@ -69,19 +69,12 @@
                         type="text"
                         placeholder="Tên nhà cung cấp">
                     <dropdown- :size="50" 
-                               class="user-dropdown">
-                        <div v-for="supplier_ in supplierResults" 
-                             :key="supplier_.id"
-                             class="user"
-                             @click="supplier = supplier_">
-                            <row- size="40">
-                                <s- :s="10"/>
-                                <span class="full">
-                                    {{ supplier_.name }}
-                                </span>
-                                <s- :s="10"/>
-                            </row->
-                        </div>
+                               class="supplier-dropdown">
+                        <row- v-for="s in supplierResults" 
+                              :key="s.id"
+                              size="50"
+                              class="supplier"
+                              @click.native="supplier = s">{{ s.name }}</row->
                     </dropdown->
                 </input->
             </div>
@@ -144,7 +137,7 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { money, found, avatar, create } from '../../modules/index';
 
 export default {
@@ -213,8 +206,11 @@ export default {
         setInterval(() => {
             this.time = new moment().format('hh:mm:ss DD/MM/YYYY');
         }, 100);
+        this.load_all('Supplier');
+        this.load_all('Book');
     },
     methods: {
+        ...mapActions(['load_all']),
         money,
         avatar,
         async submit() {
@@ -222,7 +218,7 @@ export default {
                 _: 'OrderCoupon',
                 supplierId: this.supplier.id,
                 shipper: 'Không rõ',
-                orderCouponDetails: this.items.map(item => ({
+                details: this.items.map(item => ({
                     bookId: item.book.id,
                     count: item.count,
                 })),
@@ -232,7 +228,9 @@ export default {
         },
 
         add_item(book) {
-            this.items.push({ book, count: 1 });
+            const index = this.items.findIndex(item => item.book === book);
+            if (index !== -1) return;
+            this.items.push({ book, count: 10 });
         },
 
         remove_item(item) {

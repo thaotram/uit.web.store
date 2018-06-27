@@ -5,7 +5,9 @@ class OrderCouponDetail extends Model {
     static isRawValid(orderCouponDetails) {
         if (!Array.isArray(orderCouponDetails))
             throw 'Danh sách chi tiết phiếu đặt phải là một mảng';
-
+        if (orderCouponDetails.length === 0) {
+            throw 'Phiếu đặt hàng phải có ít nhất một mặt hàng';
+        }
         return orderCouponDetails.every(detail => {
             if (typeof detail != 'object')
                 throw 'Chi tiết phiếu đặt phải là kiểu đối tượng';
@@ -23,9 +25,10 @@ class OrderCouponDetail extends Model {
     }
 
     get json() {
-        const o = this.object;
-        o.bookId = this.book.id;
-        return o;
+        return {
+            ...this.object,
+            bookId: this.book.id,
+        };
     }
 }
 

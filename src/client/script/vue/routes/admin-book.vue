@@ -24,21 +24,11 @@
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
-                        <div>
-                            Mã
-                        </div>
-                        <div>
-                            Tên sản phẩm
-                        </div>
-                        <div>
-                            Số lượng
-                        </div>
-                        <div>
-                            Giá bán
-                        </div>
-                        <div>
-                            Giá bìa
-                        </div>
+                        <div>Mã</div>
+                        <div>Tên sản phẩm</div>
+                        <div>Số lượng</div>
+                        <div>Giá bán</div>
+                        <div>Giá bìa</div>
                         <span/>
                     </table-row->
                 </template>
@@ -47,21 +37,11 @@
                                 :key="book.id"
                                 size="45"
                                 @click.native="$router.push(`/admin/book/detail/${book.id}`)">
-                        <div>
-                            {{ book.id }}
-                        </div>
-                        <div>
-                            {{ book.name }}
-                        </div>
-                        <div>
-                            {{ book.count }}
-                        </div>
-                        <div>
-                            {{ money(book.realPrice) }}
-                        </div>
-                        <div>
-                            {{ money(book.coverPrice) }}
-                        </div>
+                        <div>{{ book.id }}</div>
+                        <div>{{ book.name }}</div>
+                        <div>{{ book.count }}</div>
+                        <div>{{ money(book.realPrice) }}</div>
+                        <div>{{ money(book.coverPrice) }}</div>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -76,7 +56,7 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { money, found } from '../../modules';
 
 export default {
@@ -121,7 +101,11 @@ export default {
             );
         },
     },
+    mounted() {
+        this.load_all('Book');
+    },
     methods: {
+        ...mapActions(['load_all']),
         money,
     },
 };

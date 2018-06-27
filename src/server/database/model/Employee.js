@@ -79,6 +79,7 @@ class Employee extends Model {
                 this.phone = update.phone;
             }
         });
+        return this;
     }
 
     get history() {

@@ -64,16 +64,26 @@ export default {
         z-index: 1;
         border-bottom: 0.85px solid rgba(0, 0, 0, 0.2);
         overflow: hidden;
-
-        height: 50px;
-        min-height: 50px;
-
-        > .row {
-            padding: 5px;
-            > span {
-                line-height: 40px;
-            }
+        padding: 5px 10px;
+        > span {
+            line-height: 40px;
         }
+
+        &:hover {
+            background-color: rgba(black, 0.1);
+        }
+        &:active {
+            background-color: rgba(black, 0.2);
+        }
+    }
+}
+
+.dropdown.supplier-dropdown .result {
+    z-index: 10;
+    > .supplier {
+        padding: 0 10px;
+        line-height: 50px;
+
         &:hover {
             background-color: rgba(black, 0.1);
         }

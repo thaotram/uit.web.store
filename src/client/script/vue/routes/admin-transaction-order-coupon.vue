@@ -32,31 +32,14 @@
                 <template slot="content">
                     <table-row- v-for="(orderCoupon, index) in orderCouponResults"
                                 :key="orderCoupon.id"
-                                size="60">
-                        <div>
-                            {{ index + 1 }}
-                        </div>
-                        <div>
-                            {{ supplier(orderCoupon.supplierId).name }}
-                        </div>
-                        <div class="row">
-                            <image- :src="avatar(employee(orderCoupon.employeeId).id)"
-                                    class="round square border"
-                                    size="30"/>
-                            <s- :s="10"/>
-                            <span class="full">
-                                {{ employee(orderCoupon.employeeId).name }}
-                            </span>
-                        </div>
-                        <div>
-                            {{ timeAgo(orderCoupon.create) }}
-                        </div>
-                        <div>
-                            {{ orderCoupon.type }}
-                        </div>
-                        <div>
-                            {{ orderCoupon.count }}
-                        </div>
+                                size="60"
+                                @click.native="$router.push(`/admin/transaction/order-coupon-detail/${orderCoupon.id}`)">
+                        <div>{{ index + 1 }}</div>
+                        <div>{{ (get('Supplier', orderCoupon.supplierId) || {}).name }}</div>
+                        <user- :employee-id="orderCoupon.employeeId"/>
+                        <div>{{ timeAgo(orderCoupon.create) }}</div>
+                        <div>{{ orderCoupon.type }}</div>
+                        <div>{{ orderCoupon.count }}</div>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -71,8 +54,8 @@
     </row->
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
-import { avatar, timeAgo, money, user, employee, supplier } from '../../modules/index';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import { avatar, timeAgo, money } from '../../modules/index';
 
 export default {
     components: {
@@ -88,6 +71,7 @@ export default {
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'user',
     },
     data() {
         return {
@@ -104,6 +88,7 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
+        ...mapGetters(['get']),
         orderCouponResults() {
             return this.data.OrderCoupons.map(orderCoupon => ({
                 ...orderCoupon,
@@ -114,13 +99,15 @@ export default {
             }));
         },
     },
+    mounted() {
+        this.load_all('OrderCoupon');
+        this.load_all('Supplier');
+    },
     methods: {
+        ...mapActions(['load_all']),
         avatar,
         timeAgo,
         money,
-        user,
-        employee,
-        supplier,
     },
 };
 </script>

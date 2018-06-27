@@ -1,5 +1,5 @@
 <template>
-    <row- class="admin admin-transaction-export-bill-detail light" >
+    <row- class="admin admin-transaction-import-coupon-detail light" >
         <col- class="left full noOverflow">
             <row- size="40" 
                   class="title">
@@ -28,31 +28,31 @@
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="cartDetail in cartDetailResults" 
-                                :key="cartDetail.id"
+                    <table-row- v-for="importCouponDetail in importCouponDetailResults" 
+                                :key="importCouponDetail.id"
                                 size="45">
-                        <div>{{ cartDetail.bookId }}</div>
-                        <div>{{ (get('Book', cartDetail.bookId) || {}).name }}</div>
-                        <div>{{ cartDetail.count }}</div>
-                        <div>{{ money(cartDetail.price) }}</div>
-                        <div>{{ money(cartDetail.price * cartDetail.count) }}</div>
+                        <div>{{ importCouponDetail.bookId }}</div>
+                        <div>{{ (get('Book', importCouponDetail.bookId) || {}).name }}</div>
+                        <div>{{ importCouponDetail.count }}</div>
+                        <div>{{ money(importCouponDetail.price) }}</div>
+                        <div>{{ money(importCouponDetail.price * importCouponDetail.count) }}</div>
                     </table-row->
                 </template>
             </table-view->
         </col->
         <col- class="right noOverflow">
             <div class="col full shadow round padding">
-                <div class="semibold">Người mua:</div>
-                <s- :s="10"/>
-                <user- :user="user"/>
-                <s- :s="10"/>
                 <div class="semibold">Nhân viên:</div>
                 <s- :s="10"/>
-                <user- :employee-id="cart.exportBill.employeeId"/>
+                <user- :employee-id="importCoupon.employeeId"/>
                 <s- :s="10"/>
                 <line-/>
                 <s- :s="10"/>
-                <div class="semibold">Thời gian: {{ cart.exportBill.create }}</div>
+                <div class="semibold">Thời gian: {{ importCoupon.create }}</div>
+                <s- :s="10"/>
+                <div class="semibold">Người giao: {{ importCoupon.shipper }}</div>
+                <s- :s="10"/>
+                <div class="semibold">Người giao: {{ (get('Supplier', importCoupon.supplierId) || {}).name }}</div>
             </div>
             <s- :s="20"/>
             <col- class="shadow round pay">
@@ -62,7 +62,7 @@
                     <span class="green-text">{{ count }}</span>
                 </row->
                 <row- class="pay-row bold">
-                    <span>Khách phải trả:</span>
+                    <span>Tổng tiền:</span>
                     <s-/>
                     <span class="green-text">{{ money(total) }}</span>
                 </row->
@@ -70,7 +70,7 @@
                 <row- size="40">
                     <button- class="full green round"
                              icon="" 
-                             text="In hóa đơn"
+                             text="In phiếu nhập"
                              @click.native="print"/>
                 </row->
             </col->
@@ -85,33 +85,39 @@
                     <s- :s="10"/>
                     <span class="logo-text d full">{{ app.name }}</span>
                 </row->
-                <s- :s="5"/>
+                <s- :s="10"/>
                 <p class="text">- Địa chỉ: {{ app.address }}</p>
+                <s- :s="5"/>
                 <p class="text">- Điện thoại: {{ app.phone }}</p>
-                <s- :s="8"/>
+                <s- :s="10"/>
                 <div class="line"/>
-                <s- :s="8"/>
-                <p class="text bold big center">HÓA ĐƠN BÁN LẺ</p>
-                <s- :s="8"/>
+                <s- :s="10"/>
+                <p class="text bold big center">PHIẾU NHẬP</p>
+                <s- :s="10"/>
                 <div class="bill-table">
-                    <p class="text">Thời gian: {{ cart.exportBill.create }}</p>
-                    <s- :s="8"/>
+                    <p class="text"><span class="bold">Thời gian: </span>{{ importCoupon.create }}</p>
+                    <div style="height: 5px"/>
+                    <p class="text"><span class="bold">Nhà cung cấp: </span>{{ (get('Supplier', importCoupon.supplierId) || {}).name }}</p>
+                    <div style="height: 5px"/>
                     <div class="row">
                         <div>Tên sách</div>
                         <div>SL</div>
                         <div>Đơn giá</div>
                         <div>Thành tiền</div>
                     </div>
-                    <div class="line"/>
-                    <div v-for="(cartDetail, index) in cart.cartDetails" 
+                    <div class="line" 
+                         style="margin: 3px 0"/>
+                    <div v-for="(importCouponDetail, index) in importCoupon.importCouponDetails" 
                          :key="index"
+                         style="margin-bottom: 3px"
                          class="row">
-                        <div>{{ (get('Book', cartDetail.bookId) || {}).name }}</div>
-                        <div>{{ cartDetail.count }}</div>
-                        <div>{{ money(cartDetail.price) }}</div>
-                        <div>{{ money(cartDetail.count * cartDetail.price) }}</div>
+                        <div>{{ (get('Book', importCouponDetail.bookId) || {}).name }}</div>
+                        <div>{{ importCouponDetail.count }}</div>
+                        <div>{{ money(importCouponDetail.price) }}</div>
+                        <div>{{ money(importCouponDetail.count * importCouponDetail.price) }}</div>
                     </div>
-                    <div class="line"/>
+                    <div class="line" 
+                         style="margin: 3px 0"/>
                     <div class="row bold">
                         <div>Tổng cộng</div>
                         <div>{{ count }}</div>
@@ -120,7 +126,23 @@
                     </div>
                 </div>
                 <s- :s="20"/>
-                <p class="text bold center">Xin cảm ơn quý khách!</p>
+                <row- size="40" 
+                      class="sign">
+                    <s- :s="20"/>
+                    <span>Người lập phiếu</span>
+                    <s-/>
+                    <span>Người giao</span>
+                    <s- :s="20"/>
+                </row->
+                <s- :s="20"/>
+                <row- size="40" 
+                      class="sign">
+                    <s- :s="20"/>
+                    <span>{{ (get('Employee', importCoupon.employeeId) || {}).name }}</span>
+                    <s-/>
+                    <span>{{ importCoupon.shipper }}</span>
+                    <s- :s="20"/>
+                </row->
             </col->
         </div>
     </row->
@@ -148,9 +170,8 @@ export default {
     },
     data() {
         return {
-            cart: {
-                cartDetails: [],
-                exportBill: {},
+            importCoupon: {
+                importCouponDetails: [],
             },
 
             filterBookName: '',
@@ -165,8 +186,8 @@ export default {
                 ['0 80px', 'end'],
                 [1, 'start'],
                 ['0 70px', 'center'],
-                ['0 80px', 'end'],
-                ['0 80px', 'end'],
+                ['0 90px', 'end'],
+                ['0 100px', 'end'],
             ],
         };
     },
@@ -174,40 +195,46 @@ export default {
         ...mapState(['app', 'data']),
         ...mapGetters(['get']),
 
-        cartDetailResults() {
-            return this.cart.cartDetails.filter(cartDetail =>
+        importCouponDetailResults() {
+            return this.importCoupon.importCouponDetails.filter(importCouponDetail =>
                 found(
-                    (this.get('Book', cartDetail.bookId) || {}).name,
+                    (this.get('Book', importCouponDetail.bookId) || {}).name,
                     this.filterBookName,
                 ),
             );
         },
 
         total() {
-            return this.cart.cartDetails
-                .map(cartDetail => cartDetail.price * cartDetail.count)
+            return this.importCoupon.importCouponDetails
+                .map(
+                    importCouponDetail =>
+                        importCouponDetail.price * importCouponDetail.count,
+                )
                 .reduce((a, b) => a + b, 0);
         },
 
         count() {
-            return this.cart.cartDetails
-                .map(cartDetail => cartDetail.count)
+            return this.importCoupon.importCouponDetails
+                .map(importCouponDetail => importCouponDetail.count)
                 .reduce((a, b) => Number(a) + Number(b), 0);
         },
     },
     async mounted() {
-        const payload = {
-            name: 'Cart',
+        this.importCoupon = await this.load_by_id({
+            name: 'ImportCoupon',
             id: this.$route.params.id,
-        };
-        this.cart = await this.load_by_id(payload);
-        this.cart.cartDetails.map(
-            async cartDetail =>
+        });
+        this.importCoupon.importCouponDetails.map(
+            async importCouponDetail =>
                 await this.load_by_id({
                     name: 'Book',
-                    id: cartDetail.bookId,
+                    id: importCouponDetail.bookId,
                 }),
         );
+        await this.load_by_id({
+            name: 'Supplier',
+            id: this.importCoupon.supplierId,
+        });
     },
     methods: {
         ...mapActions(['load_by_id']),
@@ -219,7 +246,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-transaction-export-bill-detail {
+.admin-transaction-import-coupon-detail {
     > .left {
         > .row.title > .input.search-box {
             min-width: 400px;

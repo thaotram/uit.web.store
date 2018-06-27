@@ -1,12 +1,8 @@
 <template>
-    <row- class="admin admin-transaction-export-bill-detail light" >
+    <row- class="admin admin-transaction-order-coupon-detail light" >
         <col- class="left full noOverflow">
             <row- size="40" 
                   class="title">
-                <button- text="In hóa đơn này" 
-                         icon=""
-                         class="shadow round green"
-                         @click.native="print"/>
                 <s-/>
                 <input- v-model="filterBookName" 
                         class="shadow search-box round"  
@@ -22,37 +18,33 @@
                         <div>Mã</div>
                         <div>Tên sản phẩm</div>
                         <div>Số lượng</div>
-                        <div>Đơn giá</div>
+                        <div>Giá bìa</div>
                         <div>Thành tiền</div>
                         <span/>
                     </table-row->
                 </template>
                 <template slot="content">
-                    <table-row- v-for="cartDetail in cartDetailResults" 
-                                :key="cartDetail.id"
+                    <table-row- v-for="orderCouponDetail in orderCouponDetailResults" 
+                                :key="orderCouponDetail.id"
                                 size="45">
-                        <div>{{ cartDetail.bookId }}</div>
-                        <div>{{ (get('Book', cartDetail.bookId) || {}).name }}</div>
-                        <div>{{ cartDetail.count }}</div>
-                        <div>{{ money(cartDetail.price) }}</div>
-                        <div>{{ money(cartDetail.price * cartDetail.count) }}</div>
+                        <div>{{ orderCouponDetail.bookId }}</div>
+                        <div>{{ orderCouponDetail.name }}</div>
+                        <div>{{ orderCouponDetail.count }}</div>
+                        <div>{{ orderCouponDetail.coverPrice }}</div>
+                        <div>{{ money(orderCouponDetail.coverPrice * orderCouponDetail.count) }}</div>
                     </table-row->
                 </template>
             </table-view->
         </col->
         <col- class="right noOverflow">
             <div class="col full shadow round padding">
-                <div class="semibold">Người mua:</div>
-                <s- :s="10"/>
-                <user- :user="user"/>
-                <s- :s="10"/>
                 <div class="semibold">Nhân viên:</div>
                 <s- :s="10"/>
-                <user- :employee-id="cart.exportBill.employeeId"/>
+                <user- :employee-id="orderCoupon.employeeId"/>
                 <s- :s="10"/>
                 <line-/>
                 <s- :s="10"/>
-                <div class="semibold">Thời gian: {{ cart.exportBill.create }}</div>
+                <div class="semibold">Thời gian: {{ orderCoupon.create }}</div>
             </div>
             <s- :s="20"/>
             <col- class="shadow round pay">
@@ -62,7 +54,7 @@
                     <span class="green-text">{{ count }}</span>
                 </row->
                 <row- class="pay-row bold">
-                    <span>Khách phải trả:</span>
+                    <span>Tổng tiền theo giá bìa:</span>
                     <s-/>
                     <span class="green-text">{{ money(total) }}</span>
                 </row->
@@ -70,7 +62,7 @@
                 <row- size="40">
                     <button- class="full green round"
                              icon="" 
-                             text="In hóa đơn"
+                             text="In phiếu đặt hàng"
                              @click.native="print"/>
                 </row->
             </col->
@@ -94,7 +86,7 @@
                 <p class="text bold big center">HÓA ĐƠN BÁN LẺ</p>
                 <s- :s="8"/>
                 <div class="bill-table">
-                    <p class="text">Thời gian: {{ cart.exportBill.create }}</p>
+                    <p class="text">Thời gian: {{ orderCoupon.create }}</p>
                     <s- :s="8"/>
                     <div class="row">
                         <div>Tên sách</div>
@@ -103,13 +95,13 @@
                         <div>Thành tiền</div>
                     </div>
                     <div class="line"/>
-                    <div v-for="(cartDetail, index) in cart.cartDetails" 
+                    <div v-for="(orderCouponDetail, index) in orderCoupon.orderCouponDetails" 
                          :key="index"
                          class="row">
-                        <div>{{ (get('Book', cartDetail.bookId) || {}).name }}</div>
-                        <div>{{ cartDetail.count }}</div>
-                        <div>{{ money(cartDetail.price) }}</div>
-                        <div>{{ money(cartDetail.count * cartDetail.price) }}</div>
+                        <div>{{ (get('Book', orderCouponDetail.bookId) || {}).name }}</div>
+                        <div>{{ orderCouponDetail.count }}</div>
+                        <div>{{ money(orderCouponDetail.price) }}</div>
+                        <div>{{ money(orderCouponDetail.count * orderCouponDetail.price) }}</div>
                     </div>
                     <div class="line"/>
                     <div class="row bold">
@@ -148,9 +140,8 @@ export default {
     },
     data() {
         return {
-            cart: {
-                cartDetails: [],
-                exportBill: {},
+            orderCoupon: {
+                orderCouponDetails: [],
             },
 
             filterBookName: '',
@@ -174,38 +165,53 @@ export default {
         ...mapState(['app', 'data']),
         ...mapGetters(['get']),
 
-        cartDetailResults() {
-            return this.cart.cartDetails.filter(cartDetail =>
-                found(
-                    (this.get('Book', cartDetail.bookId) || {}).name,
-                    this.filterBookName,
-                ),
-            );
+        orderCouponDetailResults() {
+            return this.orderCoupon.orderCouponDetails
+                .filter(orderCouponDetail =>
+                    found(
+                        (this.get('Book', orderCouponDetail.bookId) || {}).name,
+                        this.filterBookName,
+                    ),
+                )
+                .map(orderCouponDetail => {
+                    const book = this.get('Book', orderCouponDetail.bookId) || {};
+                    return {
+                        id: orderCouponDetail.id,
+                        bookId: orderCouponDetail.bookId,
+                        name: book.name,
+                        count: orderCouponDetail.count,
+                        coverPrice: book.coverPrice,
+                        total: orderCouponDetail.count * book.coverPrice,
+                    };
+                });
         },
 
         total() {
-            return this.cart.cartDetails
-                .map(cartDetail => cartDetail.price * cartDetail.count)
+            return this.orderCoupon.orderCouponDetails
+                .map(
+                    orderCouponDetail =>
+                        (this.get('Book', orderCouponDetail.bookId) || {}).coverPrice * orderCouponDetail.count,
+                )
                 .reduce((a, b) => a + b, 0);
         },
 
         count() {
-            return this.cart.cartDetails
-                .map(cartDetail => cartDetail.count)
+            return this.orderCoupon.orderCouponDetails
+                .map(orderCouponDetail => orderCouponDetail.count)
                 .reduce((a, b) => Number(a) + Number(b), 0);
         },
     },
     async mounted() {
         const payload = {
-            name: 'Cart',
+            name: 'OrderCoupon',
             id: this.$route.params.id,
         };
-        this.cart = await this.load_by_id(payload);
-        this.cart.cartDetails.map(
-            async cartDetail =>
+        this.orderCoupon = await this.load_by_id(payload);
+        this.orderCoupon.orderCouponDetails.map(
+            async orderCouponDetail =>
                 await this.load_by_id({
                     name: 'Book',
-                    id: cartDetail.bookId,
+                    id: orderCouponDetail.bookId,
                 }),
         );
     },
@@ -219,7 +225,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.admin-transaction-export-bill-detail {
+.admin-transaction-order-coupon-detail {
     > .left {
         > .row.title > .input.search-box {
             min-width: 400px;

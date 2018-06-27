@@ -16,13 +16,10 @@ export default function(io, client) {
         } else {
             if (permission.user.indexOf('create') === -1) throw 'Không có đủ quyền';
         }
-        
+
         const object = await create.model.create(create);
         object.notification(io);
 
-        // io.emit('update', create._);
-        // create.model.notification.forEach(name => io.emit('update', name));
-
-        res.json({ message: 'Thành công' });
+        res({ message: 'Thành công' });
     });
 }

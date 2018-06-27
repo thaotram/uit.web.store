@@ -40,7 +40,7 @@ export default {
     },
     mounted() {
         this.updateStyle();
-    },  
+    },
     methods: {
         updateStyle() {
             initialize({

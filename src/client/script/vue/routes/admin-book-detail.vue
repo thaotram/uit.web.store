@@ -115,6 +115,7 @@ export default {
         money,
         async submit() {
             const res = await create({
+                _: 'Price',
                 bookId: Number(this.book.id),
                 price: Number(this.price),
             });

@@ -13,7 +13,7 @@ export interface Read extends Operators {
     page?: number;
 
     _: string;
-    model: Model;
+    model: typeof Model;
 
     return?: string;
 
@@ -22,7 +22,7 @@ export interface Read extends Operators {
 
 export interface Create extends Object {
     _: string;
-    model: Model;
+    model: typeof Model;
 
     return?: string;
 
@@ -48,7 +48,8 @@ export interface Create extends Object {
 
 export interface Update extends Object {
     _: string;
-    model: Model;
+    _id: number;
+    model: typeof Model;
 
     return?: string;
 

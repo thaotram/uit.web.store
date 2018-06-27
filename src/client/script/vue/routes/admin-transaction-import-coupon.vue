@@ -26,31 +26,14 @@
                 <template slot="content">
                     <table-row- v-for="(importCoupon, index) in importCouponResults"
                                 :key="importCoupon.id"
-                                size="60">
-                        <div>
-                            {{ index + 1 }}
-                        </div>
-                        <div>
-                            {{ supplier(importCoupon.supplierId).name }}
-                        </div>
-                        <div class="row">
-                            <image- :src="avatar(employee(importCoupon.employeeId).id)"
-                                    class="round square border"
-                                    size="30"/>
-                            <s- :s="10"/>
-                            <span class="full">
-                                {{ employee(importCoupon.employeeId).name }}
-                            </span>
-                        </div>
-                        <div>
-                            {{ timeAgo(importCoupon.create) }}
-                        </div>
-                        <div>
-                            {{ importCoupon.count }}
-                        </div>
-                        <div>
-                            {{ money(importCoupon.total) }}
-                        </div>
+                                size="60"
+                                @click.native="$router.push(`/admin/transaction/import-coupon-detail/${importCoupon.id}`)">
+                        <div>{{ index + 1 }}</div>
+                        <div>{{ (get('Supplier', importCoupon.supplierId) || {}).name }}</div>
+                        <user- :employee-id="importCoupon.employeeId"/>
+                        <div>{{ timeAgo(importCoupon.create) }}</div>
+                        <div>{{ count(importCoupon) }}</div>
+                        <div>{{ money(total(importCoupon)) }}</div>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -65,8 +48,8 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
-import { avatar, timeAgo, money, user, employee, supplier } from '../../modules/index';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { avatar, timeAgo, money } from '../../modules/index';
 
 export default {
     components: {
@@ -82,6 +65,7 @@ export default {
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'user',
     },
     data() {
         return {
@@ -98,27 +82,30 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
+        ...mapGetters(['get']),
         importCouponResults() {
-            console.log(this.data);
-            return [];
-            // return this.data.ImportCoupons.map(importCoupon => ({
-            //     ...importCoupon,
-            //     total: importCoupon.importCouponDetails
-            //         .map(detail => detail.count * detail.price)
-            //         .reduce((a, b) => a + b, 0),
-            //     count: importCoupon.importCouponDetails
-            //         .map(detail => detail.count)
-            //         .reduce((a, b) => a + b, 0),
-            // }));
+            return this.data.ImportCoupons;
         },
     },
+    mounted() {
+        this.load_all('ImportCoupon');
+        this.load_all('Supplier');
+    },
     methods: {
+        ...mapActions(['load_all']),
         avatar,
         timeAgo,
         money,
-        user,
-        employee,
-        supplier,
+        count(importCoupon) {
+            return importCoupon.importCouponDetails
+                .map(detail => detail.count)
+                .reduce((a, b) => a + b, 0);
+        },
+        total(importCoupon) {
+            return importCoupon.importCouponDetails
+                .map(detail => detail.price * detail.count)
+                .reduce((a, b) => a + b, 0);
+        },
     },
 };
 </script>

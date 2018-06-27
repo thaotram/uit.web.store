@@ -1,11 +1,14 @@
 import Model from '../utils/Model';
 
 class CartDetail extends Model {
-    static isRawValid(cartDetail) {
-        if (!Array.isArray(cartDetail))
+    static isRawValid(cartDetails) {
+        if (!Array.isArray(cartDetails)) {
             throw 'Danh sách chi tiết giao dịch phải là một mảng';
-
-        return cartDetail.every(detail => {
+        }
+        if (cartDetails.length === 0) {
+            throw 'Hóa đơn phải có ít nhất một chi tiết';
+        }
+        return cartDetails.every(detail => {
             if (typeof detail != 'object')
                 throw 'Chi tiết giao dịch phải là kiểu đối tượng';
             if (!detail.hasOwnProperty('bookId') || !detail.hasOwnProperty('count')) {

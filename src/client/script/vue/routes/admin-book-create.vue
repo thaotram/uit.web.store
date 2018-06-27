@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         submit() {
-            // Sửa lại hàm submit này
+            // TODO: Sửa lại hàm submit này
             fetch('/api/books/tiki', {
                 method: 'POST',
                 credentials: 'same-origin',

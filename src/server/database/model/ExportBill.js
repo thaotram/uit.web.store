@@ -7,6 +7,16 @@ class ExportBill extends Model {
     static async create(create) {
         const employee = create.authorize.staff;
 
+        if (!Array.isArray(create.details)) {
+            throw 'Details phải là một mảng';
+        }
+        create.details.forEach(detail => {
+            const book = Book.getById(detail.bookId);
+            if (book.count - detail.count < 0) {
+                throw `Sách "${book.name}" đã hết hàng`;
+            }
+        });
+
         const cart = await Cart.create(create);
 
         return await ExportBill.write({

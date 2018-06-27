@@ -26,31 +26,14 @@
                 <template slot="content">
                     <table-row- v-for="(paymentCoupon, index) in paymentCouponResults"
                                 :key="paymentCoupon.id"
-                                size="60">
-                        <div>
-                            {{ index + 1 }}
-                        </div>
-                        <div>
-                            {{ supplier(paymentCoupon.supplierId).name }}
-                        </div>
-                        <div class="row">
-                            <image- :src="avatar(employee(paymentCoupon.employeeId).id)"
-                                    class="round square bpayment"
-                                    size="30"/>
-                            <s- :s="10"/>
-                            <span class="full">
-                                {{ employee(paymentCoupon.employeeId).name }}
-                            </span>
-                        </div>
-                        <div>
-                            {{ timeAgo(paymentCoupon.create) }}
-                        </div>
-                        <div>
-                            {{ paymentCoupon.content }}
-                        </div>
-                        <div>
-                            {{ money(paymentCoupon.money) }}
-                        </div>
+                                size="60"
+                                @click.native="$router.push(`/admin/transaction/payment-coupon-detail/${paymentCoupon.id}`)">
+                        <div>{{ index + 1 }}</div>
+                        <div>{{ (get('Supplier', paymentCoupon.supplierId) || {}).name }}</div>
+                        <user- :employee-id="paymentCoupon.employeeId"/>
+                        <div>{{ timeAgo(paymentCoupon.create) }}</div>
+                        <div>{{ paymentCoupon.content }}</div>
+                        <div>{{ money(paymentCoupon.money) }}</div>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -65,8 +48,8 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
-import { avatar, timeAgo, money, user, employee, supplier } from '../../modules/index';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { avatar, timeAgo, money } from '../../modules/index';
 
 export default {
     components: {
@@ -82,6 +65,7 @@ export default {
         ...'s',
         ...'table-row',
         ...'table-view',
+        ...'user',
     },
     data() {
         return {
@@ -98,24 +82,20 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
+        ...mapGetters(['get']),
         paymentCouponResults() {
             return this.data.PaymentCoupons;
-            // return this.data.PaymentCoupons.map(paymentCoupon => ({
-            //     ...paymentCoupon,
-            //     type: paymentCoupon.paymentCouponDetails.length,
-            //     count: paymentCoupon.paymentCouponDetails
-            //         .map(detail => detail.count)
-            //         .reduce((a, b) => a + b, 0),
-            // }));
         },
     },
+    mounted() {
+        this.load_all('PaymentCoupon');
+        this.load_all('Supplier');
+    },
     methods: {
+        ...mapActions(['load_all']),
         avatar,
         timeAgo,
         money,
-        user,
-        employee,
-        supplier,
     },
 };
 </script>

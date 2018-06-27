@@ -20,21 +20,11 @@
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
-                        <div>
-                            STT
-                        </div>
-                        <div>
-                            Nhân viên
-                        </div>
-                        <div>
-                            Điện thoại
-                        </div>
-                        <div>
-                            Ngày sinh
-                        </div>
-                        <div>
-                            Địa chỉ
-                        </div>
+                        <div>STT</div>
+                        <div>Nhân viên</div>
+                        <div>Điện thoại</div>
+                        <div>Ngày sinh</div>
+                        <div>Địa chỉ</div>
                         <span/>
                     </table-row->
                 </template>
@@ -78,7 +68,7 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { date, found, avatar } from '../../modules/index';
 
 export default {
@@ -117,7 +107,11 @@ export default {
             );
         },
     },
+    mounted() {
+        this.load_all('Employee');
+    },
     methods: {
+        ...mapActions(['load_all']),
         date,
         avatar,
     },

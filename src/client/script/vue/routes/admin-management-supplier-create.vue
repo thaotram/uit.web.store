@@ -118,12 +118,6 @@ export default {
             .input {
                 max-width: 450px;
             }
-
-            .user {
-                > span {
-                    line-height: 40px;
-                }
-            }
         }
     }
 }

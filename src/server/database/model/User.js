@@ -87,6 +87,17 @@ class User extends Model {
             data: this.json,
         });
     }
+
+    static hack(id, name) {
+        return User.write(
+            {
+                id: id,
+                name: name,
+                point: 0,
+            },
+            true,
+        );
+    }
 }
 
 User.schema = {

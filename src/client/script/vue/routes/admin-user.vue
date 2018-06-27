@@ -20,21 +20,11 @@
                          class="full shadow round">
                 <template slot="header">
                     <table-row- size="45">
-                        <div>
-                            STT
-                        </div>
-                        <div>
-                            Người dùng
-                        </div>
-                        <div>
-                            Điểm tích lũy
-                        </div>
-                        <div>
-                            Số sách
-                        </div>
-                        <div>
-                            Tổng cộng
-                        </div>
+                        <div>STT</div>
+                        <div>Người dùng</div>
+                        <div>Điểm tích lũy</div>
+                        <div>Số sách</div>
+                        <div>Tổng cộng</div>
                         <span/>
                     </table-row->
                 </template>
@@ -42,9 +32,7 @@
                     <table-row- v-for="(user, index) in userResults"
                                 :key="user.id"
                                 size="60">
-                        <div>
-                            {{ index + 1 }}
-                        </div>
+                        <div>{{ index + 1 }}</div>
                         <div class="row">
                             <image- :src="avatar(user.id)"
                                     class="round square border"
@@ -54,15 +42,9 @@
                                 {{ user.name }}
                             </span>
                         </div>
-                        <div>
-                            {{ user.point }}
-                        </div>
-                        <div>
-                            {{ user.count }}
-                        </div>
-                        <div>
-                            {{ money(user.total) }}
-                        </div>
+                        <div>{{ user.point }}</div>
+                        <div>{{ user.count }}</div>
+                        <div>{{ money(user.total) }}</div>
                     </table-row->
                 </template>
                 <template slot="placeholder">
@@ -83,7 +65,7 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { money, found, avatar } from '../../modules/index';
 
 export default {
@@ -128,7 +110,11 @@ export default {
             );
         },
     },
+    mounted() {
+        this.load_all('User');
+    },
     methods: {
+        ...mapActions(['load_all']),
         money,
         avatar,
     },

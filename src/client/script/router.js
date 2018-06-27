@@ -61,6 +61,11 @@ const router = new VueRouter({
             component: () => import('admin-transaction-import-coupon'),
         },
         {
+            path: '/admin/transaction/import-coupon-detail/:id',
+            name: 'admin-transaction-import-coupon-detail',
+            component: () => import('admin-transaction-import-coupon-detail'),
+        },
+        {
             path: '/admin/transaction/import-coupon/create',
             name: 'admin-transaction-import-coupon-create',
             component: () => import('admin-transaction-import-coupon-create'),
@@ -71,6 +76,11 @@ const router = new VueRouter({
             component: () => import('admin-transaction-order-coupon'),
         },
         {
+            path: '/admin/transaction/order-coupon-detail/:id',
+            name: 'admin-transaction-order-coupon-detail',
+            component: () => import('admin-transaction-order-coupon-detail'),
+        },
+        {
             path: '/admin/transaction/order-coupon/create',
             name: 'admin-transaction-order-coupon-create',
             component: () => import('admin-transaction-order-coupon-create'),
@@ -79,6 +89,11 @@ const router = new VueRouter({
             path: '/admin/transaction/payment-coupon',
             name: 'admin-transaction-payment-coupon',
             component: () => import('admin-transaction-payment-coupon'),
+        },
+        {
+            path: '/admin/transaction/payment-coupon-detail/:id',
+            name: 'admin-transaction-payment-coupon-detail',
+            component: () => import('admin-transaction-payment-coupon-detail'),
         },
         {
             path: '/admin/transaction/payment-coupon/create',
@@ -114,6 +129,11 @@ const router = new VueRouter({
             path: '/admin/management/supplier/edit/:id',
             name: 'admin-management-supplier-edit',
             component: () => import('admin-management-supplier-edit'),
+        },
+        {
+            path: '/admin/report',
+            name: 'admin-report',
+            component: () => import('admin-report'),
         },
         {
             path: '/information',

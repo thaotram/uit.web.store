@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         logout() {
-            Facebook.FB.logout(this.$root.checkLogin);
+            Facebook.FB.logout(() => location.reload(true));
         },
     },
 };

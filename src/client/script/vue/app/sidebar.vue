@@ -57,8 +57,7 @@
             <button- :active="is('admin-management-employee-edit')"
                      :class="{hide: !is('admin-management-employee-edit')}"
                      icon=""
-                     text="Cập nhật thông tin"
-                     @click.native="go('/admin/management/employee/create')"/>
+                     text="Cập nhật thông tin"/>
             <button- :active="is('admin-management-employee-create')"
                      :class="{hide: !is('admin-management-employee-create')}"
                      icon=""
@@ -77,8 +76,7 @@
             <button- :active="is('admin-management-supplier-edit')"
                      :class="{hide: !is('admin-management-supplier-edit')}"
                      icon=""
-                     text="Cập nhật thông tin"
-                     @click.native="go('/admin/management/supplier/create')"/>
+                     text="Cập nhật thông tin"/>
             <button- :active="is('admin-management-supplier-create')"
                      :class="{hide: !is('admin-management-supplier-create')}"
                      icon=""
@@ -100,7 +98,20 @@
                  icon=""
                  text="Hóa đơn bán hàng"
                  @click.native="go('/admin/transaction/export-bill')"/>
-
+        <col- :class="{show: match(/^admin-transaction-export-bill/)}"
+              size="50"
+              class="indent">
+            <button- :active="is('admin-transaction-export-bill-detail')"
+                     :class="{hide: !is('admin-transaction-export-bill-detail')}"
+                     icon=""
+                     text="Chi tiết hóa đơn"/>
+            <button- :active="is('admin-transaction-export-bill-create')"
+                     :class="{hide: !is('admin-transaction-export-bill-create')}"
+                     icon=""
+                     text="Tạo phiếu nhập"
+                     @click.native="go('/admin/transaction/export-bill/create')"/>
+        </col->
+        <!--  -->
         <!-- Phiếu nhập -->
         <button- :active="is('admin-transaction-import-coupon')"
                  icon=""
@@ -109,6 +120,10 @@
         <col- :class="{show: match(/^admin-transaction-import-coupon/)}"
               size="50"
               class="indent">
+            <button- :active="is('admin-transaction-import-coupon-detail')"
+                     :class="{hide: !is('admin-transaction-import-coupon-detail')}"
+                     icon=""
+                     text="Chi tiết phiếu nhập"/>
             <button- :active="is('admin-transaction-import-coupon-create')"
                      :class="{hide: !is('admin-transaction-import-coupon-create')}"
                      icon=""
@@ -124,6 +139,10 @@
         <col- :class="{show: match(/^admin-transaction-order-coupon/)}"
               size="50"
               class="indent">
+            <button- :active="is('admin-transaction-order-coupon-detail')"
+                     :class="{hide: !is('admin-transaction-order-coupon-detail')}"
+                     icon=""
+                     text="Chi tiết phiếu đặt"/>
             <button- :active="is('admin-transaction-order-coupon-create')"
                      :class="{hide: !is('admin-transaction-order-coupon-create')}"
                      icon=""
@@ -139,12 +158,21 @@
         <col- :class="{show: match(/^admin-transaction-payment-coupon/)}"
               size="50"
               class="indent">
+            <button- :active="is('admin-transaction-payment-coupon-detail')"
+                     :class="{hide: !is('admin-transaction-payment-coupon-detail')}"
+                     icon=""
+                     text="Chi tiết phiếu đặt"/>
             <button- :active="is('admin-transaction-payment-coupon-create')"
                      :class="{hide: !is('admin-transaction-payment-coupon-create')}"
                      icon=""
                      text="Tạo phiếu trả"
                      @click.native="go('/admin/transaction/payment-coupon/create')"/>
         </col->
+
+        <!-- <button- :active="is('admin-report')"
+                 icon=""
+                 text="Báo cáo"
+                 @click.native="go('/admin/report')"/> -->
 
         <s-/>
         <button- :active="is('information')" 
@@ -189,7 +217,7 @@ export default {
             return this.$route.name.match(regex) !== null;
         },
         logout() {
-            Facebook.FB.logout(this.$root.checkLogin);
+            Facebook.FB.logout(() => location.reload(true));
         },
     },
 };

@@ -1,6 +1,7 @@
 import login from './api/login.api';
 import read from './api/read.api';
 import create from './api/create.api';
+import update from './api/update.api';
 /**
  * Init SocketIO in Server
  * @param {SocketIO.Server} io
@@ -12,6 +13,7 @@ export default function(io) {
         login(io, fake);
         read(io, fake);
         create(io, fake);
+        update(io, fake);
 
         const sessionID = fake.request.sessionID;
         console.log(`${sessionID} in`);

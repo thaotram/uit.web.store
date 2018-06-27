@@ -49,19 +49,7 @@
                                         class="shadow search-box round"
                                         type="text"
                                         placeholder="Ngày sinh"/>
-                                <div class="row user-input"
-                                     size="40">
-                                    <div class="row user" 
-                                         size="40">
-                                        <image- :src="avatar(user.id)"
-                                                class="round square border"
-                                                size="30"/>
-                                        <s- :s="10"/>
-                                        <span class="full">
-                                            {{ user.name }}
-                                        </span>
-                                    </div>
-                                </div>
+                                <user- :facebook-id="employee.userId"/>
                             </col->
                         </row->
                     </div>
@@ -71,8 +59,8 @@
     </row->
 </template>
 <script>
-import { mapState } from 'vuex';
-import { date, avatar, user } from '../../modules/index';
+import { mapState, mapActions } from 'vuex';
+import { date, avatar, update } from '../../modules/index';
 
 export default {
     components: {
@@ -83,6 +71,7 @@ export default {
         ...'input',
         ...'label',
         ...'image',
+        ...'user',
         ...'line',
         ...'list',
         ...'row',
@@ -92,6 +81,13 @@ export default {
     },
     data() {
         return {
+            employee: { 
+                name: '',
+                address: '',
+                phone: '',
+                birthdate: '',
+                userId: -1,
+            },
             size: [
                 ['0 30px', 'center'],
                 ['0 220px', 'start'],
@@ -104,37 +100,26 @@ export default {
     },
     computed: {
         ...mapState(['app', 'data']),
-        employee() {
-            return (
-                this.data.Employees.find(
-                    employee => employee.id == Number(this.$route.params.id),
-                ) || {
-                    name: '',
-                    address: '',
-                    phone: '',
-                    birthdate: '',
-                }
-            );
-        },
-        user() {
-            return user(this.employee.userId, this);
-        },
+    },
+    async mounted() {
+        this.employee = await this.load_by_id({
+            name: 'Employee',
+            id: this.$route.params.id,
+        });
     },
     methods: {
+        ...mapActions(['load_by_id']),
         date,
         avatar,
         // Sửa lại hàm submit này
         async submit() {
-            const res = await fetch('/api/employee/edit', {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    employeeId: this.employee.id,
-                    data: this.employee,
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await update({
+                _: 'Employee',
+                _id: this.employee.id,
+                name: this.employee.name,
+                phone: this.employee.phone,
+                address: this.employee.address,
+                birthdate: this.employee.birthdate,
             });
             if (res.error) return alert(res.error);
             this.$router.push('/admin/management/employee');
@@ -151,7 +136,6 @@ export default {
     }
     .input-color {
         .col {
-            > .user-input,
             > .input,
             > .button {
                 margin-bottom: 10px;
@@ -159,12 +143,6 @@ export default {
 
             .input {
                 max-width: 450px;
-            }
-
-            .user {
-                > span {
-                    line-height: 40px;
-                }
             }
         }
     }
