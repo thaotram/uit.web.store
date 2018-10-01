@@ -1,4 +1,6 @@
 # uit.web.store
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fphamhongphuc%2Fuit.web.store.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fphamhongphuc%2Fuit.web.store?ref=badge_shield)
+
 
 ==================================================
 
@@ -70,3 +72,7 @@ build:server            # src/server > dist/server
 build:client            # src/client > dist/client
 build                   # two above 
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fphamhongphuc%2Fuit.web.store.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fphamhongphuc%2Fuit.web.store?ref=badge_large)
