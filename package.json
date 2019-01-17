@@ -51,7 +51,7 @@
         "chart.js": "^2.7.2",
         "cheerio": "^1.0.0-rc.2",
         "cookie-parser": "^1.4.3",
-        "express": "^4.16.3",
+        "express": "^4.16.4",
         "express-session": "^1.15.6",
         "fb": "^2.0.0",
         "got": "^8.3.1",
