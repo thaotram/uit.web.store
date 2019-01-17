@@ -173,6 +173,10 @@
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0-beta.49.tgz#0e9fcbb834f878bb365d2a8ea90eee21ba3ccd23"
 
+"@babel/helper-plugin-utils@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0.tgz#bbb3fbee98661c569034237cc03967ba99b4f250"
+
 "@babel/helper-regex@7.0.0-beta.49":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/helper-regex/-/helper-regex-7.0.0-beta.49.tgz#ff244f19c2a2f167ff4b3165a636b08fd641816b"
@@ -351,11 +355,17 @@
     "@babel/helper-regex" "7.0.0-beta.49"
     regexpu-core "^4.1.4"
 
-"@babel/plugin-syntax-async-generators@7.0.0-beta.49", "@babel/plugin-syntax-async-generators@^7.0.0-beta.49":
+"@babel/plugin-syntax-async-generators@7.0.0-beta.49":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-async-generators/-/plugin-syntax-async-generators-7.0.0-beta.49.tgz#50ee943002aedc9ab3a8d12292bd35dd9edb1df8"
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.49"
+
+"@babel/plugin-syntax-async-generators@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-async-generators/-/plugin-syntax-async-generators-7.2.0.tgz#69e1f0db34c6f5a0cf7e2b3323bf159a76c8cb7f"
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
 
 "@babel/plugin-syntax-class-properties@7.0.0-beta.49":
   version "7.0.0-beta.49"
